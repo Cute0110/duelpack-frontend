@@ -176,7 +176,7 @@ const Footer = ({ onScrollTo }: any) => {
       <div className="w-full border border-gray-600"></div>
       <div className={`${isMobile ? "" : "container"} p-4`}>
         <p className="flex justify-start items-center text-muted text-sm mb-2">
-          Copyright © PackDraw 2025
+          Copyright © DuelPack 2025
         </p>
         <p className="flex justify-start items-center text-muted text-sm mb-2">
           PackDraw is a brand name of PackDraw Group which is composed by Packdraw Limited, a company duly incorporated under the laws of Cyprus with the company number HE 445177, and registered office at Iakovou Patatsou 4a, Agios Dometios, 2362 Nicosia, Cyprus and PackDraw US, LLC, a company duly incorporated under the laws of United States of America with the registered number 7571319 and registered office at 108 West 13th Street Wilmington, Delaware 19801, United States.
