@@ -5,13 +5,6 @@ import Logo from "@/public/duelpack-logo.svg";
 import { FaFacebookF } from "react-icons/fa";
 import { FaInstagram, FaXTwitter, FaTelegram, FaYoutube } from "react-icons/fa6";
 import { useEffect, useState } from "react";
-import AboutUs from "./Modals/AboutUs";
-import CustomerSupport from "./Modals/CustomerSupport";
-import PrivacyPolicy from "./Modals/PrivacyPolicy";
-import AMLPolicy from "./Modals/AMLPolicy";
-import FAQs from "./Modals/FAQs";
-import FairGameOdds from "./Modals/FairGameOdds";
-import TermsConditions from "./Modals/TermsConditions";
 import { useAuth } from "@/lib/authContext";
 import Link from "next/link";
 
@@ -29,7 +22,7 @@ const Footer = ({ onScrollTo }: any) => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024);
+      setIsMobile(window.innerWidth < 768);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -47,24 +40,13 @@ const Footer = ({ onScrollTo }: any) => {
   }
   return (
     <footer className={`bg-[#161a1d]`}>
-      <AboutUs isModalOpen={isAboutUsModalOpen} onModalClose={onModalClose} modalTitle={modalTitle} />
-      <CustomerSupport isModalOpen={isCSModalOpen} onModalClose={onModalClose} modalTitle={modalTitle} />
-      <PrivacyPolicy isModalOpen={isPolicyModalOpen} onModalClose={onModalClose} modalTitle={modalTitle} />
-      <AMLPolicy isModalOpen={isAMLModalOpen} onModalClose={onModalClose} modalTitle={modalTitle} />
-      <FAQs isModalOpen={isFaqsModalOpen} onModalClose={onModalClose} modalTitle={modalTitle} />
-      <FairGameOdds isModalOpen={isFGOModalOpen} onModalClose={onModalClose} modalTitle={modalTitle} />
-      <TermsConditions isModalOpen={isTCModalOpen} onModalClose={onModalClose} modalTitle={modalTitle} />
-      {/* <section className="container bg-[#0d3832] rounded-[10px] py-4 px-2 overflow-hidden w-[95%] lg:w-full">
-        <CryptoCarousel />
-      </section> */}
 
-      <div className={`${isMobile ? "" : "container"} flex flex-col xl:flex-row justify-between items-normal xl:items-center py-10 gap-y-6 px-4`}>
+      <div className={`${isMobile ? "" : "container"} flex flex-col md:flex-row justify-between items-normal md:items-center py-10 gap-y-6 px-4`}>
         {/* Logo */}
-        <div className="flex-shrink-0 self-start">
+        <div className="flex-shrink-0 self-start w-full md:w-[50%]">
           <a href="#" className="flex items-center mb-2">
-            <Image
-              priority
-              src={Logo}
+            <img
+              src={"./duelpack-logo.svg"}
               alt="Wecazoo Logo"
               className="h-10 w-auto"
             />
@@ -75,8 +57,8 @@ const Footer = ({ onScrollTo }: any) => {
         </div>
 
         {/* Footer Links */}
-        <div className="flex flex-col md:flex-row gap-6 lg:gap-12">
-          <div className="flex justify-between">
+        <div className="flex flex-col md:flex-row gap-6 justify-between w-full md:w-[50%]">
+          <div className="flex justify-between gap-6 w-full md:w-[66%]">
             <div className="flex flex-col gap-2">
               <h3 className="font-bold text-lg">Games</h3>
               <ul className="text-muted flex flex-col gap-2 justify-start">
@@ -122,17 +104,6 @@ const Footer = ({ onScrollTo }: any) => {
             <div className="flex flex-col gap-6">
               <h3 className="font-bold text-lg">COMMUNITY</h3>
               <ul className="text-muted flex flex-row gap-6 justify-start">
-                {/* <li className="group">
-                  <a
-                    href="https://t.me/wecazoo"
-                    className="flex items-center gap-2 group-hover:text-primary transition-colors"
-                  >
-                    <div className="w-[48px] h-[48px] md:w-[24px] md:h-[24px] rounded-full bg-muted flex items-center justify-center group-hover:bg-primary transition-colors">
-                      <FaTelegram className="text-2xl md:text-sm text-background group-hover:text-white transition-colors" />
-                    </div>
-                    <p className="hidden md:block">Telegram</p>
-                  </a>
-                </li> */}
                 <li className="group">
                   <a
                     href="https://x.com/wecazoo_com?t=FG6phvuInUuYRNUO5twpMA&s=09"
@@ -174,11 +145,11 @@ const Footer = ({ onScrollTo }: any) => {
 
       {/* Copyright */}
       <div className="w-full border border-gray-600"></div>
-      <div className={`${isMobile ? "" : "container"} p-4`}>
-        <p className="flex justify-start items-center text-muted text-sm mb-2">
+      <div className={`${isMobile ? "" : "flex container"} p-4 justify-between items-start`}>
+        <p className="flex justify-start items-center text-muted text-sm mb-2 w-full md:w-[50%]">
           Copyright © DuelPack 2025
         </p>
-        <p className="flex justify-start items-center text-muted text-sm mb-2">
+        <p className="flex justify-start items-center text-muted text-sm mb-2 w-full md:w-[50%]">
           PackDraw is a brand name of PackDraw Group which is composed by Packdraw Limited, a company duly incorporated under the laws of Cyprus with the company number HE 445177, and registered office at Iakovou Patatsou 4a, Agios Dometios, 2362 Nicosia, Cyprus and PackDraw US, LLC, a company duly incorporated under the laws of United States of America with the registered number 7571319 and registered office at 108 West 13th Street Wilmington, Delaware 19801, United States.
         </p>
       </div>

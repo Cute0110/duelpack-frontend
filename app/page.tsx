@@ -16,7 +16,8 @@ type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 const Home = () => {
   const { isAuthenticated, isSidebarCollapsed } = useAuth();
-  const [allGamesData, setAllGamesData] = useState([]);
+  const [packsData, setPacksData] = useState({ data: [], count: 0, start: 0, length: 5 });
+  const [forgeData, setForgeData] = useState({ data: [], count: 0, start: 0, length: 5 });
   const [api, contextHolder] = notification.useNotification();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -33,19 +34,31 @@ const Home = () => {
   useEffect(() => {
     document.title = "DuelPack";
     //document.querySelector('meta[name="description"]')?.setAttribute("content", "Wecazoo is a top crypto casino offering Solana, Bitcoin & more. Play with no KYC in the UK, Canada, Sverige, Netherlands & more. 500% deposit bonus!");
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await axiosInstance.post('/api/game_list', eot({ start: 0, length: 0, search: 0, order: "order", dir: "asc" }));
-    //     const res = dot(response.data);
-    //     if (res.status == 1) {
-    //       setAllGamesData(res.data);
-    //     } else {
-    //       openNotification("error", "Error", res.msg, "topRight");
-    //     }
-    //   } catch (err) {
-    //     openNotification("error", "Error", "Network error!", "topRight");
-    //   }
-    // };
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.post('/api/pack_list', eot({ start: 0, length: 5, search: 0, order: "id", dir: "asc" }));
+        const res = dot(response.data);
+        if (res.status == 1) {
+          setPacksData({ data: res.data, count: res.count, start: res.start, length: res.length });
+        } else {
+          openNotification("error", "Error", res.msg, "topRight");
+        }
+      } catch (err) {
+        openNotification("error", "Error", "Network error!", "topRight");
+      }
+
+      try {
+        const response = await axiosInstance.post('/api/forge_list', eot({ start: 0, length: 6, search: 0, order: "id", dir: "asc" }));
+        const res = dot(response.data);
+        if (res.status == 1) {
+          setForgeData({ data: res.data, count: res.count, start: res.start, length: res.length });
+        } else {
+          openNotification("error", "Error", res.msg, "topRight");
+        }
+      } catch (err) {
+        openNotification("error", "Error", "Network error!", "topRight");
+      }
+    };
 
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024); // 1024px is the lg breakpoint in Tailwind
@@ -53,7 +66,7 @@ const Home = () => {
 
     checkMobile();
 
-    // fetchData();
+    fetchData();
     window.addEventListener('resize', checkMobile);
 
     return () => window.removeEventListener('resize', checkMobile);
@@ -74,11 +87,10 @@ const Home = () => {
     <>
       {contextHolder}
       <div className="min-h-screen bg-[#1d2125] text-foreground">
-
-        <main className={`mt-[40px] `} // Added transform and scale
-        >
-          <RandingPage />
-        </main>
+        <RandingPage 
+        packsData={packsData}
+        forgeData={forgeData}
+        />
       </div >
     </>
   );
