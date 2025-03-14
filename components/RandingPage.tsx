@@ -53,7 +53,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
   return (
     <div className="container mt-[75px]">
       <div className="flex justify-between gap-6">
-        <div style={{ width: "calc(100% - 250px)" }}>
+        <div className="w-full md:calc-100-minus-250">
           <div className="w-full">
             <div className="flex flex-col md:flex-row gap-4 w-full pt-8">
               <div className="relative flex-1 bg-[#161a1d] rounded-lg">
@@ -100,7 +100,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                 <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Packs</button>
               </div>
             </div>
-            <div className="w-full grid grid-cols-5 gap-6 mt-4">
+            <div className="w-full grid grid-cols-2 md:grid-cols-6 gap-6 mt-4">
               {packs.map((data: any, index) => (
                 <div className="rounded-xl cursor-pointer group relative" key={index}>
                   <div className="absolute top-4 right-4 bg-[#1d2125] p-2 rounded-xl opacity-0 group-hover:opacity-100">
@@ -136,7 +136,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                 <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Products</button>
               </div>
             </div>
-            <div className="w-full grid grid-cols-6 gap-6 mt-4">
+            <div className="w-full grid grid-cols-2 md:grid-cols-6 gap-6 mt-4">
               {forge.map((data: any, index) => (
                 <div className="rounded-xl cursor-pointer group bg-[#22272b] relative py-4" key={index}>
                   <div className="flex items-center justify-between w-full px-4">
@@ -160,22 +160,22 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                 <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Products</button>
               </div>
             </div>
-            <div className="w-full grid grid-cols-3 gap-6 mt-4">
-              <div className="rounded-lg border border-gray-600 aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
+            <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+              <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
                 <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">1</div>
                 <img src={"./images/openPacks.webp"} className="h-[50%] mt-12 mx-auto" />
                 <p className="text-center font-bold text-xl mt-2">Open Packs</p>
                 <p className="text-center text-md mt-2 text-gray-400">Find your perfect packs & experience</p>
                 <p className="text-center text-md mt-2 text-gray-400">the online excitement!</p>
               </div>
-              <div className="rounded-lg border border-gray-600 aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
+              <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
                 <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">2</div>
                 <img src={"./images/winItems.webp"} className="h-[50%] mt-12 mx-auto" />
                 <p className="text-center font-bold text-xl mt-2">Open Packs</p>
                 <p className="text-center text-md mt-2 text-gray-400">Find your perfect packs & experience</p>
                 <p className="text-center text-md mt-2 text-gray-400">the online excitement!</p>
               </div>
-              <div className="rounded-lg border border-gray-600 aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
+              <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
                 <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">3</div>
                 <img src={"./images/cashOrClaim.webp"} className="h-[50%] mt-12 mx-auto" />
                 <p className="text-center font-bold text-xl mt-2">Open Packs</p>
@@ -185,7 +185,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
             </div>
           </div>
           <div className="w-full mt-12">
-            <div className="flex w-full grid grid-cols-2 gap-4">
+            <div className="flex w-full grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-4">
                 {commentsLeftData.map((data: any, index) => [
                   <div className="bg-[#22272b] rounded-xl py-6 px-4" key={data.key} onClick={() => onClickComments(data.key)}>
@@ -211,7 +211,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
             </div>
           </div>
         </div>
-        <div className="w-[250px]">Slide Show</div>
+        <div className="hidden md:block w-[250px]">Slide Show</div>
       </div>
     </div>
   );

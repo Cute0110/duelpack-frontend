@@ -36,7 +36,7 @@ const Home = () => {
     //document.querySelector('meta[name="description"]')?.setAttribute("content", "Wecazoo is a top crypto casino offering Solana, Bitcoin & more. Play with no KYC in the UK, Canada, Sverige, Netherlands & more. 500% deposit bonus!");
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.post('/api/pack_list', eot({ start: 0, length: 5, search: 0, order: "id", dir: "asc" }));
+        const response = await axiosInstance.post('/api/pack_list', eot({ start: 0, length: 6, search: 0, order: "id", dir: "asc" }));
         const res = dot(response.data);
         if (res.status == 1) {
           setPacksData({ data: res.data, count: res.count, start: res.start, length: res.length });

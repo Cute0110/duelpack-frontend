@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      spacing: {
+        'calc-100-minus-250': 'calc(100% - 250px)',
+      },
       container: {
         center: true,
         padding: "1rem",
