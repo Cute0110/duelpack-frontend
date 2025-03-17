@@ -10,10 +10,20 @@ import Battles from "@/public/images/battles.svg";
 import Forge from "@/public/images/forge.svg";
 import Events from "@/public/images/events.svg";
 import Rewards from "@/public/images/rewards.svg";
-import ViewSVG from "@/public/images/view.svg";
 import FAQSVG from "@/public/images/faq.svg";
 import UpArrow from "@/public/images/upArrow.svg";
 import DownArrow from "@/public/images/downArrow.svg";
+import EachPack from "./EachPack";
+import PackItemsModal from "./Modals/PackItemsModal";
+
+import axiosInstance from "@/lib/action";
+import { dot, eot } from "@/lib/cryptoUtils";
+
+import { notification } from 'antd';
+import type { NotificationArgsProps } from 'antd';
+
+type NotificationPlacement = NotificationArgsProps['placement'];
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 const RandingPage = ({ packsData, forgeData }: any) => {
   const imageURL = ["battle.png", "pack.png", "forge.png"];
@@ -21,6 +31,22 @@ const RandingPage = ({ packsData, forgeData }: any) => {
   const [packs, setPacks] = useState([]);
   const [forge, setForge] = useState([]);
   const [activeComment, setActiveComment] = useState(0);
+
+  
+  const [api, contextHolder] = notification.useNotification();
+  const [itemsData, setItemsData] = useState([]);
+  const [isPackItemsModalOpen, setIsPackItemsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedPackData, setSelectedPackData] = useState(null);
+
+  const openNotification = (type: NotificationType, title: any, content: any, placement: NotificationPlacement) => {
+    api[type]({
+      message: title,
+      description: content,
+      duration: 2,
+      placement,
+    });
+  };
 
   const commentsLeftData = [
     { title: 'What is DuelPack?', content: 'DuelPack revolutionizes online shopping with its "Gamified-Shopping" approach, offering digital "Packs" filled with a diverse selection of products from top brands you know and love. All packs display their price, product range, and odds before you open them, ensuring a secure, transparent, and exhilarating shopping experience.', key: 1 },
@@ -43,177 +69,197 @@ const RandingPage = ({ packsData, forgeData }: any) => {
     setForge(forgeData.data);
   }, [forgeData]);
 
-  const onClickComments = (key : any) => {
+  const onClickComments = (key: any) => {
 
     console.log(activeComment, key);
-    if (activeComment == key) {setActiveComment(0)}
-    else {setActiveComment(key)}
+    if (activeComment == key) { setActiveComment(0) }
+    else { setActiveComment(key) }
+  }
+
+  const onClickViewItem = async (data: any) => {
+    setIsLoading(true);
+    try {
+      const response = await axiosInstance.post('/api/items_list', eot({ start: 0, length: 0, search: 0, order: "order", dir: "asc", packID: data.id }));
+      const res = dot(response.data);
+      if (res.status == 1) {
+        setItemsData(res.data);
+      } else {
+        openNotification("error", "Error", res.msg, "topRight");
+        setIsPackItemsModalOpen(false);
+      }
+    } catch (err) {
+      openNotification("error", "Error", "Network error!", "topRight");
+      setIsPackItemsModalOpen(false);
+    } finally {
+      setIsLoading(false);
+    }
+
+    setSelectedPackData(data);
+    setIsPackItemsModalOpen(true);
   }
 
   return (
-    <div className="container mt-[75px]">
-      <div className="flex justify-between gap-6">
-        <div className="w-full md:calc-100-minus-250">
-          <div className="w-full">
-            <div className="flex flex-col md:flex-row gap-4 w-full pt-8">
-              <div className="relative flex-1 bg-[#161a1d] rounded-lg">
-                <img src={`./images/${imageURL[0]}`} className="w-full h-auto rounded-lg" />
-                <div className="absolute top-4 left-4 z-10 flex items-center justify-between gap-2 bg-[#22272b] px-2 py-[4px] rounded-md">
-                  <Battles className="h-5 w-auto text-[#90cdf4]" />
-                  <span className="text-[#90cdf4] font-semibold text-sm">Battle</span>
-                </div>
-                <div className="absolute bottom-4 left-4 font-semibold text-lg">
-                  <div>Create Your</div>
-                  <div>First Battle!</div>
-                </div>
-              </div>
-              <div className="relative flex-1 bg-[#161a1d] rounded-lg">
-                <img src={`./images/${imageURL[1]}`} className="w-full h-auto rounded-lg" />
-                <div className="absolute top-4 left-4 z-10 flex items-center justify-between gap-2 bg-[#22272b] px-2 py-[4px] rounded-md">
-                  <Packs className="h-5 w-auto text-[#7c4be2]" />
-                  <span className="text-[#7c4be2] font-semibold text-sm">Packs</span>
-                </div>
-                <div className="absolute bottom-4 left-4 font-semibold text-lg">
-                  <div>Open Your</div>
-                  <div>First Pack!</div>
-                </div>
-              </div>
-              <div className="relative flex-1 bg-[#161a1d] rounded-lg">
-                <img src={`./images/${imageURL[2]}`} className="w-full h-auto rounded-lg" />
-                <div className="absolute top-4 left-4 z-10 flex items-center justify-between gap-2 bg-[#22272b] px-2 py-[4px] rounded-md">
-                  <Forge className="h-5 w-auto text-[#53e296]" />
-                  <span className="text-[#53e296] font-semibold text-sm">Forge</span>
-                </div>
-                <div className="absolute bottom-4 left-4 font-semibold text-lg">
-                  <div>Try Out The Forge!</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-full mt-12">
-            <div className="w-full flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Packs className="h-8 w-auto text-gray-600" />
-                <span className="text-lg font-bold">New Packs</span>
-              </div>
-              <div>
-                <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Packs</button>
-              </div>
-            </div>
-            <div className="w-full grid grid-cols-2 md:grid-cols-6 gap-6 mt-4">
-              {packs.map((data: any, index) => (
-                <div className="rounded-xl cursor-pointer group relative" key={index}>
-                  <div className="absolute top-4 right-4 bg-[#1d2125] p-2 rounded-xl opacity-0 group-hover:opacity-100">
-                    <ViewSVG className="h-4 w-auto text-gray-300 z-10" />
+    <>
+      {contextHolder}
+      {isPackItemsModalOpen && (<PackItemsModal packData={selectedPackData} itemsData={itemsData} setIsPackItemsModalOpen={setIsPackItemsModalOpen} />)}
+      <div className="container mt-[75px]">
+        <div className="flex justify-between gap-6">
+          <div className="w-full md:calc-100-minus-250">
+            <div className="w-full">
+              <div className="flex flex-col md:flex-row gap-4 w-full pt-8">
+                <div className="relative flex-1 bg-[#161a1d] rounded-lg">
+                  <img src={`./images/${imageURL[0]}`} className="w-full h-auto rounded-lg" />
+                  <div className="absolute top-4 left-4 z-10 flex items-center justify-between gap-2 bg-[#22272b] px-2 py-[4px] rounded-md">
+                    <Battles className="h-5 w-auto text-[#90cdf4]" />
+                    <span className="text-[#90cdf4] font-semibold text-sm">Battle</span>
                   </div>
-                  <img src={`./images/packs/${data.imageUrl}`} className="rounded-xl" />
-                  <p className="text-center mt-4 font-semibold text-lg">${data.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="w-full mt-12">
-            <div className="w-full flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Battles className="h-8 w-auto text-gray-600" />
-                <span className="text-lg font-bold">Battle Highlights</span>
-              </div>
-              <div>
-                <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Battles</button>
-              </div>
-            </div>
-            <div className="w-full mt-4 bg-[#22272b] h-[100px] rounded-xl text-center p-[35px]">
-              No Battles
-            </div>
-          </div>
-          <div className="w-full mt-12">
-            <div className="w-full flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Forge className="h-8 w-auto text-gray-600" />
-                <span className="text-lg font-bold">Forge Highlights</span>
-              </div>
-              <div>
-                <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Products</button>
-              </div>
-            </div>
-            <div className="w-full grid grid-cols-2 md:grid-cols-6 gap-6 mt-4">
-              {forge.map((data: any, index) => (
-                <div className="rounded-xl cursor-pointer group bg-[#22272b] relative py-4" key={index}>
-                  <div className="flex items-center justify-between w-full px-4">
-                    <div className="text-[#f6e05e] font-semibold">{data.multi.toFixed(2)}X</div>
-                    <img src={data.user.avatarURL} className="rounded-full w-6" />
+                  <div className="absolute bottom-4 left-4 font-semibold text-lg">
+                    <div>Create Your</div>
+                    <div>First Battle!</div>
                   </div>
-                  <img src={`./images/forge/${data.imageUrl}`} className="rounded-xl" />
-                  <p className="w-full text-center font-semibold text-md text-gray-500 truncate px-8">{data.name}</p>
-                  <p className="w-full text-center font-semibold text-lg">${data.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                 </div>
-              ))}
-            </div>
-          </div>
-          <div className="w-full mt-12">
-            <div className="w-full flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <FAQSVG className="h-6 w-auto text-gray-600" />
-                <span className="text-lg font-bold">How DuelPack Works</span>
-              </div>
-              <div>
-                <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Products</button>
-              </div>
-            </div>
-            <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-              <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
-                <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">1</div>
-                <img src={"./images/openPacks.webp"} className="h-[50%] mt-12 mx-auto" />
-                <p className="text-center font-bold text-xl mt-2">Open Packs</p>
-                <p className="text-center text-md mt-2 text-gray-400">Find your perfect packs & experience</p>
-                <p className="text-center text-md mt-2 text-gray-400">the online excitement!</p>
-              </div>
-              <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
-                <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">2</div>
-                <img src={"./images/winItems.webp"} className="h-[50%] mt-12 mx-auto" />
-                <p className="text-center font-bold text-xl mt-2">Open Packs</p>
-                <p className="text-center text-md mt-2 text-gray-400">Find your perfect packs & experience</p>
-                <p className="text-center text-md mt-2 text-gray-400">the online excitement!</p>
-              </div>
-              <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
-                <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">3</div>
-                <img src={"./images/cashOrClaim.webp"} className="h-[50%] mt-12 mx-auto" />
-                <p className="text-center font-bold text-xl mt-2">Open Packs</p>
-                <p className="text-center text-md mt-2 text-gray-400">Find your perfect packs & experience</p>
-                <p className="text-center text-md mt-2 text-gray-400">the online excitement!</p>
+                <div className="relative flex-1 bg-[#161a1d] rounded-lg">
+                  <img src={`./images/${imageURL[1]}`} className="w-full h-auto rounded-lg" />
+                  <div className="absolute top-4 left-4 z-10 flex items-center justify-between gap-2 bg-[#22272b] px-2 py-[4px] rounded-md">
+                    <Packs className="h-5 w-auto text-[#7c4be2]" />
+                    <span className="text-[#7c4be2] font-semibold text-sm">Packs</span>
+                  </div>
+                  <div className="absolute bottom-4 left-4 font-semibold text-lg">
+                    <div>Open Your</div>
+                    <div>First Pack!</div>
+                  </div>
+                </div>
+                <div className="relative flex-1 bg-[#161a1d] rounded-lg">
+                  <img src={`./images/${imageURL[2]}`} className="w-full h-auto rounded-lg" />
+                  <div className="absolute top-4 left-4 z-10 flex items-center justify-between gap-2 bg-[#22272b] px-2 py-[4px] rounded-md">
+                    <Forge className="h-5 w-auto text-[#53e296]" />
+                    <span className="text-[#53e296] font-semibold text-sm">Forge</span>
+                  </div>
+                  <div className="absolute bottom-4 left-4 font-semibold text-lg">
+                    <div>Try Out The Forge!</div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="w-full mt-12">
-            <div className="flex w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-4">
-                {commentsLeftData.map((data: any, index) => [
-                  <div className="bg-[#22272b] rounded-xl py-6 px-4" key={data.key} onClick={() => onClickComments(data.key)}>
-                    <div className="flex items-center justify-between cursor-pointer" onClick={() => onClickComments(data.key)}>
-                      <span className="font-bold">{data.title}</span>
-                      {activeComment != data.key ? <DownArrow className="h-6 w-auto text-gray-600" /> : <DownArrow className="h-6 w-auto text-gray-600 rotate-180" />}
+            <div className="w-full mt-12">
+              <div className="w-full flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Packs className="h-8 w-auto text-gray-600" />
+                  <span className="text-lg font-bold">New Packs</span>
+                </div>
+                <div>
+                  <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Packs</button>
+                </div>
+              </div>
+              <div className="w-full grid grid-cols-2 md:grid-cols-6 gap-6 mt-4">
+                {packs.map((data: any, index) => (
+                  <EachPack key={index} data={data} onClickViewItem={onClickViewItem}/>
+                ))}
+              </div>
+            </div>
+            <div className="w-full mt-12">
+              <div className="w-full flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Battles className="h-8 w-auto text-gray-600" />
+                  <span className="text-lg font-bold">Battle Highlights</span>
+                </div>
+                <div>
+                  <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Battles</button>
+                </div>
+              </div>
+              <div className="w-full mt-4 bg-[#22272b] h-[100px] rounded-xl text-center p-[35px]">
+                No Battles
+              </div>
+            </div>
+            <div className="w-full mt-12">
+              <div className="w-full flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Forge className="h-8 w-auto text-gray-600" />
+                  <span className="text-lg font-bold">Forge Highlights</span>
+                </div>
+                <div>
+                  <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Products</button>
+                </div>
+              </div>
+              <div className="w-full grid grid-cols-2 md:grid-cols-6 gap-6 mt-4">
+                {forge.map((data: any, index) => (
+                  <div className="rounded-xl cursor-pointer group bg-[#22272b] relative py-4" key={index}>
+                    <div className="flex items-center justify-between w-full px-4">
+                      <div className="text-[#f6e05e] font-semibold">{data.multi.toFixed(2)}X</div>
+                      <img src={data.user.avatarURL} className="rounded-full w-6" />
                     </div>
-                    {activeComment == data.key ? <div className="mt-4">{data.content}</div> : <></>}
+                    <img src={`./images/forge/${data.imageUrl}`} className="rounded-xl" />
+                    <p className="w-full text-center font-semibold text-md text-gray-500 truncate px-8">{data.name}</p>
+                    <p className="w-full text-center font-semibold text-lg">${data.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                   </div>
-                ])}
+                ))}
               </div>
-              <div className="space-y-4">
-                {commentsRightData.map((data: any, index) => [
-                  <div className="bg-[#22272b] rounded-xl py-6 px-4" key={data.key}>
-                    <div className="flex items-center justify-between cursor-pointer" onClick={() => onClickComments(data.key)}>
-                      <span>{data.title}</span>
-                      {activeComment != data.key ? <DownArrow className="h-6 w-auto text-gray-600" /> : <DownArrow className="h-6 w-auto text-gray-600 rotate-180" />}
+            </div>
+            <div className="w-full mt-12">
+              <div className="w-full flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <FAQSVG className="h-6 w-auto text-gray-600" />
+                  <span className="text-lg font-bold">How DuelPack Works</span>
+                </div>
+                <div>
+                  <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Products</button>
+                </div>
+              </div>
+              <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+                <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
+                  <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">1</div>
+                  <img src={"./images/openPacks.webp"} className="h-[50%] mt-12 mx-auto" />
+                  <p className="text-center font-bold text-xl mt-2">Open Packs</p>
+                  <p className="text-center text-md mt-2 text-gray-400">Find your perfect packs & experience</p>
+                  <p className="text-center text-md mt-2 text-gray-400">the online excitement!</p>
+                </div>
+                <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
+                  <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">2</div>
+                  <img src={"./images/winItems.webp"} className="h-[50%] mt-12 mx-auto" />
+                  <p className="text-center font-bold text-xl mt-2">Open Packs</p>
+                  <p className="text-center text-md mt-2 text-gray-400">Find your perfect packs & experience</p>
+                  <p className="text-center text-md mt-2 text-gray-400">the online excitement!</p>
+                </div>
+                <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
+                  <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">3</div>
+                  <img src={"./images/cashOrClaim.webp"} className="h-[50%] mt-12 mx-auto" />
+                  <p className="text-center font-bold text-xl mt-2">Open Packs</p>
+                  <p className="text-center text-md mt-2 text-gray-400">Find your perfect packs & experience</p>
+                  <p className="text-center text-md mt-2 text-gray-400">the online excitement!</p>
+                </div>
+              </div>
+            </div>
+            <div className="w-full mt-12">
+              <div className="flex w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-4">
+                  {commentsLeftData.map((data: any, index) => [
+                    <div className="bg-[#22272b] rounded-xl py-6 px-4" key={data.key} onClick={() => onClickComments(data.key)}>
+                      <div className="flex items-center justify-between cursor-pointer" onClick={() => onClickComments(data.key)}>
+                        <span className="font-bold">{data.title}</span>
+                        {activeComment != data.key ? <DownArrow className="h-6 w-auto text-gray-600" /> : <DownArrow className="h-6 w-auto text-gray-600 rotate-180" />}
+                      </div>
+                      {activeComment == data.key ? <div className="mt-4">{data.content}</div> : <></>}
                     </div>
-                    {activeComment == data.key ? <div className="mt-4">{data.content}</div> : <></>}
-                  </div>
-                ])}
+                  ])}
+                </div>
+                <div className="space-y-4">
+                  {commentsRightData.map((data: any, index) => [
+                    <div className="bg-[#22272b] rounded-xl py-6 px-4" key={data.key}>
+                      <div className="flex items-center justify-between cursor-pointer" onClick={() => onClickComments(data.key)}>
+                        <span>{data.title}</span>
+                        {activeComment != data.key ? <DownArrow className="h-6 w-auto text-gray-600" /> : <DownArrow className="h-6 w-auto text-gray-600 rotate-180" />}
+                      </div>
+                      {activeComment == data.key ? <div className="mt-4">{data.content}</div> : <></>}
+                    </div>
+                  ])}
+                </div>
               </div>
             </div>
           </div>
+          <div className="hidden md:block w-[250px]">Slide Show</div>
         </div>
-        <div className="hidden md:block w-[250px]">Slide Show</div>
       </div>
-    </div>
+    </>
   );
 };
 

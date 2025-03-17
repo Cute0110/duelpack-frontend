@@ -13,6 +13,7 @@ import type { NotificationArgsProps } from 'antd';
 import SearchSVG from "@/public/images/search.svg";
 import DownArrowSVG from "@/public/images/downArrow.svg";
 import ViewSVG from "@/public/images/view.svg";
+import EachPack from "./EachPack";
 
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
@@ -92,13 +93,7 @@ const PacksScreen = ({ packsData }: any) => {
             </div>
             <div className="w-full grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
               {packs.map((data: any, index) => (
-                <div className="rounded-xl cursor-pointer group relative" key={index}>
-                  <div className="absolute top-4 right-4 bg-[#1d2125] p-2 rounded-xl opacity-0 group-hover:opacity-100">
-                    <ViewSVG className="h-4 w-auto text-gray-300 z-10" onClick={() => onClickViewItem(data)} />
-                  </div>
-                  <img src={`./images/packs/${data.name}/${data.imageUrl}`} className="rounded-xl" />
-                  <p className="text-center mt-4 font-semibold text-lg">${data.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                </div>
+                <EachPack key={index} data={data} onClickViewItem={onClickViewItem}/>
               ))}
             </div>
           </div>
