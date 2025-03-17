@@ -78,6 +78,8 @@ const RandingPage = ({ packsData, forgeData }: any) => {
 
   const onClickViewItem = async (data: any) => {
     setIsLoading(true);
+    setSelectedPackData(data);
+    setIsPackItemsModalOpen(true);
     try {
       const response = await axiosInstance.post('/api/items_list', eot({ start: 0, length: 0, search: 0, order: "order", dir: "asc", packID: data.id }));
       const res = dot(response.data);
@@ -93,15 +95,12 @@ const RandingPage = ({ packsData, forgeData }: any) => {
     } finally {
       setIsLoading(false);
     }
-
-    setSelectedPackData(data);
-    setIsPackItemsModalOpen(true);
   }
 
   return (
     <>
       {contextHolder}
-      {isPackItemsModalOpen && (<PackItemsModal packData={selectedPackData} itemsData={itemsData} setIsPackItemsModalOpen={setIsPackItemsModalOpen} />)}
+      {isPackItemsModalOpen && (<PackItemsModal packData={selectedPackData} itemsData={itemsData} setIsPackItemsModalOpen={setIsPackItemsModalOpen} isLoading={isLoading}/>)}
       <div className="container mt-[75px]">
         <div className="flex justify-between gap-6">
           <div className="w-full md:calc-100-minus-250">
