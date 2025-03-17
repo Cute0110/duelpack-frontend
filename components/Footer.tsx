@@ -95,7 +95,7 @@ const Footer = ({ onScrollTo }: any) => {
                   <span className="cursor-pointer font-bold text-white text-lg">SUPPORT</span>
                 </li>
                 <li className="hover:text-primary transition-colors">
-                  <span className="cursor-pointer">support@packdraw.com</span>
+                  <span className="cursor-pointer">support@duelpack.com</span>
                 </li>
               </ul>
             </div>
@@ -150,7 +150,7 @@ const Footer = ({ onScrollTo }: any) => {
           Copyright © DuelPack 2025
         </p>
         <p className="flex justify-start items-center text-muted text-sm mb-2 w-full md:w-[50%]">
-          PackDraw is a brand name of PackDraw Group which is composed by Packdraw Limited, a company duly incorporated under the laws of Cyprus with the company number HE 445177, and registered office at Iakovou Patatsou 4a, Agios Dometios, 2362 Nicosia, Cyprus and PackDraw US, LLC, a company duly incorporated under the laws of United States of America with the registered number 7571319 and registered office at 108 West 13th Street Wilmington, Delaware 19801, United States.
+          DuelPack is a brand name of DuelPack Group which is composed by DuelPack Limited, a company duly incorporated under the laws of Cyprus with the company number HE 445177, and registered office at Iakovou Patatsou 4a, Agios Dometios, 2362 Nicosia, Cyprus and DuelPack US, LLC, a company duly incorporated under the laws of United States of America with the registered number 7571319 and registered office at 108 West 13th Street Wilmington, Delaware 19801, United States.
         </p>
       </div>
     </footer>

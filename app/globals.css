@@ -229,36 +229,3 @@ body {
 .ant-collapse-header:hover {
   background: #130d25 !important;
 }
-
-
-.bg-new-player-battle-banner {
-  background-image: url(https://packdraw.com/_next/static/media/new-player-battle-bg.1be58b8b.png)
-}
-
-.bg-new-player-forge-banner {
-  background-image: url(https://packdraw.com/_next/static/media/new-player-forge-bg.05239b2f.png)
-}
-
-.bg-new-player-packs-banner {
-  background-image: url(https://packdraw.com/_next/static/media/new-player-packs-bg.25a9e544.png)
-}
-
-.bg-packs-banner {
-  background-image: url(https://packdraw.com/_next/static/media/packs-bg.6f31c947.png)
-}
-
-.bg-race-placement {
-  background-image: url(https://packdraw.com/_next/static/media/placement-rays.fb21a88e.svg)
-}
-
-.bg-race-table-grid {
-  background-image: url(https://packdraw.com/_next/static/media/table-grid.1bf187bf.png)
-}
-
-.bg-raffle-ticket {
-  background-image: url(https://packdraw.com/_next/static/media/raffle-ticket.49e185ba.svg)
-}
-
-.bg-trophy {
-  background-image: url(https://packdraw.com/_next/static/media/trophy.28d530a4.png)
-}

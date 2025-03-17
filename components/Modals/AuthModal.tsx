@@ -110,7 +110,7 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
                     <div className="w-full max-w-xl h-full bg-[#1d2125] rounded-lg shadow-md p-12">
                         <form onSubmit={handleSubmit}>
                             <h2 className="text-white text-2xl font-bold text-center">
-                                {isLogin ? "Welcome Back" : "Welcome to PackDraw"}
+                                {isLogin ? "Welcome Back" : "Welcome to DuelPack"}
                             </h2>
                             <h1 className="text-gray-400 text-lg text-center mb-4">
                                 {isLogin ? "Sign In to Access Your Account" : "Sign Up to Get Started"}
