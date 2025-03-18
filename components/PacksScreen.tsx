@@ -160,7 +160,7 @@ const PacksScreen = ({ packsData }: any) => {
                       {menu}
                       <Divider style={{ margin: '8px 0', borderColor: "gray" }} />
                       <div className="px-[10px]">
-                        {priceRangeList.map((item) => <div className="flex items-center text-md font-semibold mb-2 cursor-pointer" onClick={() => onPriceRangeChange(item.value)}>{item.value == selectedPriceRange ? (<Check size={20} className="w-[30px]"/>) : <div className="w-[30px]"></div>}{item.label}</div>)}
+                        {priceRangeList.map((item, index) => <div key={index} className="flex items-center text-md font-semibold mb-2 cursor-pointer" onClick={() => onPriceRangeChange(item.value)}>{item.value == selectedPriceRange ? (<Check size={20} className="w-[30px]"/>) : <div className="w-[30px]"></div>}{item.label}</div>)}
                       </div>
                     </>
                   )}options={sortTypeList.map((item) => ({ label: <span className="flex items-center text-md font-semibold">{item.value == selectedSortType ? (<Check size={20} className="w-[30px]"/>) : <div className="w-[30px]"></div>}{item.label}</span>, value: item.value }))}
