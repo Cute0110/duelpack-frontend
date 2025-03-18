@@ -74,7 +74,7 @@ const PacksScreen = ({ packsData }: any) => {
     setSelectedPackData(data);
     setIsPackItemsModalOpen(true);
     try {
-      const response = await axiosInstance.post('/api/items_list', eot({ start: 0, length: 0, search: 0, order: "order", dir: "asc", packID: data.id }));
+      const response = await axiosInstance.post('/api/pack_items_list', eot({ start: 0, length: 0, search: 0, order: "order", dir: "asc", packID: data.id }));
       const res = dot(response.data);
       if (res.status == 1) {
         setItemsData(res.data);

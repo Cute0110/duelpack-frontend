@@ -27,11 +27,11 @@ const PackItemsModal = ({ packData, itemsData, setIsPackItemsModalOpen, isLoadin
                             <div className="rounded-xl cursor-pointer group bg-[#22272b] relative p-4 group" key={index}>
                                 <p className="w-full text-center font-semibold text-lg text-gray-500">{data.percent.toFixed(4)}%</p>
                                 <div className="relative w-full aspect-square p-4 mt-2">
-                                    <div className={`absolute inset-0 m-auto ${itemBackColorArray[data.order-1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-3/4 aspect-square rounded-full blur-xl`}></div>
-                                    <img src={`./images/packs/${data.imageUrl}`} className="w-full relative" />
+                                    <div className={`absolute inset-0 m-auto ${itemBackColorArray[data.item.order-1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-3/4 aspect-square rounded-full blur-xl`}></div>
+                                    <img src={`./images/items/${data.item.imageUrl}`} className="w-full relative" />
                                 </div>
-                                <p className="w-full text-center font-semibold text-md text-gray-500 truncate px-8 mt-2">{data.name}</p>
-                                <p className="w-full text-center font-semibold text-lg">${data.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                                <p className="w-full text-center font-semibold text-md text-gray-500 truncate px-8 mt-2">{data.item.name}</p>
+                                <p className="w-full text-center font-semibold text-lg">${data.item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                             </div>
                         ))}
                     </div>
