@@ -3,13 +3,11 @@ import { X } from "lucide-react";
 
 const PackItemsModal = ({ packData, itemsData, setIsPackItemsModalOpen, isLoading }: any) => {
 
+    const itemBackColorArray = ['bg-yellow-500', 'bg-red-500', 'bg-blue-500', 'bg-gray-500']
+
     const onClose = () => {
         setIsPackItemsModalOpen(false);
     }
-
-    useEffect(() => {
-
-    }, []);
 
     return (
         <div className="fixed top-0 left-0 w-screen h-screen z-50">
@@ -26,10 +24,13 @@ const PackItemsModal = ({ packData, itemsData, setIsPackItemsModalOpen, isLoadin
                     :
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
                         {itemsData.map((data: any, index: any) => (
-                            <div className="rounded-xl cursor-pointer group bg-[#22272b] relative p-4" key={index}>
-                                <p className="w-full text-center font-semibold text-lg">{data.percent.toFixed(4)}%</p>
-                                <img src={`./images/packs/${data.imageUrl}`} className="rounded-xl" />
-                                <p className="w-full text-center font-semibold text-md text-gray-500 truncate px-8">{data.name}</p>
+                            <div className="rounded-xl cursor-pointer group bg-[#22272b] relative p-4 group" key={index}>
+                                <p className="w-full text-center font-semibold text-lg text-gray-500">{data.percent.toFixed(4)}%</p>
+                                <div className="relative w-full aspect-square p-4 mt-2">
+                                    <div className={`absolute inset-0 m-auto ${itemBackColorArray[data.order-1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-3/4 aspect-square rounded-full blur-xl`}></div>
+                                    <img src={`./images/packs/${data.imageUrl}`} className="w-full relative" />
+                                </div>
+                                <p className="w-full text-center font-semibold text-md text-gray-500 truncate px-8 mt-2">{data.name}</p>
                                 <p className="w-full text-center font-semibold text-lg">${data.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                             </div>
                         ))}
