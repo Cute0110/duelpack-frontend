@@ -121,8 +121,8 @@ const PacksScreen = ({ packsData }: any) => {
       <div className="container mt-[75px]">
         <div className="flex justify-between gap-6">
           <div className="w-full md:calc-100-minus-250">
-            <div className="w-full grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
-              <div className="relative col-span-2">
+            <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+              <div className="relative">
                 <input
                   placeholder="Search"
                   className="rounded-md bg-[#34383c] w-full py-2 pl-[40px] placeholder-bold"
@@ -136,7 +136,7 @@ const PacksScreen = ({ packsData }: any) => {
                 />
                 <SearchSVG className="absolute  h-5 text-white top-[50%] left-[10px] -translate-y-[50%]" />
               </div>
-              <div>
+              {/* <div>
                 <Select
                   className="w-full"
                   variant="filled"
@@ -145,8 +145,8 @@ const PacksScreen = ({ packsData }: any) => {
                   optionLabelProp="value"
                   options={packTypeList.map((item) => ({ label: <span className="flex items-center text-md font-bold">{item.value == selectedPackType ? (<Check size={20} className="w-[30px]"/>) : <div className="w-[30px]"></div>}{item.label}</span>, value: item.value }))}
                 />
-              </div>
-              <div>
+              </div> */}
+              <div className="col-start-1 md:col-start-3">
                 <Select
                   className="w-full"
                   variant="filled"
@@ -163,17 +163,18 @@ const PacksScreen = ({ packsData }: any) => {
                         {priceRangeList.map((item, index) => <div key={index} className="flex items-center text-md font-semibold mb-2 cursor-pointer" onClick={() => onPriceRangeChange(item.value)}>{item.value == selectedPriceRange ? (<Check size={20} className="w-[30px]"/>) : <div className="w-[30px]"></div>}{item.label}</div>)}
                       </div>
                     </>
-                  )}options={sortTypeList.map((item) => ({ label: <span className="flex items-center text-md font-semibold">{item.value == selectedSortType ? (<Check size={20} className="w-[30px]"/>) : <div className="w-[30px]"></div>}{item.label}</span>, value: item.value }))}
+                  )}
+                  options={sortTypeList.map((item) => ({ label: <span className="flex items-center text-md font-semibold">{item.value == selectedSortType ? (<Check size={20} className="w-[30px]"/>) : <div className="w-[30px]"></div>}{item.label}</span>, value: item.value }))}
                 />
               </div>
-              <div className="flex items-center col-span-2 md:col-span-1 justify-center rounded-md p-2 bg-[#4299e1] gap-2 hover:bg-[#3182ce] cursor-pointer">
+              {/* <div className="flex items-center col-span-2 md:col-span-1 justify-center rounded-md p-2 bg-[#4299e1] gap-2 hover:bg-[#3182ce] cursor-pointer">
                 <img
                   src={"./duelpack-logo.svg"}
                   alt="Wecazoo Logo"
                   className="h-6 w-auto"
                 />
                 <span>Creat Pack</span>
-              </div>
+              </div> */}
             </div>
             <div className="w-full grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
               {packs.map((data: any, index) => (
