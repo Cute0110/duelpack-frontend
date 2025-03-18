@@ -147,7 +147,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                   <span className="text-lg font-bold">New Packs</span>
                 </div>
                 <div>
-                  <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Packs</button>
+                  <a href="/packs" className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Packs</a>
                 </div>
               </div>
               <div className="w-full grid grid-cols-2 md:grid-cols-6 gap-6 mt-4">
