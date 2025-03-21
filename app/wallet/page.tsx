@@ -10,11 +10,12 @@ import type { NotificationArgsProps } from 'antd';
 import { useAuth } from "@/lib/authContext";
 import { MoreHorizontal } from "lucide-react";
 import PacksScreen from "@/components/PacksScreen";
+import WalletScreen from "@/components/WalletScreen";
 
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-const Packs = () => {
+const Wallet = () => {
   const { isAuthenticated, isSidebarCollapsed } = useAuth();
   const [packsData, setPacksData] = useState({ data: [], count: 0, start: 0, length: 5 });
   const [forgeData, setForgeData] = useState({ data: [], count: 0, start: 0, length: 5 });
@@ -76,12 +77,10 @@ const Packs = () => {
     <>
       {contextHolder}
       <div className="min-h-screen bg-[#1d2125] text-foreground">
-        <PacksScreen
-        packsData={packsData}
-        />
+        <WalletScreen />
       </div >
     </>
   );
 }
 
-export default Packs;
+export default Wallet;

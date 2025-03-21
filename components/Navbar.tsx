@@ -50,21 +50,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
   };
 
   const onDepositClick = async () => {
-    try {
-      const response = await axiosInstance.post('/api/createInvoice', eot({ price: 50.55, currency: "USD" }));
-      const res = dot(response.data);
-      if (res.status == 1) {
-        // setPaymentUrl(res.url);
-        // setIsPaymentDialogOpen(true);
-        console.log(res.url);
-      } else {
-        // openNotification("error", "Error", res.msg, "topRight");
-        console.log(res.msg);
-      }
-    } catch (error) {
-      // openNotification("error", "Error", "Token expired or network error", "topRight");
-        console.log("error");
-    }
+    router.push("/wallet");
   }
 
   return (
@@ -160,7 +146,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                       className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-blue-400 text-base text-white font-bold hover:bg-blue-500 disabled:text-blue-600 px-6 h-10 w-28"
                       onClick={() => onDepositClick()}
                     >
-                      Deposit
+                      Wallet
                     </button>
                     <div>
                       <img src={authData.avatarURL} className="rounded-full w-8 cursor-pointer" onClick={() => setIsOpen(!isOpen)} />
