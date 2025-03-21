@@ -32,7 +32,7 @@ const ItemDetailsModal = ({ itemData, setIsItemDetailsModalOpen }: any) => {
                         </div>
                         <Divider style={{ margin: '25px 0', borderColor: "gray" }} />
                         <div className="mt-2 text-lg">
-                            ${itemData.item.comment}
+                            {itemData.item.comment}
                         </div>
                         <div className="mt-4 font-bold text-lg">
                             Outcome
