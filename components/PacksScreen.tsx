@@ -34,8 +34,8 @@ const PacksScreen = ({ packsData }: any) => {
   ]
 
   const priceRangeList = [
-    {label: "All", value: 0},
-    {label: "Greater than $500", value: 1, min: 500, max: null},
+    {label: "All", value: 0, min: 0, max: 999999},
+    {label: "Greater than $500", value: 1, min: 500, max: 999999},
     {label: "$250.00 - $500.00", value: 2, min: 250, max: 500},
     {label: "$100.00 - $250.00", value: 3, min: 100, max: 250},
     {label: "$50.00 - $100.00", value: 4, min: 50, max: 100},
@@ -51,7 +51,7 @@ const PacksScreen = ({ packsData }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPackData, setSelectedPackData] = useState(null);
   const [searchVal, setSearchVal] = useState("");
-  const [selectedPackType, setSelectedPackType] = useState("Official Packs");
+  //const [selectedPackType, setSelectedPackType] = useState("Official Packs");
   const [selectedSortType, setSelectedSortType] = useState("Newest");
   const [selectedPriceRange, setSelectedPriceRange] = useState(0);
   const [isSortTypeMenuOpen, setIsSortTypeMenuOpen] = useState(false);
@@ -90,28 +90,50 @@ const PacksScreen = ({ packsData }: any) => {
     }
   }
 
+  const onFilterAndSortPack = (searchArg : any, sortArg : any, rangeArg : any) => {
+    const tempData = packsData.data.filter((data: any) => data.name.toLowerCase().includes(searchArg.toLowerCase()));
+    
+    if (sortArg == "Newest") {
+      tempData.sort((a:any, b:any) => a.createdAt - b.updatedAt);
+    } else if (sortArg == "Most Popular") {
+      tempData.sort((a:any, b:any) => a.createdAt - b.updatedAt);
+    } else if (sortArg == "Price Low to High") {
+      tempData.sort((a:any, b:any) => a.price - b.price);
+    } else if (sortArg == "Price High to Low") {
+      tempData.sort((a:any, b:any) => b.price - a.price);
+    }
+
+    if (rangeArg == 0) {
+      setPacks(tempData);
+    } else {
+      setPacks(tempData.filter((data: any) => data.price >= priceRangeList[rangeArg].min && data.price <= priceRangeList[rangeArg].max));
+    }
+  }
+
   const onSearchValueChange = (e: any) => {
     setSearchVal(e.target.value);
     if (e.target.value == "") {
-      setPacks(packsData.data);
+      onFilterAndSortPack("", selectedSortType, selectedPriceRange)
     }
   }
 
   const onSearchEnter = () => {
-    setPacks(packsData.data.filter((data: any) => data.name.toLowerCase().includes(searchVal.toLowerCase())));
+    onFilterAndSortPack(searchVal, selectedSortType, selectedPriceRange);
   }
 
-  const onPackTypeChange = (value: any) => {
-    setSelectedPackType(value);
-  }
+  // const onPackTypeChange = (value: any) => {
+  //   setSelectedPackType(value);
+  // }
 
   const onSortTypeChange = (value: any) => {
     setSelectedSortType(value);
+    onFilterAndSortPack(searchVal, value, selectedPriceRange);
   }
 
   const onPriceRangeChange = (value: any) => {
     setSelectedPriceRange(value);
     setIsSortTypeMenuOpen(false);
+    onFilterAndSortPack(searchVal, selectedSortType, value);
   }
 
   return (
