@@ -198,7 +198,7 @@ const PacksScreen = ({ packsData }: any) => {
                 <span>Creat Pack</span>
               </div> */}
             </div>
-            <div className="w-full grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
+            <div className="w-full grid grid-cols-2 md:grid-cols-5 gap-4 mt-4 mb-12">
               {packs.map((data: any, index) => (
                 <EachPack key={index} data={data} onClickViewItem={onClickViewItem} />
               ))}

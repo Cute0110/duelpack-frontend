@@ -7,6 +7,7 @@ import {
   Menu,
   LogOutIcon,
   WalletIcon,
+  ShoppingCart
 } from "lucide-react";
 import AuthModal from "./Modals/AuthModal";
 import { useAuth } from "@/lib/authContext";
@@ -136,14 +137,14 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                 {isAuthenticated && (
                   <div className="flex items-center gap-3">
                     <button
-                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-6 h-10 w-28"
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-4 h-10"
                       onClick={() => {
                       }}
                     >
-                      Cart
+                      {isMobile ? <ShoppingCart /> : "Cart" }
                     </button>
                     <button
-                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-blue-400 text-base text-white font-bold hover:bg-blue-500 disabled:text-blue-600 px-6 h-10 w-28"
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-blue-400 text-base text-white font-bold hover:bg-blue-500 disabled:text-blue-600 px-4 h-10"
                       onClick={() => onDepositClick()}
                     >
                       Wallet
@@ -155,7 +156,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                 )}
 
                 {/* Auth buttons in top bar for mobile */}
-                {!isAuthenticated && (
+                {!isAuthenticated && !isMobile && (
                   <div className="flex items-center gap-3">
                     <button
                       className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-6 h-10 w-28"
@@ -300,16 +301,38 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                           </div>
                         )}
                         <div className="w-full h-[1px] border-t-[1px] border-gray-600 mt-2"></div>
-                        <div className="relative p-4">
+                        {!isAuthenticated && (
+                          <div className="flex items-center gap-3 m-2">
+                            <button
+                              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-6 h-10 w-28"
+                              onClick={() => {
+                                setIsAuthModalOpen(true);
+                                setIsAuthModalType(true);
+                              }}
+                            >
+                              Login
+                            </button>
+                            <button
+                              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-blue-400 text-base text-white font-bold hover:bg-blue-500 disabled:text-blue-600 px-6 h-10 w-28"
+                              onClick={() => {
+                                setIsAuthModalOpen(true);
+                                setIsAuthModalType(false);
+                              }}
+                            >
+                              Sign Up
+                            </button>
+                          </div>
+                        )}
+                        {/* <div className="relative p-4">
                           <input
                             placeholder="Promotion code"
                             className="w-full text-[15px] px-4 py-2 mx-1 rounded bg-[#1d2125] flex items-center"
                             required
                           />
-                          <button className="absolute top-5 right-4 bg-[#4299e1] p-2 rounded-md">
+                          <button className="absolute top-4 right-4 bg-[#4299e1] p-2 rounded-md">
                             <CheckSVG className="h-6 w-auto text-gray-300" />
                           </button>
-                        </div>
+                        </div> */}
                       </div>
                     )}
                   </div>

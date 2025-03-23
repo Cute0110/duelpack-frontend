@@ -228,7 +228,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                 </div>
               </div>
             </div>
-            <div className="w-full mt-12">
+            <div className="w-full my-12">
               <div className="flex w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-4">
                   {commentsLeftData.map((data: any, index) => [
@@ -245,7 +245,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                   {commentsRightData.map((data: any, index) => [
                     <div className="bg-[#22272b] rounded-xl py-6 px-4" key={data.key}>
                       <div className="flex items-center justify-between cursor-pointer" onClick={() => onClickComments(data.key)}>
-                        <span>{data.title}</span>
+                        <span className="font-bold">{data.title}</span>
                         {activeComment != data.key ? <DownArrow className="h-6 w-auto text-gray-600" /> : <DownArrow className="h-6 w-auto text-gray-600 rotate-180" />}
                       </div>
                       {activeComment == data.key ? <div className="mt-4">{data.content}</div> : <></>}
