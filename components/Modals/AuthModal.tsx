@@ -172,7 +172,7 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
                                     </>
                                 }
                             </button>
-                            <div className="flex items-start my-4 text-white">
+                            <div className="my-4 text-white">
                                 {/* <input
                                     type="checkbox"
                                     id="termsConfirmation"
