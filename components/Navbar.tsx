@@ -68,7 +68,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
               <div className="flex items-center">
                 <Link href="/" className="flex items-center">
                   <img src="./duelpack-logo.svg" alt="Wecazoo Logo" className="h-9 lg:h-11 w-auto" />
-                  <h1 className="text-xl text-white font-bold ml-4">DuelPack</h1>
+                  <h1 className="text-xl text-white font-bold ml-2">DuelPack</h1>
                 </Link>
 
                 <nav className="hidden lg:flex relative items-center h-[4rem] ml-6 gap-5 overflow-clip">
@@ -156,25 +156,25 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                 )}
 
                 {/* Auth buttons in top bar for mobile */}
-                {!isAuthenticated && !isMobile && (
+                {!isAuthenticated && (
                   <div className="flex items-center gap-3">
                     <button
-                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-6 h-10 w-28"
+                      className={`inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-6 h-10 ${isMobile ? "w-20" : "w-28"}`}
                       onClick={() => {
                         setIsAuthModalOpen(true);
                         setIsAuthModalType(true);
                       }}
                     >
-                      Login
+                      Sign In
                     </button>
                     <button
-                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-blue-400 text-base text-white font-bold hover:bg-blue-500 disabled:text-blue-600 px-6 h-10 w-28"
+                      className={`inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-blue-400 text-base text-white font-bold hover:bg-blue-500 disabled:text-blue-600 px-6 h-10 ${isMobile ? "w-20" : "w-28"}`}
                       onClick={() => {
                         setIsAuthModalOpen(true);
                         setIsAuthModalType(false);
                       }}
                     >
-                      Sign Up
+                      Register
                     </button>
                   </div>
                 )}
@@ -239,6 +239,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                               `flex items-center px-1 gap-1 ${isAuthenticated ? "text-white" : "text-gray-400"
                               }`
                             }
+                            onClick={() => setIsOpen(false)}
                           >
                             <Packs className="h-6 w-auto text-gray-300" />
                             <p className="text-base text-white font-semibold">Packs</p>
@@ -301,7 +302,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                           </div>
                         )}
                         <div className="w-full h-[1px] border-t-[1px] border-gray-600 mt-2"></div>
-                        {!isAuthenticated && (
+                        {/* {!isAuthenticated && (
                           <div className="flex items-center gap-3 m-2">
                             <button
                               className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-6 h-10 w-28"
@@ -322,8 +323,8 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                               Sign Up
                             </button>
                           </div>
-                        )}
-                        {/* <div className="relative p-4">
+                        )} */}
+                        <div className="relative p-4">
                           <input
                             placeholder="Promotion code"
                             className="w-full text-[15px] px-4 py-2 mx-1 rounded bg-[#1d2125] flex items-center"
@@ -332,7 +333,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                           <button className="absolute top-4 right-4 bg-[#4299e1] p-2 rounded-md">
                             <CheckSVG className="h-6 w-auto text-gray-300" />
                           </button>
-                        </div> */}
+                        </div>
                       </div>
                     )}
                   </div>
