@@ -27,7 +27,7 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
         email: "",
         password: "",
         confirmPassword: "",
-        termsConfirmation: false,
+        termsConfirmation: true,
         rememberMeConfirmation: false,
     });
 
