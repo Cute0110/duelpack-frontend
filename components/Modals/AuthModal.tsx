@@ -183,9 +183,9 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
                                     required
                                 />
                                 <label htmlFor="termsConfirmation" className="text-white font-normal text-sm mt-[-4px]">
-                                    By accessing the site, I attest that I am at least 18 years old and agree to the
-                                    <span className="underline cursor-pointer">Terms of Service</span> .
+                                    By using Duel Pack you agree to the
                                 </label>
+                                <span className="underline cursor-pointer text-white mt-[-4px] ml-[4px]">Terms & Conditions</span> .
                             </div>
                             <div className="flex items-center w-full gap-4 mb-4">
                                 <div className="border-t-[1px] border-gray-600 flex-1"></div>
