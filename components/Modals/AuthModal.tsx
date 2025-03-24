@@ -172,8 +172,8 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
                                     </>
                                 }
                             </button>
-                            <div className="flex items-start my-4">
-                                <input
+                            <div className="flex items-start my-4 text-white">
+                                {/* <input
                                     type="checkbox"
                                     id="termsConfirmation"
                                     name="termsConfirmation"
@@ -181,11 +181,11 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
                                     onChange={handleInputChange}
                                     className="mr-2"
                                     required
-                                />
-                                <label htmlFor="termsConfirmation" className="text-white font-normal text-sm mt-[-4px]">
+                                /> */}
+                                {/* <label htmlFor="termsConfirmation" className="text-white font-normal text-sm mt-[-4px]">
                                     By using Duel Pack you agree to the
-                                </label>
-                                <span className="underline cursor-pointer text-white mt-[-4px] ml-[4px]">Terms & Conditions</span> .
+                                </label> */}
+                                By using Duel Pack, you agree to the<span className="underline cursor-pointer ml-[4px]">Terms & Conditions</span> .
                             </div>
                             <div className="flex items-center w-full gap-4 mb-4">
                                 <div className="border-t-[1px] border-gray-600 flex-1"></div>
