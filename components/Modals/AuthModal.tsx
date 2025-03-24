@@ -1,5 +1,7 @@
 "use client";
 
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "@/lib/firebase";
 import React, { useEffect, useState } from "react";
 import { ChevronDownIcon, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
@@ -10,13 +12,16 @@ import { notification } from 'antd';
 import type { NotificationArgsProps } from 'antd';
 import { eot, dot } from '@/lib/cryptoUtils';
 import GoogleImg from '@/public/images/google.svg';
+import { useRouter } from "next/navigation";
 
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
+    const router = useRouter();
     const [isLogin, setIsLogin] = useState(modalType);
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -57,6 +62,7 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        setIsLoading(true);
         if (isLogin) {
             try {
                 const response = await axiosInstance.post('/api/login', eot({ emailAddress: formData.email, password: formData.password }));
@@ -73,6 +79,8 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
                 }
             } catch (error) {
                 openNotification('error', 'Error', "Network error!", 'topRight');
+            } finally {
+                setIsLoading(false);
             }
         } else {
             try {
@@ -86,6 +94,8 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
                 }
             } catch (error) {
                 openNotification('error', 'Error', "Network error!", 'topRight');
+            } finally {
+                setIsLoading(false);
             }
         }
     };
@@ -102,6 +112,36 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
         onModalClose();
     };
 
+    const signInWithGoogle = async () => {
+        setIsLoading(true);
+        try {
+            const result = await signInWithPopup(auth, googleProvider);
+
+            try {
+                const response = await axiosInstance.post('/api/google_login', eot({ emailAddress: result.user.email, password: "" }));
+                const res = dot(response.data);
+                if (res.status == 1) {
+                    openNotification('success', 'Success', 'Logged In successfully!', 'topRight');
+                    const token = res.token;
+                    localStorage.setItem('authToken', token);
+                    setIsAuthenticated(true);
+                    setAuthData(res.userData);
+                    onModalClose();
+                } else {
+                    openNotification('error', 'Error', res.msg, 'topRight');
+                }
+            } catch (error) {
+                openNotification('error', 'Error', "Network error!", 'topRight');
+            } finally {
+                setIsLoading(false);
+            }
+        } catch (error) {
+            openNotification('error', 'Error', "Network error!", 'topRight');
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     return (
         <>
             {contextHolder}
@@ -115,10 +155,23 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
                             <h1 className="text-gray-400 text-lg text-center mb-4">
                                 {isLogin ? "Sign In to Access Your Account" : "Sign Up to Get Started"}
                             </h1>
-                            <div className="flex justify-center gap-4 border border-gray-600 p-2 rounded-md">
-                                <GoogleImg className="h-6 w-auto text-gray-300" />
-                                <span className="text-white font-bold text-lg">Sign in with Google</span>
-                            </div>
+                            <button
+                                className="flex justify-center items-center w-full gap-4 border border-gray-600 h-14 rounded-md"
+                                onClick={signInWithGoogle}
+                                type="button"
+                                disabled={!formData.termsConfirmation || isLoading}
+                            >
+                                {isLoading ?
+                                    <div className="h-full w-full flex items-center justify-center">
+                                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white" />
+                                    </div>
+                                    :
+                                    <>
+                                        <GoogleImg className="h-6 w-auto text-gray-300" />
+                                        <span className={`font-bold text-lg ${formData.termsConfirmation ? "text-white" : "text-gray-600"} `}>Sign in with Google</span>
+                                    </>
+                                }
+                            </button>
                             <div className="flex items-start my-4">
                                 <input
                                     type="checkbox"
@@ -130,7 +183,7 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
                                     required
                                 />
                                 <label htmlFor="termsConfirmation" className="text-white font-normal text-sm mt-[-4px]">
-                                    By accessing the site, I attest that I am at least 18 years old and agree to the 
+                                    By accessing the site, I attest that I am at least 18 years old and agree to the
                                     <span className="underline cursor-pointer">Terms of Service</span> .
                                 </label>
                             </div>
@@ -215,10 +268,17 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
 
                             <button
                                 type="submit"
-                                className="w-full bg-[#4299e1] text-white text-[22px] font-medium py-1 rounded-[10px] mt-4"
-                                disabled={!formData.termsConfirmation}
+                                className={`w-full bg-[#4299e1] ${formData.termsConfirmation ? "text-white" : "text-gray-600"} h-14 text-[22px] font-medium rounded-[10px] mt-4`}
+                                disabled={!formData.termsConfirmation || isLoading}
                             >
-                                {isLogin ? "Sign In" : "Sign Up"}
+                                {isLoading ?
+                                    <div className="h-full w-full flex items-center justify-center">
+                                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white" />
+                                    </div> :
+                                    <span>
+                                        {isLogin ? "Sign In" : "Sign Up"}
+                                    </span>
+                                }
                             </button>
                         </form>
                         {isLogin ?
