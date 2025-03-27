@@ -78,6 +78,8 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
       const tempPack: any = packs.find((data: any) => data.id == addedPackIdsArray[i]);
       temp.push({ packInfo: tempPack, itemsInfo: tempItems });
 
+      console.log(tempPack);
+
       totalPrice += tempPack.price;
 
       const minItems = 10;

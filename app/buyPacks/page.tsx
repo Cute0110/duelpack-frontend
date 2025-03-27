@@ -10,9 +10,19 @@ import type { NotificationArgsProps } from 'antd';
 import { useAuth } from "@/lib/authContext";
 import { useSearchParams } from "next/navigation";
 import BuyPacksScreen from "@/components/BuyPacksScreen";
+import { Suspense } from "react";
 
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+
+const BuyPacksWrapper = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BuyPacks />
+    </Suspense>
+  );
+};
 
 const BuyPacks = () => {
   const { isAuthenticated, isSidebarCollapsed, setAuthData, setIsAuthenticated } = useAuth();
@@ -119,4 +129,4 @@ const BuyPacks = () => {
   );
 }
 
-export default BuyPacks;
+export default BuyPacksWrapper;
