@@ -18,6 +18,7 @@ const Packs = () => {
   const { isAuthenticated, isSidebarCollapsed } = useAuth();
   const [packsData, setPacksData] = useState({ data: [], count: 0, start: 0, length: 5 });
   const [api, contextHolder] = notification.useNotification();
+  const [isLoading, setIsLoading] = useState(false);
 
   const openNotification = (type: NotificationType, title: any, content: any, placement: NotificationPlacement) => {
     api[type]({
@@ -30,6 +31,7 @@ const Packs = () => {
 
   useEffect(() => {
     document.title = "DuelPack";
+    setIsLoading(true);
     //document.querySelector('meta[name="description"]')?.setAttribute("content", "Wecazoo is a top crypto casino offering Solana, Bitcoin & more. Play with no KYC in the UK, Canada, Sverige, Netherlands & more. 500% deposit bonus!");
     const fetchData = async () => {
       try {
@@ -42,6 +44,8 @@ const Packs = () => {
         }
       } catch (err) {
         openNotification("error", "Error", "Network error!", "topRight");
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -63,9 +67,14 @@ const Packs = () => {
     <>
       {contextHolder}
       <div className="min-h-screen bg-[#1d2125] text-foreground">
-        <PacksScreen
-        packsData={packsData}
-        />
+        {isLoading ?
+          <div className="h-full w-full flex items-center justify-center mt-[80px]">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white" />
+          </div> :
+          <PacksScreen
+            packsData={packsData}
+          />
+        }
       </div >
     </>
   );

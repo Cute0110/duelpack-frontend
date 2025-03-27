@@ -45,6 +45,7 @@ const BuyPacks = () => {
   useEffect(() => {
     document.title = "DuelPack";
     //document.querySelector('meta[name="description"]')?.setAttribute("content", "Wecazoo is a top crypto casino offering Solana, Bitcoin & more. Play with no KYC in the UK, Canada, Sverige, Netherlands & more. 500% deposit bonus!");
+    setIsLoading(true);
     const fetchData = async () => {
       try {
         const response = await axiosInstance.post('/api/pack_list', eot({ start: 0, length: 0, search: 0, order: "id", dir: "asc" }));
@@ -91,6 +92,8 @@ const BuyPacks = () => {
         }
       } catch (err) {
         openNotification("error", "Error", "Network error!", "topRight");
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -142,12 +145,17 @@ const BuyPacks = () => {
     <>
       {contextHolder}
       <div className="min-h-screen bg-[#1d2125] text-foreground">
-        <BuyPacksScreen
-          packsData={packsData}
-          itemsData={itemsData}
-          packId={packId}
-          onBuyItemAction={onBuyItemAction}
-        />
+        {isLoading ?
+          <div className="h-full w-full flex items-center justify-center mt-[80px]">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white" />
+          </div>
+          :
+          <BuyPacksScreen
+            packsData={packsData}
+            itemsData={itemsData}
+            packId={packId}
+            onBuyItemAction={onBuyItemAction}
+          />}
       </div >
     </>
   );
