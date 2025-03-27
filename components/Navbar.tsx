@@ -23,16 +23,33 @@ import CloseSVG from "@/public/images/close.svg";
 import ClickOutside from "./ClickOutside";
 import axiosInstance from "@/lib/action";
 import { dot, eot } from "@/lib/cryptoUtils";
+import CartModal from "./Modals/CartModal";
+import { notification } from 'antd';
+import type { NotificationArgsProps } from 'antd';
+
+type NotificationPlacement = NotificationArgsProps['placement'];
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 const Navbar = ({ isNavLinksHidden }: any) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isAuthModalType, setIsAuthModalType] = useState(true);
-  const { isAuthenticated, setIsAuthenticated, authData, isSidebarCollapsed, setIsSidebarCollapsed, setIsExpanded } = useAuth();
+  const { isAuthenticated, setIsAuthenticated, authData } = useAuth();
   const [isMobile, setIsMobile] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isGamesDropdownOpen, setIsGamesDropdownOpen] = useState(false);
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [cartData, setCartData] = useState({ data: [], count: 0 });
+  const [isLoading, setIsLoading] = useState(false);
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (type: NotificationType, title: any, content: any, placement: NotificationPlacement) => {
+    api[type]({
+      message: title,
+      description: content,
+      duration: 2,
+      placement,
+    });
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,17 +67,67 @@ const Navbar = ({ isNavLinksHidden }: any) => {
     router.push("/");
   };
 
+  const onClickCart = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axiosInstance.post('/api/cart_list', eot({userId: authData.id}));
+      const res = dot(response.data);
+      if (res.status == 1) {
+        setCartData({ data: res.data, count: res.count });
+        setIsCartModalOpen(true);
+      } else {
+        openNotification("error", "Error", res.msg, "topRight");
+      }
+    } catch (err) {
+      openNotification("error", "Error", "Network error!", "topRight");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const onSellClick = async (ids: any, price: any) => {
+    if (ids.length == 0) {
+      openNotification("warning", "Warning", "You did not select any items!", "topRight");
+    } else {
+      setIsLoading(true);
+      try {
+        const response = await axiosInstance.post('/api/sell_cart_items', eot({ ids, price, userId: authData.id }));
+        const res = dot(response.data);
+        if (res.status == 1) {
+          setCartData({ data: res.data, count: res.count });
+          openNotification("success", "Success", "Sold items successfully!", "topRight");
+        } else {
+          openNotification("error", "Error", res.msg, "topRight");
+        }
+      } catch (err) {
+        openNotification("error", "Error", "Network error!", "topRight");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }
+
   const onDepositClick = async () => {
     router.push("/wallet");
   }
 
   return (
     <>
+
+      {contextHolder}
       <AuthModal
         isModalOpen={isAuthModalOpen}
         onModalClose={() => setIsAuthModalOpen(false)}
         modalType={isAuthModalType}
       />
+      {isCartModalOpen &&
+        <CartModal
+          isLoading={isLoading}
+          cartData={cartData}
+          setIsCartModalOpen={setIsCartModalOpen}
+          onSellClick={onSellClick}
+        />
+      }
       <div className="flex">
         <div className="flex-1">
           <header className="fixed top-0 left-0 right-0 z-40 bg-[#1d2125] h-[75px] border-b-[1px] border-gray-600">
@@ -138,10 +205,9 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                   <div className="flex items-center gap-3">
                     <button
                       className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-4 h-10"
-                      onClick={() => {
-                      }}
+                      onClick={onClickCart}
                     >
-                      {isMobile ? <ShoppingCart /> : "Cart" }
+                      {isMobile ? <ShoppingCart /> : "Cart"}
                     </button>
                     <button
                       className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-blue-400 text-base text-white font-bold hover:bg-blue-500 disabled:text-blue-600 px-4 h-10"

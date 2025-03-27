@@ -20,10 +20,10 @@ const PackItemsModal = ({ packData, itemsData, setIsPackItemsModalOpen, isLoadin
 
     return (
         <>
-            {isItemDetailsModalOpen && (<ItemDetailsModal itemData={selectedItemData} setIsItemDetailsModalOpen={setIsItemDetailsModalOpen} />)}
-            <div className="fixed top-0 left-0 w-screen h-screen z-50">
+            {isItemDetailsModalOpen && (<ItemDetailsModal itemData={selectedItemData} setIsItemDetailsModalOpen={setIsItemDetailsModalOpen} viewType={true} />)}
+            <div className="fixed top-0 left-0 w-screen h-screen z-[70]">
                 <div className="w-screen h-screen bg-black opacity-[0.5]" onClick={onClose}></div>
-                <div className="absolute top-[75px] max-w-7xl w-[calc(100vw-40px)] h-[calc(100vh-80px)] left-1/2 transform -translate-x-1/2 z-[60] bg-[#1d2125] rounded-xl p-4 overflow-auto">
+                <div className="absolute top-[75px] max-w-7xl w-[calc(100vw-40px)] h-[calc(100vh-80px)] left-1/2 transform -translate-x-1/2 z-[80] bg-[#1d2125] rounded-xl p-4 overflow-auto">
                     <div className="flex items-center justify-between">
                         <div className="text-white font-bold text-xl">{packData.name} - ${packData.price.toFixed(2)}</div>
                         <X onClick={onClose} className="cursor-pointer" />

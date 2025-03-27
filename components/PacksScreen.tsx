@@ -122,7 +122,7 @@ const PacksScreen = ({ packsData }: any) => {
   }
 
   // const onPackTypeChange = (value: any) => {
-  //   setSelectedPackType(value);
+  //   console.log(1111);
   // }
 
   const onSortTypeChange = (value: any) => {

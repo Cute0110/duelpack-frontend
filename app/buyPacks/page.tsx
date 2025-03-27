@@ -8,16 +8,20 @@ import { dot, eot } from "@/lib/cryptoUtils";
 import { notification } from 'antd';
 import type { NotificationArgsProps } from 'antd';
 import { useAuth } from "@/lib/authContext";
-import { MoreHorizontal } from "lucide-react";
-import PacksScreen from "@/components/PacksScreen";
+import { useSearchParams } from "next/navigation";
+import BuyPacksScreen from "@/components/BuyPacksScreen";
 
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-const Packs = () => {
-  const { isAuthenticated, isSidebarCollapsed } = useAuth();
+const BuyPacks = () => {
+  const { isAuthenticated, isSidebarCollapsed, setAuthData, setIsAuthenticated } = useAuth();
   const [packsData, setPacksData] = useState({ data: [], count: 0, start: 0, length: 5 });
+  const [itemsData, setItemsData] = useState({ data: [], count: 0 });
   const [api, contextHolder] = notification.useNotification();
+  const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const packId = searchParams.get("packId"); // Get the 'id' from the URL
 
   const openNotification = (type: NotificationType, title: any, content: any, placement: NotificationPlacement) => {
     api[type]({
@@ -43,10 +47,51 @@ const Packs = () => {
       } catch (err) {
         openNotification("error", "Error", "Network error!", "topRight");
       }
+      try {
+        const response = await axiosInstance.post('/api/all_items_list');
+        const res = dot(response.data);
+        if (res.status == 1) {
+          setItemsData({ data: res.data, count: res.count });
+        } else {
+          openNotification("error", "Error", res.msg, "topRight");
+        }
+      } catch (err) {
+        openNotification("error", "Error", "Network error!", "topRight");
+      }
     };
 
     fetchData();
   }, []);
+
+  const onBuyItemAction = async (itemIds: any, userId: any, payAmount: any) => {
+    try {
+      const response = await axiosInstance.post('/api/buy_items', eot({ itemIds, userId, payAmount }));
+      const res = dot(response.data);
+      if (res.status == 1) {
+        openNotification("success", "Success", "Items added to cart!", "topRight");
+        try {
+          const response = await axiosInstance.get('/api/check_session', {
+            withCredentials: true,
+          });
+
+          const res = dot(response.data);
+
+          if (res.status == 1) {
+            setAuthData(res.userData);
+            setIsAuthenticated(res.status);
+          } else {
+            console.log(res.msg);
+          }
+        } catch (error) {
+          openNotification("error", "Error", "error", "topRight");
+        }
+      } else {
+        openNotification("error", "Error", res.msg, "topRight");
+      }
+    } catch (err) {
+      openNotification("error", "Error", "Network error!", "topRight");
+    }
+  }
 
   const onScrollTo = (gameSection: any) => {
     const element = document.getElementById(gameSection); // Replace with your target element's ID
@@ -63,12 +108,15 @@ const Packs = () => {
     <>
       {contextHolder}
       <div className="min-h-screen bg-[#1d2125] text-foreground">
-        <PacksScreen
-        packsData={packsData}
+        <BuyPacksScreen
+          packsData={packsData}
+          itemsData={itemsData}
+          packId={packId}
+          onBuyItemAction={onBuyItemAction}
         />
       </div >
     </>
   );
 }
 
-export default Packs;
+export default BuyPacks;
