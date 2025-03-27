@@ -51,24 +51,48 @@ const BuyPacks = () => {
         const res = dot(response.data);
         if (res.status == 1) {
           setPacksData({ data: res.data, count: res.count, start: res.start, length: res.length });
+
+          let totalCount = 0;
+          try {
+            // Create an array of promises
+            const requests = res.data.map((pack: any) =>
+              axiosInstance.post('/api/pack_items_list', eot({
+                start: 0,
+                length: 0,
+                search: 0,
+                order: "rarity",
+                dir: "asc",
+                packID: pack.id,
+              }))
+            );
+
+            // Wait for all requests to resolve
+            const responses = await Promise.all(requests);
+
+            // Process responses
+            let temp: any = [];
+            responses.forEach((response) => {
+              const res1 = dot(response.data);
+              if (res1.status === 1) {
+                temp = temp.concat(res1.data); // Add items to the array
+                totalCount += res1.count;
+              } else {
+                openNotification("error", "Error", res1.msg, "topRight");
+              }
+            });
+
+            // Update state
+            setItemsData({ data: temp, count: totalCount });
+          } catch {
+            openNotification("error", "Error", "Network error!", "topRight");
+          }
         } else {
           openNotification("error", "Error", res.msg, "topRight");
         }
       } catch (err) {
         openNotification("error", "Error", "Network error!", "topRight");
       }
-      try {
-        const response = await axiosInstance.post('/api/all_items_list');
-        const res = dot(response.data);
-        if (res.status == 1) {
-          setItemsData({ data: res.data, count: res.count });
-        } else {
-          openNotification("error", "Error", res.msg, "topRight");
-        }
-      } catch (err) {
-        openNotification("error", "Error", "Network error!", "topRight");
-      }
-    };
+    }
 
     fetchData();
   }, []);

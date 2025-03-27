@@ -69,6 +69,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
 
   const onClickCart = async () => {
     setIsLoading(true);
+    setIsCartModalOpen(true);
     try {
       const response = await axiosInstance.post('/api/cart_list', eot({userId: authData.id}));
       const res = dot(response.data);
@@ -77,9 +78,11 @@ const Navbar = ({ isNavLinksHidden }: any) => {
         setIsCartModalOpen(true);
       } else {
         openNotification("error", "Error", res.msg, "topRight");
+        setIsCartModalOpen(false);
       }
     } catch (err) {
       openNotification("error", "Error", "Network error!", "topRight");
+      setIsCartModalOpen(false);
     } finally {
       setIsLoading(false);
     }
