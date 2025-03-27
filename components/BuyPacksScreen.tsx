@@ -75,7 +75,7 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
 
     for (let i = 0; i < addedPackIdsArray.length; i++) {
       const tempItems = itemsData.data.filter((data: any) => data.packId == addedPackIdsArray[i]);
-      const tempPack: any = packs.find((data: any) => data.id == addedPackIdsArray[i]);
+      const tempPack: any = packsData.data.find((data: any) => data.id == addedPackIdsArray[i]);
       temp.push({ packInfo: tempPack, itemsInfo: tempItems });
 
       totalPrice += tempPack?.price;
@@ -90,14 +90,6 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
     setAddedPacks(temp);
   }
 
-  useEffect(() => {
-    const temp: any = [...addedPackIds];
-    temp.push(Number(packId));
-
-    if (itemsData.count > 0) onAddPacks(temp);
-    setAddedPackIds(temp);
-  }, [packId]);
-
   function shuffleArray(array: any) {
     const shuffledArray = [...array]; // Make a copy of the original array
     for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -111,10 +103,21 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
   }
 
   useEffect(() => {
-    if (itemsData.count > 0) onAddPacks(addedPackIds);
+    const temp: any = [];
+    temp.push(Number(packId));
+    setAddedPackIds(temp);
+  }, [packId]);
+
+  useEffect(() => {
+    const temp: any = [];
+    temp.push(Number(packId));
+    if (packsData.count > 0) onAddPacks(temp);
   }, [itemsData]);
 
   useEffect(() => {
+    const temp: any = [];
+    temp.push(Number(packId));
+    if (itemsData.count > 0) onAddPacks(temp);
     setPacks(packsData.data);
   }, [packsData]);
 
