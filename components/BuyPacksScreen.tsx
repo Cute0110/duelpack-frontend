@@ -213,7 +213,10 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
       const generatedIds = onGeneratePackId();
       let temp: any = [];
       for (let i = 0; i < addedPackIds.length; i++) {
-        temp.push((carouselApi[i].current.selectedScrollSnap() + 4) % carouselApi[i].current.slideNodes().length)
+        if (window.innerWidth < 768)
+          temp.push((carouselApi[i].current.selectedScrollSnap() + 1) % carouselApi[i].current.slideNodes().length)
+        else 
+          temp.push((carouselApi[i].current.selectedScrollSnap() + 4) % carouselApi[i].current.slideNodes().length)
       }
       setCurrentIndexes(temp);
       setTargetPackIds(generatedIds);
@@ -231,7 +234,10 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
     if (isSpin == false) {
       let temp: any = [];
       for (let i = 0; i < addedPackIds.length; i++) {
-        temp.push((carouselApi[i].current.selectedScrollSnap() + 4) % carouselApi[i].current.slideNodes().length)
+        if (window.innerWidth < 768)
+          temp.push((carouselApi[i].current.selectedScrollSnap() + 1) % carouselApi[i].current.slideNodes().length)
+        else 
+          temp.push((carouselApi[i].current.selectedScrollSnap() + 4) % carouselApi[i].current.slideNodes().length)
       }
       setCurrentIndexes(temp);
     }
@@ -272,7 +278,7 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
       {isItemDetailsModalOpen && (<ItemDetailsModal itemData={selectedItemData} setIsItemDetailsModalOpen={setIsItemDetailsModalOpen} />)}
       {isPacksModalOpen && (<PacksModal packs={packs} setIsPacksModalOpen={setIsPacksModalOpen} addedPackIds={addedPackIds} onAddId={onAddId} onRemoveId={onRemoveId} onClickViewItem={onClickViewItem} />)}
       {isPackItemsModalOpen && (<PackItemsModal packData={selectedPackData} itemsData={selectedPackItemsData} setIsPackItemsModalOpen={setIsPackItemsModalOpen} />)}
-      <div className="mt-[75px] py-2">
+      <div className="mt-[75px]">
         {
           carouselItemsData.map((data: any, packIndex: any) => (
             <div key={packIndex}>
@@ -283,7 +289,7 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
                   carouselApi[packIndex].current = api; // Store the API in the ref
                   // api.on('select', () => handleSelect(api, packIndex)); // Call handleSelect when carousel slide changes
                 }}
-                className="w-full px-8"
+                className="w-full"
                 onPointerDown={(e) => e.preventDefault()}  // Prevent mouse dragging
                 onTouchStart={(e) => e.preventDefault()}  // Prevent touch dragging
               >
@@ -328,20 +334,20 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
       <div className="container pb-8">
         <div className="w-full">
           <div className="flex items-center justify-between py-4">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 md:gap-4">
               <button
                 type="button"
-                className="w-44 bg-green-400 hover:bg-green-500 text-white rounded-md py-2 font-bold"
+                className="w-40 md:w-44 bg-green-400 hover:bg-green-500 text-white rounded-md py-2 font-bold"
                 onClick={onClickBuyItem}
                 disabled={isSpin}
               >
                 Buy for ${addedPacksTotalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </button>
               <button type="button" className="flex items-center gap-2 bg-gray-600 hover:bg-gray-500 text-white rounded-md p-2 font-bold" onClick={onClickDemoSpin} disabled={isSpin}>
-                <RotateCw size={20} />Demo Spin
+                <RotateCw size={20} /><span className="hidden md:block">Demo Spin</span>
               </button>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 md:gap-4">
               <button type="button" className="bg-gray-700 hover:bg-gray-600 text-white rounded-md p-2" onClick={() => setIsSpinFaster(!isSpinFaster)} disabled={isSpin}>
                 <Zap className={`h-6 w-auto ${isSpinFaster ? "text-yellow-300" : "text-white"}`} />
               </button>

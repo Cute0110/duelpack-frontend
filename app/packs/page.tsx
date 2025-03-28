@@ -68,7 +68,7 @@ const Packs = () => {
       {contextHolder}
       <div className="min-h-screen bg-[#1d2125] text-foreground">
         {isLoading ?
-          <div className="h-full w-full flex items-center justify-center mt-[80px]">
+          <div className="h-full w-full flex items-center justify-center mt-[75px] py-4">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white" />
           </div> :
           <PacksScreen

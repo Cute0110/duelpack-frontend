@@ -88,7 +88,7 @@ const CartModal = ({ cartData, setIsCartModalOpen, isLoading, onSellClick }: any
                         </div>
                     </div>
                     <p className="mt-4 px-2 text-gray-500 font-semibold text-xl">
-                        Selected <span className="font-bold text-white text-2xl">{selectedItems.length}</span> items - Total Price : <span className="font-bold text-white text-2xl">${totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        Selected <span className="font-bold text-white text-2xl">{selectedItems.length}</span> items | Price : <span className="font-bold text-white text-2xl">${totalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                     </p>
                     {isLoading ?
                         <div className="h-full w-full flex items-center justify-center">
