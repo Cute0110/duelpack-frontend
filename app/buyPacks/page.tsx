@@ -54,7 +54,7 @@ const BuyPacks = () => {
           setPacksData({ data: res.data, count: res.count, start: res.start, length: res.length });
 
           let packItemConnectInfoCount = res.packItemConnectInfoCount;
-          const batchSize = 500;
+          const batchSize = 300;
           const totalRequests = Math.ceil(packItemConnectInfoCount / batchSize); // Number of batches
 
           try {
