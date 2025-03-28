@@ -53,19 +53,23 @@ const BuyPacks = () => {
         if (res.status == 1) {
           setPacksData({ data: res.data, count: res.count, start: res.start, length: res.length });
 
-          let totalCount = 0;
+          let packItemConnectInfoCount = res.packItemConnectInfoCount;
+          const batchSize = 500;
+          const totalRequests = Math.ceil(packItemConnectInfoCount / batchSize); // Number of batches
+
           try {
-            // Create an array of promises
-            const requests = res.data.map((pack: any) =>
-              axiosInstance.post('/api/pack_items_list', eot({
-                start: 0,
-                length: 0,
+            // Create an array of promises for batch requests
+            const requests = Array.from({ length: totalRequests }, (_, i) =>
+              axiosInstance.post('/api/pack_items_list_all', eot({
+                start: i * batchSize,
+                length: batchSize,
                 search: 0,
-                order: "rarity",
+                order: "id",
                 dir: "asc",
-                packId: pack.id,
               }))
             );
+
+            console.log("Requests:", requests);
 
             // Wait for all requests to resolve
             const responses = await Promise.all(requests);
@@ -76,14 +80,13 @@ const BuyPacks = () => {
               const res1 = dot(response.data);
               if (res1.status === 1) {
                 temp = temp.concat(res1.data); // Add items to the array
-                totalCount += res1.count;
               } else {
                 openNotification("error", "Error", res1.msg, "topRight");
               }
             });
 
             // Update state
-            setItemsData({ data: temp, count: totalCount });
+            setItemsData({ data: temp, count: packItemConnectInfoCount });
           } catch {
             openNotification("error", "Error", "Network error!", "topRight");
           }

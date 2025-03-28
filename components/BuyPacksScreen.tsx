@@ -280,11 +280,11 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
       {isPacksModalOpen && (<PacksModal packs={packs} setIsPacksModalOpen={setIsPacksModalOpen} addedPackIds={addedPackIds} onAddId={onAddId} onRemoveId={onRemoveId} onClickViewItem={onClickViewItem} />)}
       {isPackItemsModalOpen && (<PackItemsModal packData={selectedPackData} itemsData={selectedPackItemsData} setIsPackItemsModalOpen={setIsPackItemsModalOpen} />)}
 
-      <Link href="/" className="flex justify-center items-center mt-[75px] pt-2">
-        <img src="./duelpack-logo.svg" alt="Wecazoo Logo" className="h-6 w-auto" />
-        <h1 className="text-lg text-white font-bold ml-2">DuelPack</h1>
-      </Link>
-      <div className="">
+      <div className="mt-[75px] relative">
+        <Link href="/" className="flex items-center absolute top-2 left-[50%] -translate-x-1/2 z-10">
+          <img src="./duelpack-logo.svg" alt="Wecazoo Logo" className="h-9 lg:h-11 w-auto" />
+          <h1 className="text-xl text-white font-bold ml-2">DuelPack</h1>
+        </Link>
         {
           carouselItemsData.map((data: any, packIndex: any) => (
             <div key={packIndex}>
@@ -295,7 +295,7 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
                   carouselApi[packIndex].current = api; // Store the API in the ref
                   // api.on('select', () => handleSelect(api, packIndex)); // Call handleSelect when carousel slide changes
                 }}
-                className="w-full"
+                className={`w-full ${packIndex == 0 ? "pt-16" : "pt-0"} z-20`}
                 onPointerDown={(e) => e.preventDefault()}  // Prevent mouse dragging
                 onTouchStart={(e) => e.preventDefault()}  // Prevent touch dragging
               >
@@ -303,13 +303,13 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
                   {data.map((itemData: any, itemIndex: any) => (
                     <CarouselItem
                       key={itemIndex}
-                      className="pl-4 basis-[33.33%] md:basis-[11.11%]"
+                      className={`pl-4 basis-[33.33%] md:basis-[11.11%]`}
                     >
                       {
                         currentIndexes[packIndex] == itemIndex ?
                           <>
                             <div className="relative aspect-square group flex items-center justify-center">
-                              <div className={`absolute inset-0 m-auto ${itemBackColorArray[addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-3/5 aspect-square rounded-full blur-xl`}></div>
+                              <div className={`absolute inset-0 m-auto ${itemBackColorArray[addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:w-2/4 aspect-square rounded-full blur-xl`}></div>
                               <img src={`./images/items/${addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.imageUrl}`} className="w-5/5 aspect-square relative" />
                             </div>
                             <div className="">
@@ -320,7 +320,7 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
                           :
                           <>
                             <div className="relative aspect-square group flex items-center justify-center">
-                              <div className={`absolute inset-0 m-auto ${itemBackColorArray[itemData.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-3/5 aspect-square rounded-full blur-xl`}></div>
+                              <div className={`absolute inset-0 m-auto ${itemBackColorArray[itemData.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
                               <img src={`./images/items/${itemData.item.imageUrl}`} className="w-3/5 aspect-square relative" />
                             </div>
                             <div className="opacity-0">
@@ -343,13 +343,13 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
             <div className="flex items-center gap-2 md:gap-4">
               <button
                 type="button"
-                className="w-40 md:w-44 bg-green-400 hover:bg-green-500 text-white rounded-md py-2 font-bold"
+                className="w-40 md:w-44 bg-[#00bf62] hover:bg-green-500 text-white rounded-md py-2 h-[40px] font-bold"
                 onClick={onClickBuyItem}
                 disabled={isSpin}
               >
                 Buy for ${addedPacksTotalPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </button>
-              <button type="button" className="flex items-center gap-2 bg-gray-600 hover:bg-gray-500 text-white rounded-md p-2 font-bold" onClick={onClickDemoSpin} disabled={isSpin}>
+              <button type="button" className="flex h-[40px] items-center gap-2 bg-gray-600 hover:bg-gray-500 text-white rounded-md p-2 font-bold" onClick={onClickDemoSpin} disabled={isSpin}>
                 <RotateCw size={20} /><span className="hidden md:block">Demo Spin</span>
               </button>
             </div>
