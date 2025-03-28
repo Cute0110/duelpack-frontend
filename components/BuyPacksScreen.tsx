@@ -295,7 +295,7 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
                   carouselApi[packIndex].current = api; // Store the API in the ref
                   // api.on('select', () => handleSelect(api, packIndex)); // Call handleSelect when carousel slide changes
                 }}
-                className={`w-full ${packIndex == 0 ? "pt-16" : "pt-0"} z-20`}
+                className={`w-full ${packIndex == 0 ? "pt-10" : "pt-0"} z-20`}
                 onPointerDown={(e) => e.preventDefault()}  // Prevent mouse dragging
                 onTouchStart={(e) => e.preventDefault()}  // Prevent touch dragging
               >
@@ -309,8 +309,8 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
                         currentIndexes[packIndex] == itemIndex ?
                           <>
                             <div className="relative aspect-square group flex items-center justify-center">
-                              <div className={`absolute inset-0 m-auto ${itemBackColorArray[addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:w-2/4 aspect-square rounded-full blur-xl`}></div>
-                              <img src={`./images/items/${addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.imageUrl}`} className="w-5/5 aspect-square relative" />
+                              <div className={`absolute top-4 inset-0 m-auto ${itemBackColorArray[addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:w-2/4 aspect-square rounded-full blur-xl`}></div>
+                              <img src={`./images/items/${addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.imageUrl}`} className="w-5/5 aspect-square relative mt-4" />
                             </div>
                             <div className="">
                               <p className="w-full text-center font-semibold text-md text-white truncate mt-2">{addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.name}</p>
@@ -320,8 +320,8 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
                           :
                           <>
                             <div className="relative aspect-square group flex items-center justify-center">
-                              <div className={`absolute inset-0 m-auto ${itemBackColorArray[itemData.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
-                              <img src={`./images/items/${itemData.item.imageUrl}`} className="w-3/5 aspect-square relative" />
+                              <div className={`absolute top-4 inset-0 m-auto ${itemBackColorArray[itemData.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
+                              <img src={`./images/items/${itemData.item.imageUrl}`} className="w-3/5 aspect-square relative mt-4" />
                             </div>
                             <div className="opacity-0">
                               <p className="w-full text-center font-semibold text-md text-white truncate mt-2">{itemData.item.name}</p>
