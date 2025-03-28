@@ -16,6 +16,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { useAuth } from "@/lib/authContext";
 import AuthModal from "./Modals/AuthModal";
+import Link from "next/link";
 
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
@@ -215,13 +216,13 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
       for (let i = 0; i < addedPackIds.length; i++) {
         if (window.innerWidth < 768)
           temp.push((carouselApi[i].current.selectedScrollSnap() + 1) % carouselApi[i].current.slideNodes().length)
-        else 
+        else
           temp.push((carouselApi[i].current.selectedScrollSnap() + 4) % carouselApi[i].current.slideNodes().length)
       }
       setCurrentIndexes(temp);
       setTargetPackIds(generatedIds);
       let addedItems = [];
-      for (let i = 0 ; i < generatedIds.length ; i ++) {
+      for (let i = 0; i < generatedIds.length; i++) {
         addedItems.push(addedPacks[i].itemsInfo[generatedIds[i]].item.id);
       }
       onBuyItemAction(addedItems, authData.id, addedPacksTotalPrice);
@@ -236,7 +237,7 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
       for (let i = 0; i < addedPackIds.length; i++) {
         if (window.innerWidth < 768)
           temp.push((carouselApi[i].current.selectedScrollSnap() + 1) % carouselApi[i].current.slideNodes().length)
-        else 
+        else
           temp.push((carouselApi[i].current.selectedScrollSnap() + 4) % carouselApi[i].current.slideNodes().length)
       }
       setCurrentIndexes(temp);
@@ -278,7 +279,12 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
       {isItemDetailsModalOpen && (<ItemDetailsModal itemData={selectedItemData} setIsItemDetailsModalOpen={setIsItemDetailsModalOpen} />)}
       {isPacksModalOpen && (<PacksModal packs={packs} setIsPacksModalOpen={setIsPacksModalOpen} addedPackIds={addedPackIds} onAddId={onAddId} onRemoveId={onRemoveId} onClickViewItem={onClickViewItem} />)}
       {isPackItemsModalOpen && (<PackItemsModal packData={selectedPackData} itemsData={selectedPackItemsData} setIsPackItemsModalOpen={setIsPackItemsModalOpen} />)}
-      <div className="mt-[75px]">
+
+      <Link href="/" className="flex justify-center items-center mt-[75px] py-2">
+        <img src="./duelpack-logo.svg" alt="Wecazoo Logo" className="h-9 lg:h-11 w-auto" />
+        <h1 className="text-xl text-white font-bold ml-2">DuelPack</h1>
+      </Link>
+      <div className="">
         {
           carouselItemsData.map((data: any, packIndex: any) => (
             <div key={packIndex}>
