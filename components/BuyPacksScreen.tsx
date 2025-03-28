@@ -303,30 +303,30 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
                   {data.map((itemData: any, itemIndex: any) => (
                     <CarouselItem
                       key={itemIndex}
-                      className={`pl-4 basis-[33.33%] md:basis-[11.11%]`}
+                      className={`pl-4 basis-[33.33%] md:basis-[11.11%] aspect-square`}
                     >
                       {
                         currentIndexes[packIndex] == itemIndex ?
                           <>
                             <div className="relative aspect-square group flex items-center justify-center">
-                              <div className={`absolute top-4 inset-0 m-auto ${itemBackColorArray[addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:w-2/4 aspect-square rounded-full blur-xl`}></div>
-                              <img src={`./images/items/${addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.imageUrl}`} className="w-5/5 aspect-square relative mt-4" />
-                            </div>
-                            <div className="">
-                              <p className="w-full text-center font-semibold text-md text-white truncate mt-2">{addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.name}</p>
-                              <p className="w-full text-center font-semibold text-md text-white truncate">${addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                              <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:w-2/4 aspect-square rounded-full blur-xl`}></div>
+                              <img src={`./images/items/${addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.imageUrl}`} className="w-5/6 aspect-square relative mt-6" />
+                              <div className="absolute w-full -bottom-4 left-[50%] -translate-x-1/2 z-10 px-4 py-2 rounded-md before:absolute before:inset-0 before:bg-black before:opacity-20 before:rounded-md">
+                                <p className="w-full text-center font-semibold text-md text-white truncate">{addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.name}</p>
+                                <p className="w-full text-center font-semibold text-md text-white truncate">${addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                              </div>
                             </div>
                           </>
                           :
                           <>
                             <div className="relative aspect-square group flex items-center justify-center">
-                              <div className={`absolute top-4 inset-0 m-auto ${itemBackColorArray[itemData.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
-                              <img src={`./images/items/${itemData.item.imageUrl}`} className="w-3/5 aspect-square relative mt-4" />
+                              <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[itemData.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
+                              <img src={`./images/items/${itemData.item.imageUrl}`} className="w-3/5 aspect-square relative mt-6" />
                             </div>
-                            <div className="opacity-0">
+                            {/* <div className="opacity-0">
                               <p className="w-full text-center font-semibold text-md text-white truncate mt-2">{itemData.item.name}</p>
                               <p className="w-full text-center font-semibold text-md text-white truncate">${itemData.item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                            </div>
+                            </div> */}
                           </>
                       }
                     </CarouselItem>
