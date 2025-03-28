@@ -280,9 +280,9 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
       {isPacksModalOpen && (<PacksModal packs={packs} setIsPacksModalOpen={setIsPacksModalOpen} addedPackIds={addedPackIds} onAddId={onAddId} onRemoveId={onRemoveId} onClickViewItem={onClickViewItem} />)}
       {isPackItemsModalOpen && (<PackItemsModal packData={selectedPackData} itemsData={selectedPackItemsData} setIsPackItemsModalOpen={setIsPackItemsModalOpen} />)}
 
-      <Link href="/" className="flex justify-center items-center mt-[75px] py-2">
-        <img src="./duelpack-logo.svg" alt="Wecazoo Logo" className="h-9 lg:h-11 w-auto" />
-        <h1 className="text-xl text-white font-bold ml-2">DuelPack</h1>
+      <Link href="/" className="flex justify-center items-center mt-[75px] pt-2">
+        <img src="./duelpack-logo.svg" alt="Wecazoo Logo" className="h-6 w-auto" />
+        <h1 className="text-lg text-white font-bold ml-2">DuelPack</h1>
       </Link>
       <div className="">
         {
