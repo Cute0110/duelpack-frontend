@@ -8,26 +8,20 @@ import PacksSVG from "@/public/images/packs.svg";
 import ItemDetailsModal from "./Modals/ItemDetailsModal";
 import PacksModal from "./Modals/PacksModal";
 import PackItemsModal from "./Modals/PackItemsModal";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
 import { useAuth } from "@/lib/authContext";
 import AuthModal from "./Modals/AuthModal";
 import Link from "next/link";
+import ItemSpin from "./ui/ItemSpin";
 
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) => {
+const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemAction, isMobile }: any) => {
   const itemBackColorArray = ['bg-yellow-500', 'bg-red-500', 'bg-blue-500', 'bg-gray-500'];
-  const carouselSpeed = 100;
 
   const { isAuthenticated, authData } = useAuth();
   const [api, contextHolder] = notification.useNotification();
-  const [packs, setPacks] = useState([]);
+
   const [addedPackIds, setAddedPackIds] = useState([]);
   const [addedPacks, setAddedPacks]: any = useState([]);
   const [addedPacksTotalPrice, setAddedPacksTotalPrice] = useState(0);
@@ -36,29 +30,16 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
   const [isPackItemsModalOpen, setIsPackItemsModalOpen] = useState(false);
   const [isSpinFaster, setIsSpinFaster] = useState(false);
   const [isSpin, setIsSpin] = useState(false);
+  const [spinType, setSpinType] = useState(false);
+  const [itemsSpinStatus, setItemsSpinStatus] = useState([]);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [selectedItemData, setSelectedItemData] = useState(null);
   const [selectedPackData, setSelectedPackData] = useState(null);
   const [selectedPackItemsData, setSelectedPackItemsData] = useState([]);
   const [carouselItemsData, setCarouselItemsData] = useState([]);
-  const [targetPackIds, setTargetPackIds] = useState([]);
+  const [itemSpinSpeed, setItemSpinSpeed]: any = useState([0, 0, 0, 0, 0]);
+  const [targetPackIds, setTargetPackIds] = useState([-1, -1, -1, -1, -1]);
   const [carouselApi, setCarouselApi] = useState([useRef<any>(null), useRef<any>(null), useRef<any>(null), useRef<any>(null), useRef<any>(null)]);
-  const [currentIndexes, setCurrentIndexes] = useState([-1, -1, -1, -1, -1]);
-  const [autoplayPlugin, setAutoplayPlugin] = useState([
-    React.useRef(Autoplay({ delay: carouselSpeed, stopOnInteraction: false })),
-    React.useRef(Autoplay({ delay: carouselSpeed, stopOnInteraction: false })),
-    React.useRef(Autoplay({ delay: carouselSpeed, stopOnInteraction: false })),
-    React.useRef(Autoplay({ delay: carouselSpeed, stopOnInteraction: false })),
-    React.useRef(Autoplay({ delay: carouselSpeed, stopOnInteraction: false })),
-  ]);
-  const [carouselOptions, setCarouselOptions] = useState([
-    { align: "start" as const, loop: true, skipSnaps: true, },
-    { align: "start" as const, loop: true, skipSnaps: true, },
-    { align: "start" as const, loop: true, skipSnaps: true, },
-    { align: "start" as const, loop: true, skipSnaps: true, },
-    { align: "start" as const, loop: true, skipSnaps: true, },
-  ]);
-
 
   const openNotification = (type: NotificationType, title: any, content: any, placement: NotificationPlacement) => {
     api[type]({
@@ -75,8 +56,8 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
     let totalPrice = 0;
 
     for (let i = 0; i < addedPackIdsArray.length; i++) {
-      const tempItems = itemsData.data.filter((data: any) => data.packId == addedPackIdsArray[i]);
-      const tempPack: any = packsData.data.find((data: any) => data.id == addedPackIdsArray[i]);
+      const tempItems = packItemConnectInfo.data.filter((data: any) => data.packId == addedPackIdsArray[i]);
+      const tempPack: any = packsInfo.data.find((data: any) => data.id == addedPackIdsArray[i]);
       temp.push({ packInfo: tempPack, itemsInfo: tempItems });
 
       totalPrice += tempPack?.price;
@@ -89,6 +70,7 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
     setAddedPacksTotalPrice(totalPrice);
     setCarouselItemsData(carouselTemp);
     setAddedPacks(temp);
+    setAddedPackIds(addedPackIdsArray);
   }
 
   function shuffleArray(array: any) {
@@ -106,21 +88,8 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
   useEffect(() => {
     const temp: any = [];
     temp.push(Number(packId));
-    setAddedPackIds(temp);
-  }, [packId]);
-
-  useEffect(() => {
-    const temp: any = [];
-    temp.push(Number(packId));
-    if (packsData.count > 0) onAddPacks(temp);
-  }, [itemsData]);
-
-  useEffect(() => {
-    const temp: any = [];
-    temp.push(Number(packId));
-    if (itemsData.count > 0) onAddPacks(temp);
-    setPacks(packsData.data);
-  }, [packsData]);
+    onAddPacks(temp);
+  }, [packsInfo, packItemConnectInfo]);
 
   const onItemClick = (data: any) => {
     setIsItemDetailsModalOpen(true);
@@ -129,7 +98,7 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
 
   const onClickViewItem = (packData: any) => {
     setSelectedPackData(packData);
-    setSelectedPackItemsData(itemsData.data.filter((data: any) => data.packId == packData.id))
+    setSelectedPackItemsData(packItemConnectInfo.data.filter((data: any) => data.packId == packData.id))
     setIsPackItemsModalOpen(true);
   }
 
@@ -141,14 +110,14 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
       if (index !== -1) {
         temp.splice(index, 1); // Remove the element at that index
       }
-      setCurrentIndexes([-1, -1, -1, -1, -1]);
       setAddedPackIds(temp);
       onAddPacks(temp);
     }
   }
 
   const onAddId = (id: any) => {
-    if (addedPackIds.length < 5) {
+    const checkTemp: any = packItemConnectInfo.data.filter((data: any) => data.packId == id);
+    if (addedPackIds.length < 5 && checkTemp.length > 0) {
       const temp: any = [...addedPackIds];
       temp.push(id);
 
@@ -188,44 +157,35 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
     return tempArray;
   }
 
-  const onClickDemoSpin = () => {
-    let spinTemp: any = [];
+  const onStartSpin = () => {
+    let spinStatusTemp: any = [];
     for (let i = 0; i < addedPackIds.length; i++) {
-      spinTemp.push(true);
+      spinStatusTemp.push(true);
     }
+    setItemsSpinStatus(spinStatusTemp);
     setIsSpin(true);
-    setCurrentIndexes([-1, -1, -1, -1, -1]);
-    setTargetPackIds([]);
+    setTargetPackIds([-1, -1, -1, -1, -1]);
+    setItemSpinSpeed([50, 50, 50, 50, 50]);
     if (isSpinFaster) {
       const timeoutId = setTimeout(() => {
-        setIsSpin((prev) => !prev);
         setTargetPackIds(onGeneratePackId());
       }, 700);
     } else {
       const timeoutId = setTimeout(() => {
-        setIsSpin((prev) => !prev);
         setTargetPackIds(onGeneratePackId());
       }, 2000);
     }
   }
 
+  const onClickDemoSpin = () => {
+    setSpinType(false);
+    onStartSpin();
+  }
+
   const onClickBuyItem = () => {
     if (isAuthenticated) {
-      const generatedIds = onGeneratePackId();
-      let temp: any = [];
-      for (let i = 0; i < addedPackIds.length; i++) {
-        if (window.innerWidth < 768)
-          temp.push((carouselApi[i].current.selectedScrollSnap() + 1) % carouselApi[i].current.slideNodes().length)
-        else
-          temp.push((carouselApi[i].current.selectedScrollSnap() + 4) % carouselApi[i].current.slideNodes().length)
-      }
-      setCurrentIndexes(temp);
-      setTargetPackIds(generatedIds);
-      let addedItems = [];
-      for (let i = 0; i < generatedIds.length; i++) {
-        addedItems.push(addedPacks[i].itemsInfo[generatedIds[i]].item.id);
-      }
-      onBuyItemAction(addedItems, authData.id, addedPacksTotalPrice);
+      setSpinType(true);
+      onStartSpin();
     } else {
       setIsAuthModalOpen(true);
     }
@@ -233,40 +193,28 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
 
   useEffect(() => {
     if (isSpin == false) {
-      let temp: any = [];
-      for (let i = 0; i < addedPackIds.length; i++) {
-        if (window.innerWidth < 768)
-          temp.push((carouselApi[i].current.selectedScrollSnap() + 1) % carouselApi[i].current.slideNodes().length)
-        else
-          temp.push((carouselApi[i].current.selectedScrollSnap() + 4) % carouselApi[i].current.slideNodes().length)
+      if (spinType == true) {
+        let addedItems = [];
+        for (let i = 0; i < targetPackIds.length; i++) {
+          addedItems.push(addedPacks[i].itemsInfo[targetPackIds[i]].item.id);
+        }
+        onBuyItemAction(addedItems, authData.id, addedPacksTotalPrice);
       }
-      setCurrentIndexes(temp);
+      setTargetPackIds([-1, -1, -1, -1, -1]);
+      setItemSpinSpeed([0, 0, 0, 0, 0]);
     }
   }, [isSpin]);
 
-  // const handleSelect = (api: any, index: number) => {
-  //   console.log(isSpin, targetPackIds);
-  //   if (isSpin && targetPackIds.length > 0) {
-  //     const tempSpinArray: any = [...isSpinArray];
-  //     const tempIndexes = [...currentIndexes];
-  //     const tempPack: any = addedPacks[index];
-  //     const tempItem: any = carouselItemsData[index][(api.selectedScrollSnap() + 4) % api.slideNodes().length];
-  //     //newIndexes[index] = api.selectedScrollSnap(); // Update the index of the respective carousel
-
-  //     //console.log(api.selectedScrollSnap());
-  //     if (tempItem.itemId == tempPack.itemsInfo[targetPackIds[index]].itemId) {
-  //       tempSpinArray[index] = false;
-  //       tempIndexes[index] = (api.selectedScrollSnap() + 4) % api.slideNodes().length;
-  //       setIsSpinArray(tempSpinArray);
-  //       setCurrentIndexes(tempIndexes);
-
-  //       if (!tempSpinArray.includes(true)) {
-  //         setIsSpin((prev) => !prev);
-  //         setTargetPackIds([]);
-  //       }
-  //     }
-  //   }
-  // };
+  const onSpinFinish = (packIndex: any) => {
+    setItemsSpinStatus((prevStatus) => {
+      let newStatus: any = [...prevStatus]; // Copy the latest state
+      newStatus[packIndex] = false; // Modify it
+      if (!newStatus.includes(true)) {
+        setIsSpin(false);
+      }
+      return newStatus; // Return the updated state
+    });
+  };
 
   return (
     <>
@@ -277,7 +225,7 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
         modalType={true}
       />
       {isItemDetailsModalOpen && (<ItemDetailsModal itemData={selectedItemData} setIsItemDetailsModalOpen={setIsItemDetailsModalOpen} />)}
-      {isPacksModalOpen && (<PacksModal packs={packs} setIsPacksModalOpen={setIsPacksModalOpen} addedPackIds={addedPackIds} onAddId={onAddId} onRemoveId={onRemoveId} onClickViewItem={onClickViewItem} />)}
+      {isPacksModalOpen && (<PacksModal packs={packsInfo.data} setIsPacksModalOpen={setIsPacksModalOpen} addedPackIds={addedPackIds} onAddId={onAddId} onRemoveId={onRemoveId} onClickViewItem={onClickViewItem} />)}
       {isPackItemsModalOpen && (<PackItemsModal packData={selectedPackData} itemsData={selectedPackItemsData} setIsPackItemsModalOpen={setIsPackItemsModalOpen} />)}
 
       <div className="mt-[75px] relative">
@@ -286,56 +234,19 @@ const BuyPacksScreen = ({ packsData, itemsData, packId, onBuyItemAction }: any) 
           <h1 className="text-xl text-white font-bold ml-2">DuelPack</h1>
         </Link>
         {
-          carouselItemsData.map((data: any, packIndex: any) => (
-            <div key={packIndex}>
-              <Carousel
-                opts={carouselOptions[packIndex]}
-                plugins={isSpin ? [autoplayPlugin[packIndex].current] : []}
-                setApi={(api: any) => {
-                  carouselApi[packIndex].current = api; // Store the API in the ref
-                  // api.on('select', () => handleSelect(api, packIndex)); // Call handleSelect when carousel slide changes
-                }}
-                className={`w-full ${packIndex == 0 ? "pt-10" : "pt-0"} z-20`}
-                onPointerDown={(e) => e.preventDefault()}  // Prevent mouse dragging
-                onTouchStart={(e) => e.preventDefault()}  // Prevent touch dragging
-              >
-                <CarouselContent className="">
-                  {data.map((itemData: any, itemIndex: any) => (
-                    <CarouselItem
-                      key={itemIndex}
-                      className={`pl-4 basis-[33.33%] md:basis-[11.11%] aspect-square`}
-                    >
-                      {
-                        currentIndexes[packIndex] == itemIndex ?
-                          <>
-                            <div className="relative aspect-square group flex items-center justify-center">
-                              <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:w-2/4 aspect-square rounded-full blur-xl`}></div>
-                              <img src={`./images/items/${addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.imageUrl}`} className="w-5/6 aspect-square relative mt-6" />
-                              <div className="absolute w-full -bottom-4 left-[50%] -translate-x-1/2 z-10 px-4 py-2 rounded-md before:absolute before:inset-0 before:bg-black before:opacity-20 before:rounded-md">
-                                <p className="w-full text-center font-semibold text-md text-white truncate">{addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.name}</p>
-                                <p className="w-full text-center font-semibold text-md text-white truncate">${addedPacks[packIndex]?.itemsInfo[targetPackIds[packIndex]].item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                              </div>
-                            </div>
-                          </>
-                          :
-                          <>
-                            <div className="relative aspect-square group flex items-center justify-center">
-                              <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[itemData.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
-                              <img src={`./images/items/${itemData.item.imageUrl}`} className="w-3/5 aspect-square relative mt-6" />
-                            </div>
-                            {/* <div className="opacity-0">
-                              <p className="w-full text-center font-semibold text-md text-white truncate mt-2">{itemData.item.name}</p>
-                              <p className="w-full text-center font-semibold text-md text-white truncate">${itemData.item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                            </div> */}
-                          </>
-                      }
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-              </Carousel>
-              <Divider style={{ margin: '10px 0', borderColor: "gray" }} />
-            </div>
-          ))}
+          carouselItemsData.map((data: any, packIndex: any) =>
+            <ItemSpin
+              packItems={addedPacks[packIndex]}
+              carouselItems={data}
+              key={packIndex}
+              packIndex={packIndex}
+              stopItemId={targetPackIds[packIndex]}
+              startSpeed={itemSpinSpeed[packIndex]}
+              onSpinFinish={onSpinFinish}
+              isMobile={isMobile}
+            />
+          )
+        }
       </div>
       <div className="container pb-8">
         <div className="w-full">

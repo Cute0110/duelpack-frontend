@@ -26,11 +26,12 @@ const BuyPacksWrapper = () => {
 
 const BuyPacks = () => {
   const { isAuthenticated, isSidebarCollapsed, setAuthData, setIsAuthenticated } = useAuth();
-  const [packsData, setPacksData] = useState({ data: [], count: 0, start: 0, length: 5 });
-  const [itemsData, setItemsData] = useState({ data: [], count: 0 });
+  const [packsInfo, setPacksInfo] = useState({ data: [], count: 0});
+  const [packItemConnectInfo, setPackItemConnectInfo] = useState({ data: [], count: 0 });
   const [api, contextHolder] = notification.useNotification();
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
+  const [isMobile, setIsMobile] = useState(false);
   const packId = searchParams.get("packId"); // Get the 'id' from the URL
 
   const openNotification = (type: NotificationType, title: any, content: any, placement: NotificationPlacement) => {
@@ -44,14 +45,16 @@ const BuyPacks = () => {
 
   useEffect(() => {
     document.title = "DuelPack";
-    //document.querySelector('meta[name="description"]')?.setAttribute("content", "Wecazoo is a top crypto casino offering Solana, Bitcoin & more. Play with no KYC in the UK, Canada, Sverige, Netherlands & more. 500% deposit bonus!");
+    if (window.innerWidth < 768) {
+      setIsMobile(true);
+    }
     setIsLoading(true);
     const fetchData = async () => {
       try {
         const response = await axiosInstance.post('/api/pack_list', eot({ start: 0, length: 0, search: 0, order: "id", dir: "asc" }));
         const res = dot(response.data);
         if (res.status == 1) {
-          setPacksData({ data: res.data, count: res.count, start: res.start, length: res.length });
+          setPacksInfo({ data: res.data, count: res.count });
 
           let packItemConnectInfoCount = res.packItemConnectInfoCount;
           const batchSize = 100;
@@ -68,9 +71,6 @@ const BuyPacks = () => {
                 dir: "asc",
               }))
             );
-
-            console.log("Requests:", requests);
-
             // Wait for all requests to resolve
             const responses = await Promise.all(requests);
 
@@ -86,7 +86,7 @@ const BuyPacks = () => {
             });
 
             // Update state
-            setItemsData({ data: temp, count: packItemConnectInfoCount });
+            setPackItemConnectInfo({ data: temp, count: packItemConnectInfoCount });
           } catch {
             openNotification("error", "Error", "Network error!", "topRight");
           }
@@ -154,10 +154,11 @@ const BuyPacks = () => {
           </div>
           :
           <BuyPacksScreen
-            packsData={packsData}
-            itemsData={itemsData}
+            packsInfo={packsInfo}
+            packItemConnectInfo={packItemConnectInfo}
             packId={packId}
             onBuyItemAction={onBuyItemAction}
+            isMobile={isMobile}
           />}
       </div >
     </>
