@@ -18,6 +18,8 @@ type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemAction, isMobile }: any) => {
   const itemBackColorArray = ['bg-yellow-500', 'bg-red-500', 'bg-blue-500', 'bg-gray-500'];
+  const failedAudioRef = useRef<HTMLAudioElement | null>(null);
+  const successAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const { isAuthenticated, authData } = useAuth();
   const [api, contextHolder] = notification.useNotification();
@@ -154,10 +156,22 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
       }
       tempArray.push(getRandomWeightedValue(temp));
     }
+
+    let flag = false;
+    for (let i = 0; i < tempArray.length; i ++) {
+      if (tempArray[i] != -1 && addedPacks[i].itemsInfo[tempArray[i]].rarity < 3) {
+        flag = true;
+        break;
+      }
+    }
+
+    playAudio(flag);
+    
     return tempArray;
   }
 
   const onStartSpin = () => {
+    console.log("Start");
     let spinStatusTemp: any = [];
     for (let i = 0; i < addedPackIds.length; i++) {
       spinStatusTemp.push(true);
@@ -190,6 +204,18 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
       setIsAuthModalOpen(true);
     }
   }
+
+  
+  const playAudio = async (flag: any) => {
+    if (successAudioRef.current && failedAudioRef.current) {
+      try {
+        if (flag) await successAudioRef.current.play(); // Try playing the audio
+        else await failedAudioRef.current.play();
+      } catch (error) {
+        console.error("Audio playback failed:", error);
+      }
+    }
+  };
 
   useEffect(() => {
     if (isSpin == false) {
@@ -228,6 +254,8 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
       {isPacksModalOpen && (<PacksModal packs={packsInfo.data} setIsPacksModalOpen={setIsPacksModalOpen} addedPackIds={addedPackIds} onAddId={onAddId} onRemoveId={onRemoveId} onClickViewItem={onClickViewItem} />)}
       {isPackItemsModalOpen && (<PackItemsModal packData={selectedPackData} itemsData={selectedPackItemsData} setIsPackItemsModalOpen={setIsPackItemsModalOpen} />)}
 
+      <audio ref={failedAudioRef} src="/sounds/spin/failed.mp3" />
+      <audio ref={successAudioRef} src="/sounds/spin/success.mp3" />
       <div className="mt-[75px] relative">
         <Link href="/" className="flex items-center absolute top-2 left-[50%] -translate-x-1/2 z-10">
           <img src="./duelpack-logo.svg" alt="Wecazoo Logo" className="h-9 lg:h-11 w-auto" />
