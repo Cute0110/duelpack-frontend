@@ -88,7 +88,7 @@ const ItemSpin = ({
       return;
     } else if (containerRef.current && speed === 0 && stopItemId >= 0) {
       const currentIndex: any = calculateCenterItem();
-      smoothScrollTo(containerRef.current.scrollLeft + ((itemWidth * currentIndex + gap * (currentIndex - 0.5) - containerRef.current.scrollLeft) - (itemWidth * Math.floor(visibleItems / 2) + gap * (visibleItems / 2.0))), 1000, (currentIndex))
+      smoothScrollTo(containerRef.current.scrollLeft + gap + ((itemWidth * currentIndex + gap * (currentIndex - 0.5) - containerRef.current.scrollLeft) - (itemWidth * Math.floor(visibleItems / 2) + gap * (visibleItems / 2.0))), 1000, (currentIndex))
       return;
     }
     let animationFrameId: number;
