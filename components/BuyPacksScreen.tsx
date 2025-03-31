@@ -157,15 +157,6 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
       tempArray.push(getRandomWeightedValue(temp));
     }
 
-    let flag = false;
-    for (let i = 0; i < tempArray.length; i ++) {
-      if (tempArray[i] != -1 && addedPacks[i].itemsInfo[tempArray[i]].rarity < 3) {
-        flag = true;
-        break;
-      }
-    }
-
-    playAudio(flag);
     
     return tempArray;
   }
@@ -219,6 +210,16 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
 
   useEffect(() => {
     if (isSpin == false) {
+      let flag = false;
+      for (let i = 0; i < targetPackIds.length; i ++) {
+        if (targetPackIds[i] != -1 && addedPacks[i].itemsInfo[targetPackIds[i]].rarity < 3) {
+          flag = true;
+          break;
+        }
+      }
+
+      playAudio(flag);
+
       if (spinType == true) {
         let addedItems = [];
         for (let i = 0; i < targetPackIds.length; i++) {
