@@ -218,7 +218,9 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
         }
       }
 
-      playAudio(flag);
+      if (targetPackIds[0] != -1) {
+        playAudio(flag);
+      }
 
       if (spinType == true) {
         let addedItems = [];
