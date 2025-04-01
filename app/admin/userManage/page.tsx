@@ -1,7 +1,7 @@
 "use client";
 
 import UserManage from "@/components/Admin/UserManage";
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import DefaultLayout from "@/components/Admin/Layouts/DefaultLayout";
 import Loader from "@/components/Loader";
 import axiosInstance from "@/lib/action";
 import { useAuth } from "@/lib/authContext";

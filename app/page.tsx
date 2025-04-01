@@ -91,6 +91,7 @@ const Home = () => {
         packsData={packsData}
         forgeData={forgeData}
         />
+        <Footer />
       </div >
     </>
   );

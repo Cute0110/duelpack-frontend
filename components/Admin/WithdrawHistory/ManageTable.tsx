@@ -92,7 +92,7 @@ const ManageTable = ({data, onWithdrawAction, setOrderData} : any) => {
       title: 'User Name',
       dataIndex: 'userName',
       key: 'userName',
-      width: 100,
+      width: 150,
     },
     {
       title: 'Type',

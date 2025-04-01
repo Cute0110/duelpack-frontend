@@ -35,7 +35,7 @@ const UserManage = ({
         key: userData[i].id,
         no: (pageNum - 1) * pageCount + i + 1,
         userCode: userData[i].userCode,
-        influencerName: userData[i].influencerName,
+        userName: userData[i].userName,
         emailAddress: userData[i].emailAddress,
         balance: userData[i].balance.toFixed(2),
         createDate: userData[i].createdAt,

@@ -2,19 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown, notification, Space, Table } from 'antd';
 import type { TableColumnsType } from 'antd';
 import {Switch} from "antd";
-import {CheckOutlined, CloseOutlined, EditOutlined, UserAddOutlined, UserDeleteOutlined, HistoryOutlined, FileSyncOutlined, FundProjectionScreenOutlined, SwapOutlined} from '@ant-design/icons'
+import {CheckOutlined, CloseOutlined, EditOutlined, UserDeleteOutlined, SwapOutlined} from '@ant-design/icons'
 import moment from 'moment';
 import { useRouter } from 'next/navigation';
 import HeadTitle from '../../ui/HeadTitle';
-import { CgPassword } from 'react-icons/cg';
 import { RiLockPasswordFill } from 'react-icons/ri';
-import { on } from 'events';
 
 interface DataType {
   key: React.Key;
   no: number;
   userCode: string;
-  influencerName: string;
+  userName: string;
   emailAddress: string;
   balance: number;
   status: boolean;
@@ -22,7 +20,6 @@ interface DataType {
 }
 
 const dirTypeArray = ["", "ASC", "DESC"];
-type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 const UserManageTable = ({data, onUserStatusChangeAction, onDeleteUser, onResetPassword, onClickUserTransaction, setOrderData} : any) => {
 
@@ -80,15 +77,15 @@ const UserManageTable = ({data, onUserStatusChangeAction, onDeleteUser, onResetP
   
   const actionMenus: any = [
     {
-      label: <span className="text-[rgb(26,175,172,1)]"><RiLockPasswordFill className='mr-1'/> Reset Password</span>,
+      label: <span className="text-[rgb(26,175,172,1)] flex items-center"><RiLockPasswordFill className='mr-1'/> Reset Password</span>,
       key: '2',
     },
     {
-      label: <span className="text-[rgb(26,175,172,1)]"><SwapOutlined className='mr-1'/> Transaction</span>,
+      label: <span className="text-[rgb(26,175,172,1)] flex items-center"><SwapOutlined className='mr-1'/> Transaction</span>,
       key: '1',
     },
     {
-      label: <span className="text-[rgb(243,67,67,1)]"><UserDeleteOutlined className='mr-1'/> Delete</span>,
+      label: <span className="text-[rgb(243,67,67,1)] flex items-center"><UserDeleteOutlined className='mr-1'/> Delete</span>,
       key: '10',
     },
   ];
@@ -109,9 +106,9 @@ const UserManageTable = ({data, onUserStatusChangeAction, onDeleteUser, onResetP
       }),
     },
     {
-      title: <HeadTitle title={"Influencer Name"} />,
-      dataIndex: 'influencerName',
-      key: 'influencerName',
+      title: <HeadTitle title={"User Name"} />,
+      dataIndex: 'userName',
+      key: 'userName',
       onCell: () => ({
         style: { minWidth: '150px' }, // Set min-width for the first column in tbody
       }),

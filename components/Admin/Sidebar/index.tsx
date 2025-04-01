@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import SidebarItem from "@/components/Sidebar/SidebarItem";
+import SidebarItem from "@/components/Admin/Sidebar/SidebarItem";
 import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import {
@@ -29,13 +29,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           route: "/admin",
         },
         {
-          icon: (<TeamOutlined />),
-          label: "Manage Influencer",
-          route: "/admin/influencerManage",
-        },
-        {
           icon: (<UserOutlined />),
-          label: "Manage User",
+          label: "Users",
           route: "/admin/userManage",
         },
         // {
@@ -63,7 +58,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside
-        className={`fixed left-0 top-0 z-[100] flex h-screen w-72.5 flex-col overflow-y-hidden bg-[#130d25] duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed left-0 top-0 z-[100] flex h-screen w-72.5 flex-col overflow-y-hidden bg-[#1d2125] duration-300 ease-linear dark:bg-boxdark lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
       >
         {/* <!-- SIDEBAR HEADER --> */}
@@ -76,7 +71,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               alt="Logo"
               priority
             />
-            <span className="font-semibold text-white text-[30px]">WECAZOO</span>
+            <span className="font-semibold text-white text-[30px]">DuelPack</span>
           </Link>
 
           <button
@@ -99,7 +94,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             </svg>
           </button>
         </div>
-        <div className="border-b-[1px] border-gray-900 w-[80%] mx-auto"></div>
+        <div className="border-b-[1px] border-gray-600 w-[80%] mx-auto"></div>
         {/* <!-- SIDEBAR HEADER --> */}
 
         <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">

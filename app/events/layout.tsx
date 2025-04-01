@@ -11,6 +11,7 @@ export default function WalletLayout({
 
       <main className="flex-grow">{children}</main>
 
+      <Footer />
     </div>
   );
 }

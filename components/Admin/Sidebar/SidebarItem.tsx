@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import SidebarDropdown from "@/components/Sidebar/SidebarDropdown";
+import SidebarDropdown from "@/components/Admin/Sidebar/SidebarDropdown";
 import { usePathname } from "next/navigation";
 
 const SidebarItem = ({ item, pageName, setPageName }: any) => {
@@ -28,7 +28,7 @@ const SidebarItem = ({ item, pageName, setPageName }: any) => {
         <Link
           href={item.route}
           onClick={handleClick}
-          className={`${isItemActive ? "bg-[#07001A] rounded-lg dark:bg-meta-4" : ""} group relative flex items-center gap-2.5 px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4`}
+          className={`${isItemActive ? "bg-gray-600 rounded-lg dark:bg-meta-4" : ""} group relative flex items-center gap-2.5 px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out`}
         >
           <span className="text-[20px]">{item.icon}</span>
           {item.label}

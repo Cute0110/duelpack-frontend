@@ -9,6 +9,7 @@ export default function PacksLayout({
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <main className="flex-grow">{children}</main>
+      <Footer />
     </div>
   );
 }

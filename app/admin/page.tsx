@@ -1,7 +1,7 @@
 "use client";
 
 import Dashboard from "@/components/Admin/Dashboard";
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import DefaultLayout from "@/components/Admin/Layouts/DefaultLayout";
 import Loader from "@/components/Loader";
 import axiosInstance from "@/lib/action";
 import { useAuth } from "@/lib/authContext";
@@ -14,7 +14,7 @@ const Admin = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Wecazoo Admin";
+    document.title = "DuelPack Admin";
 
     const check_auth = async () => {
       setIsLoading(true);
@@ -34,6 +34,7 @@ const Admin = () => {
       } catch (err) {
         router.push("/");
       } finally {
+        setIsLoading(false);
       }
     }
     check_auth();

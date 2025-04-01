@@ -11,6 +11,7 @@ export default function BattlesLayout({
 
       <main className="flex-grow">{children}</main>
 
+      <Footer />
     </div>
   );
 }

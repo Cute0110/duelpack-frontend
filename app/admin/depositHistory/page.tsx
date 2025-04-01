@@ -1,6 +1,6 @@
 "use client";
 
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import DefaultLayout from "@/components/Admin/Layouts/DefaultLayout";
 import Loader from "@/components/Loader";
 import axiosInstance from "@/lib/action";
 import { useAuth } from "@/lib/authContext";
@@ -9,8 +9,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { notification } from 'antd';
 import type { NotificationArgsProps } from 'antd';
-import InfluencerManage from "@/components/Admin/InfluencerManage";
-import ProviderManage from "@/components/Admin/ProviderManage";
 import DepositHistory from "@/components/Admin/DepositHistory";
 
 type NotificationPlacement = NotificationArgsProps['placement'];

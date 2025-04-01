@@ -26,7 +26,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-lg font-medium text-white dark:text-white font-semibold">
-            {authData?.userCode}
+            {authData?.userName}
           </span>
           <span className="block text-xs">{authData?.balance?.toFixed(2)} $</span>
         </span>

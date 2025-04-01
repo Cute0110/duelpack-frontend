@@ -9,6 +9,7 @@ export default function WalletLayout({
   return (
     <div className="min-h-screen bg-black text-foreground flex flex-col">
       <main className="flex-grow">{children}</main>
+      <Footer />
     </div>
   );
 }

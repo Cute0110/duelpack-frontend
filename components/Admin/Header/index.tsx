@@ -9,7 +9,7 @@ const Header = (props: {
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
   return (
-    <header className="sticky top-0 z-50 flex w-full bg-[#130d25] drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
+    <header className="sticky top-0 z-50 flex w-full bg-[#1d2125] drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
           {/* <!-- Hamburger Toggle BTN --> */}
@@ -25,14 +25,14 @@ const Header = (props: {
           </button>
           {/* <!-- Hamburger Toggle BTN --> */}
 
-          <div className="block flex-shrink-0 lg:hidden ml-6">
+          <Link href="/" className="block flex-shrink-0 lg:hidden ml-6">
             <Image
               width={50}
               height={50}
-              src={"/wecazoo-logo.svg"}
+              src={"/duelpack-logo.svg"}
               alt="Logo"
             />
-          </div>
+          </Link>
         </div>
 
         <div className="flex items-center gap-3 2xsm:gap-7 ml-auto">

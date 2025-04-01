@@ -96,6 +96,47 @@ body {
   color: white !important;
 }
 
+.ant-pagination {
+  display: flex;
+  align-items: center;
+}
+
+.ant-table-cell {
+  background: #1d2125 !important;
+  color: white !important;
+}
+
+.ant-table-cell-row-hover {
+  background: #1d2125 !important;
+  opacity: 0.9;
+  color: white !important;
+}
+
+.ant-table-wrapper .ant-table-column-sorter {
+  color: white !important;
+}
+
+.ant-table-wrapper .ant-table-thead >tr>th {
+  border-bottom: 1px solid #5a5e62 !important;
+}
+
+.ant-table-wrapper .ant-table-tbody >tr >td {
+  border-bottom: 1px solid #5a5e62 !important;
+}
+
+.ant-empty-description {
+  color: white !important;
+}
+
+.ant-pagination-simple-pager {
+  color: white !important;
+}
+
+.ant-pagination-simple-pager input {
+  background: #34383c !important;
+  color: white !important;
+}
+
 ::-webkit-scrollbar {
   width: 4px;
 }
