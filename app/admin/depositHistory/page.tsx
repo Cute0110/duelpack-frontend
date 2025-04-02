@@ -29,7 +29,7 @@ const DepositHistoryPage = () => {
     });
   };
   useEffect(() => {
-    document.title = "Wecazoo Admin";
+    document.title = "DuelPack Admin";
 
     const check_auth = async () => {
       setIsLoading(true);

@@ -8,9 +8,9 @@ import SidebarItem from "@/components/Admin/Sidebar/SidebarItem";
 import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import {
-  HomeOutlined, UserOutlined, TeamOutlined, CommentOutlined, DollarOutlined, ProductOutlined, UserSwitchOutlined, HistoryOutlined
-  , FileSyncOutlined, FundProjectionScreenOutlined, CopyOutlined, LineChartOutlined, FieldTimeOutlined, RubyOutlined, LinkOutlined, HddOutlined, AppstoreOutlined
+  HomeOutlined, UserOutlined, ProductOutlined, FieldTimeOutlined, AppstoreOutlined
 } from "@ant-design/icons";
+import { SquareStack, PanelRightOpen, PanelRightClose } from "lucide-react";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -33,19 +33,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           label: "Users",
           route: "/admin/userManage",
         },
-        // {
-        //   icon: (<ProductOutlined />),
-        //   label: "Manage Provider",
-        //   route: "/admin/providerManage",
-        // },
         {
-          icon: (<FieldTimeOutlined />),
-          label: "Deposit Histories",
+          icon: (<ProductOutlined />),
+          label: "Packs",
+          route: "/admin/packManage",
+        },
+        {
+          icon: (<SquareStack size={20}/>),
+          label: "Items",
+          route: "/admin/itemManage",
+        },
+        {
+          icon: (<PanelRightClose />),
+          label: "Deposit",
           route: "/admin/depositHistory",
         },
         {
-          icon: (<FieldTimeOutlined />),
-          label: "Withdraw Histories",
+          icon: (<PanelRightOpen />),
+          label: "Withdraw",
           route: "/admin/withdrawHistory",
         },
       ],
