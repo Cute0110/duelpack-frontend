@@ -36,7 +36,13 @@ const PayPalButton = ({ depositAmount }: any) => {
       try {
         let response = await axiosInstance.post('api/create_order', eot({
           user_id: authData.id,
-          order_price: amount
+          order_price: amount,
+          application_context: {
+            experience_context: {
+              no_shipping: 1, // ✅ Another way to disable shipping
+            },
+            shipping_preference: "NO_SHIPPING" // 🚀 Removes address input
+          }
         }))
         const data = dot(response.data);
         return data.orderId;
@@ -70,7 +76,8 @@ const PayPalButton = ({ depositAmount }: any) => {
         options={{
           clientId,
           currency: 'USD',
-          intent: 'capture'
+          intent: 'capture',
+          'disable-funding': 'venmo'
         }}
       >
         <PayPalButtons
