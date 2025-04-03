@@ -30,8 +30,8 @@ const PayPalButton = ({ depositAmount }: any) => {
   };
 
   const paypalCreateOrder = async () => {
-    if (Number(amount) < 15 || amount == "") {
-      openNotification("warning", "Warning", "Minimum value is 15$!", "topRight");
+    if (Number(amount) < 10 || amount == "") {
+      openNotification("warning", "Warning", "Minimum value is 10$!", "topRight");
     } else {
       try {
         let response = await axiosInstance.post('api/create_order', eot({
@@ -99,7 +99,7 @@ const PayPalButton = ({ depositAmount }: any) => {
 
         <div className="flex items-center w-full gap-4 my-4">
           <div className="border-t-[1px] border-gray-600 flex-1"></div>
-          <span className="text-gray-600">Deposit with your card</span>
+          <span className="text-gray-600">Deposit with card</span>
           <div className="border-t-[1px] border-gray-600 flex-1"></div>
         </div>
 

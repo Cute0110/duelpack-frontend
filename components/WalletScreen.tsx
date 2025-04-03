@@ -86,8 +86,8 @@ const WalletScreen = () => {
 
     const onDepositClick = () => {
         if (!isNaN(Number(depositAmount)) && depositAmount.trim() !== "") {
-            if (Number(depositAmount) < 15) {
-                openNotification("warning", "Warning", "Minimum value is 15$!", "topRight");
+            if (Number(depositAmount) < 10) {
+                openNotification("warning", "Warning", "Minimum value is 10$!", "topRight");
             } else {
                 onCreateInvoice(Number(depositAmount));
             }
@@ -219,7 +219,7 @@ const WalletScreen = () => {
                                     <div className="block w-full">
                                         <div className="flex items-center w-full gap-4 my-4">
                                             <div className="border-t-[1px] border-gray-600 flex-1"></div>
-                                            <span className="text-gray-600">Deposit with your crypto wallet</span>
+                                            <span className="text-gray-600">Deposit with crypto</span>
                                             <div className="border-t-[1px] border-gray-600 flex-1"></div>
                                         </div>
                                         <div className="max-w-[500px] w-full mb-[6px]">
@@ -232,7 +232,7 @@ const WalletScreen = () => {
                                         </div>
                                         <div className="flex items-center w-full gap-4 my-4">
                                             <div className="border-t-[1px] border-gray-600 flex-1"></div>
-                                            <span className="text-gray-600">Deposit with your paypal account</span>
+                                            <span className="text-gray-600">Deposit with paypal</span>
                                             <div className="border-t-[1px] border-gray-600 flex-1"></div>
                                         </div>
                                         <div className="max-w-[500px] w-full">
