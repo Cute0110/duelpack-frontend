@@ -133,7 +133,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
       }
       <div className="flex">
         <div className="flex-1">
-          <header className="fixed top-0 left-0 right-0 z-40 bg-[#1d2125] h-[75px] border-b-[1px] border-gray-600">
+          <header className="fixed top-0 left-0 right-0 z-[999] bg-[#1d2125] h-[75px] border-b-[1px] border-gray-600">
             <div className={`mx-auto h-[75px] flex items-center justify-between container relative`}>
               <div className="flex items-center">
                 <Link href="/" className="flex items-center">

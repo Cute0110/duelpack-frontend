@@ -26,13 +26,13 @@ const DepositPaymentDialog = ({ isOpen, onClose, paymentUrl }: DepositPaymentDia
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[800px] min-h-[800px] p-0">
+      <DialogContent className="max-w-[800px] min-h-[600px] md:min-h-[800px] p-0">
         <DialogTitle className="p-3 h-[30px]">Deposit Balance</DialogTitle>
         <div className="w-full h-full">
           <iframe
             ref={iframeRef}
             src={paymentUrl.replace('http://', 'https://')}
-            className="w-full h-[800px]"
+            className="w-full h-[600px] md:h-[800px]"
             style={{ borderRadius: '8px' }}
             // Add security attributes
             sandbox="allow-scripts allow-same-origin allow-forms allow-popups"

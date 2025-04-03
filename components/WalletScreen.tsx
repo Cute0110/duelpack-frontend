@@ -22,6 +22,9 @@ import GuideBuyCyrpto from "./Modals/GuideBuyCrypto";
 import Footer from "./Footer";
 import DepositPaymentDialog from "./Modals/DepositPaymentDialog";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const PayPalButton = dynamic(() => import("./PaypalButton"), { ssr: false });
 
 const web3 = new Web3();
 
@@ -186,10 +189,10 @@ const WalletScreen = () => {
                                 <BiMoneyWithdraw className="mr-2 text-lg md:text-xl" />
                                 <span className="text-sm md:text-base">Withdraw</span>
                             </TabsTrigger>
-                            <TabsTrigger value="buyCrypto">
+                            {/* <TabsTrigger value="buyCrypto">
                                 <BiCoinStack className="mr-2 text-lg md:text-xl" />
                                 <span className="text-sm md:text-base">Buy Crypto</span>
-                            </TabsTrigger>
+                            </TabsTrigger> */}
                             {/* <TabsTrigger value="transaction">
                 <RiExchangeDollarLine className="mr-2 text-lg md:text-xl" />
                 <span className="text-sm md:text-base">Transaction</span>
@@ -198,32 +201,35 @@ const WalletScreen = () => {
                         {/* tab content */}
                         <div className="w-full lg:max-w-4xl xl:max-w-6xl">
                             <TabsContent value="deposit">
-                                <div className="bg-[#161a1d] flex flex-col p-5 md:p-6 gap-8">
+                                <div className="bg-[#161a1d] flex flex-col p-5 md:p-6 gap-8 rounded-md">
                                     <h2 className="text-xl font-semibold">Deposit Crypto</h2>
-                                    <div className="flex flex-col justify-center items-center md:justify-between gap-6 divide-y divide-gray-500/50 md:divide-none">
-                                        <div className="flex gap-4 w-full justify-start items-center pt-6 md:pt-0">
-                                            <div className="relative w-full max-w-[500px]">
-                                                <span className="absolute left-[10px] top-[50%] -translate-y-1/2 text-[20px]">$</span>
-                                                <input
-                                                    type="depositAmount"
-                                                    id="depositAmount"
-                                                    name="depositAmount"
-                                                    placeholder="Input deposit amount"
-                                                    value={depositAmount}
-                                                    onChange={handleDepositAmountInputChange}
-                                                    className="w-full text-[15px] px-6 py-2 mx-1 border rounded-xl bg-[#34383c] flex items-center"
-                                                    required
-                                                />
-                                            </div>
+                                    <div className="relative w-full max-w-[500px]">
+                                        <span className="absolute left-[10px] top-[50%] -translate-y-1/2 text-[20px]">$</span>
+                                        <input
+                                            type="depositAmount"
+                                            id="depositAmount"
+                                            name="depositAmount"
+                                            placeholder="Input deposit amount"
+                                            value={depositAmount}
+                                            onChange={handleDepositAmountInputChange}
+                                            className="w-full text-[15px] px-6 py-2 mx-1 border rounded-xl bg-[#34383c] flex items-center"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="block md:flex items-start justify-start gap-4 w-full">
+                                        <div className="max-w-[500px] w-full md:mb-0 mb-4">
                                             <button
-                                                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-6 h-10 w-28"
+                                                className="w-full rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-gray-400 font-bold hover:bg-gray-500 disabled:text-gray-400 px-6 h-[50px]"
                                                 onClick={() => onDepositClick()}
                                             >
-                                                Deposit
+                                                Pay with <span className="text-white">Crypto</span>
                                             </button>
                                         </div>
+                                        <div className="max-w-[500px] w-full">
+                                            <PayPalButton depositAmount={depositAmount} />
+                                        </div>
                                     </div>
-                                    <div>
+                                    {/* <div>
                                         <h2 className="text-xl font-semibold">Suggested Amount</h2>
                                         <div className="flex flex-col my-4 gap-3">
                                             {depositAmountArray.map((amount, index) => (
@@ -236,17 +242,17 @@ const WalletScreen = () => {
                                                             className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-6 h-10 w-28"
                                                             onClick={() => onCreateInvoice(amount)}
                                                         >
-                                                            Deposit
+                                                            Pay with Crypto
                                                         </button>
                                                     </div>
                                                 </div>
                                             ))}
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </TabsContent>
                             <TabsContent value="withdraw">
-                                <div className="bg-[#161a1d] flex flex-col p-5 md:p-6 gap-4">
+                                <div className="bg-[#161a1d] flex flex-col p-5 md:p-6 gap-4 rounded-md">
                                     <h2 className="text-xl font-semibold">Withdraw Crypto</h2>
                                     <div>
                                         <h2 className="text-muted font-lg">Your Balance</h2>
@@ -304,8 +310,8 @@ const WalletScreen = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        <button 
-                                            type="button" 
+                                        <button
+                                            type="button"
                                             className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-4 h-10 w-28 mx-2"
                                             onClick={onWithdrawClick}
                                         >
@@ -314,28 +320,11 @@ const WalletScreen = () => {
                                     </div>
                                 </div>
                             </TabsContent>
-                            <TabsContent value="buyCrypto">
-                                <div className="bg-[#161a1d] flex flex-col p-5 md:p-6 gap-8">
-                                    <h2 className="text-xl font-semibold">Buy Crypto</h2>
-                                    <div className="flex flex-col justify-center items-center md:justify-between gap-6 divide-y divide-gray-500/50 md:divide-none">
-
-                                        <div className="flex flex-col">
-                                            <button type="button" onClick={openDepositSite} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-blue-400 text-base text-white font-bold hover:bg-blue-500 disabled:text-blue-600 px-6 h-10 w-full md:w-[35%] mx-auto"><WalletIcon className="w-5 h-5 mr-3" />Buy Crypto</button>
-                                            <Link href="https://changelly.com/buy-crypto" target="_blank" className="flex items-center text-gray-300 hover:text-white w-[80%] md:w-[30%] mx-auto" style={{ "marginTop": '20px' }}>
-                                                <img
-                                                    src="/images/pay.png"
-                                                    alt="VIP"
-                                                    className="w-full h-auto rounded-lg"
-                                                />
-                                            </Link>
-                                            <span className="text-gray-400 w-full md:w-[40%] mx-auto">No Crypto? No Problem. You can now buy crypto easily through changelly, a wecazoo partner. <br />
-                                                Just select how much you want to buy and which crypto you want to buy. <br />
-                                                Then paste in your own wallet address and
-                                                choose your preferred method of payment, some examples are mastercard, visa, paypal, google pay, apple pay & many more.</span>
-                                        </div>
-                                    </div>
+                            {/* <TabsContent value="buyCrypto">
+                                <div className="bg-[#161a1d] flex flex-col rounded-md">
+                                    <PayPalButton />
                                 </div>
-                            </TabsContent>
+                            </TabsContent> */}
                             {/* <TabsContent value="transaction">
                 <div className="bg-[#130D25] flex flex-col px-4 py-8 md:p-8 gap-8 justify-center">
                   <div className="flex gap-4 items-start w-fit">
