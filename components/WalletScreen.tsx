@@ -12,7 +12,7 @@ import { MdOutlineAccountBalanceWallet } from "react-icons/md";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { useAuth } from "@/lib/authContext";
 import { useState } from "react";
-import { Input, notification, Select } from 'antd';
+import { Divider, Input, notification, Select } from 'antd';
 import type { NotificationArgsProps } from 'antd';
 import axiosInstance from "@/lib/action";
 import { eot, dot } from "@/lib/cryptoUtils";
@@ -201,7 +201,7 @@ const WalletScreen = () => {
                         {/* tab content */}
                         <div className="w-full lg:max-w-4xl xl:max-w-6xl">
                             <TabsContent value="deposit">
-                                <div className="bg-[#161a1d] flex flex-col p-5 md:p-6 gap-8 rounded-md">
+                                <div className="bg-[#161a1d] flex flex-col p-5 md:p-6 gap-8 rounded-md max-w-[500px]">
                                     <h2 className="text-xl font-semibold">Deposit Crypto</h2>
                                     <div className="relative w-full max-w-[500px]">
                                         <span className="absolute left-[10px] top-[50%] -translate-y-1/2 text-[20px]">$</span>
@@ -216,14 +216,24 @@ const WalletScreen = () => {
                                             required
                                         />
                                     </div>
-                                    <div className="block md:flex items-start justify-start gap-4 w-full">
-                                        <div className="max-w-[500px] w-full md:mb-0 mb-4">
+                                    <div className="block w-full">
+                                        <div className="flex items-center w-full gap-4 my-4">
+                                            <div className="border-t-[1px] border-gray-600 flex-1"></div>
+                                            <span className="text-gray-600">Deposit with your crypto wallet</span>
+                                            <div className="border-t-[1px] border-gray-600 flex-1"></div>
+                                        </div>
+                                        <div className="max-w-[500px] w-full mb-[6px]">
                                             <button
                                                 className="w-full rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-gray-400 font-bold hover:bg-gray-500 disabled:text-gray-400 px-6 h-[50px]"
                                                 onClick={() => onDepositClick()}
                                             >
                                                 Pay with <span className="text-white">Crypto</span>
                                             </button>
+                                        </div>
+                                        <div className="flex items-center w-full gap-4 my-4">
+                                            <div className="border-t-[1px] border-gray-600 flex-1"></div>
+                                            <span className="text-gray-600">Deposit with your paypal account</span>
+                                            <div className="border-t-[1px] border-gray-600 flex-1"></div>
                                         </div>
                                         <div className="max-w-[500px] w-full">
                                             <PayPalButton depositAmount={depositAmount} />
