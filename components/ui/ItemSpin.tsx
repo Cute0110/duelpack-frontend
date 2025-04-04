@@ -18,6 +18,7 @@ const ItemSpin = ({
   const [visibleItems, setVisibleItems] = useState(9); // Current speed
   const [gap, setGap] = useState(8); // Current speed
   const [itemWidth, setItemWidth] = useState(0); // Width of each item
+  const [currentMidIndex, setCurrentMidIndex] = useState(-1); // Width of each item
 
   // Adjust the item width based on screen width and the number of items to show
   useEffect(() => {
@@ -75,6 +76,7 @@ const ItemSpin = ({
         requestAnimationFrame(animateScroll);
       } else {
         setSpeed(0);
+        setCurrentMidIndex(-1);
         setSelectedIndex(selectedIndex);
         onSpinFinish(packIndex);
       }
@@ -94,6 +96,9 @@ const ItemSpin = ({
     let animationFrameId: number;
     const scroll = () => {
       if (containerRef.current) {
+
+        const currentIndex: any = calculateCenterItem();
+        setCurrentMidIndex(currentIndex);
         // Scroll the container
         containerRef.current.scrollLeft += speed;
         // Looping logic: If we reach the end, reset scroll to the beginning smoothly
@@ -165,7 +170,9 @@ const ItemSpin = ({
                   </div>
                   :
                   <div className="relative aspect-square group flex items-center justify-center">
-                    <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
+                    {currentMidIndex == index ? <img src="./images/packSelector.png" className="absolute top-6 inset-0 m-auto w-3/5 aspect-square" /> :
+                      <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
+                    }
                     <img src={`./images/items/${data.item.imageUrl}`} className="w-3/5 aspect-square relative mt-6" />
                   </div>
                 }
@@ -190,7 +197,9 @@ const ItemSpin = ({
                   </div>
                   :
                   <div className="relative aspect-square group flex items-center justify-center">
-                    <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
+                    {currentMidIndex == (index + carouselItems.length) ? <img src="./images/packSelector.png" className="absolute top-6 inset-0 m-auto w-3/5 aspect-square" /> :
+                      <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
+                    }
                     <img src={`./images/items/${data.item.imageUrl}`} className="w-3/5 aspect-square relative mt-6" />
                   </div>
                 }

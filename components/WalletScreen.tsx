@@ -202,7 +202,7 @@ const WalletScreen = () => {
                         <div className="w-full lg:max-w-4xl xl:max-w-6xl">
                             <TabsContent value="deposit">
                                 <div className="bg-[#161a1d] flex flex-col p-5 md:p-6 gap-8 rounded-md max-w-[500px]">
-                                    <h2 className="text-xl font-semibold">Deposit Crypto</h2>
+                                    <h2 className="text-xl font-semibold">Deposit</h2>
                                     <div className="relative w-full max-w-[500px]">
                                         <span className="absolute left-[10px] top-[50%] -translate-y-1/2 text-[20px]">$</span>
                                         <input
@@ -263,7 +263,7 @@ const WalletScreen = () => {
                             </TabsContent>
                             <TabsContent value="withdraw">
                                 <div className="bg-[#161a1d] flex flex-col p-5 md:p-6 gap-4 rounded-md">
-                                    <h2 className="text-xl font-semibold">Withdraw Crypto</h2>
+                                    <h2 className="text-xl font-semibold">Withdraw</h2>
                                     <div>
                                         <h2 className="text-muted font-lg">Your Balance</h2>
                                         <p className="font-semibold text-lg">${authData.balance.toFixed(5)}</p>

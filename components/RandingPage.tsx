@@ -187,9 +187,9 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                       <div className="text-[#f6e05e] font-semibold">{data.multi.toFixed(2)}X</div>
                       <img src={data.user.avatarURL} className="rounded-full w-6" />
                     </div>
-                    <img src={`./images/forge/${data.imageUrl}`} className="rounded-xl" />
-                    <p className="w-full text-center font-semibold text-md text-gray-500 truncate px-8">{data.name}</p>
-                    <p className="w-full text-center font-semibold text-lg">${data.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                    <img src={`./images/items/${data.item.imageUrl}`} className="rounded-xl h-24 mx-auto" />
+                    <p className="w-full text-center font-semibold text-md text-gray-500 truncate px-8">{data.item.name}</p>
+                    <p className="w-full text-center font-semibold text-lg">${data.item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                   </div>
                 ))}
               </div>
