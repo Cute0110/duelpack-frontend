@@ -71,7 +71,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
     setIsLoading(true);
     setIsCartModalOpen(true);
     try {
-      const response = await axiosInstance.post('/api/cart_list', eot({userId: authData.id}));
+      const response = await axiosInstance.post('/api/cart_list', eot({ userId: authData.id }));
       const res = dot(response.data);
       if (res.status == 1) {
         setCartData({ data: res.data, count: res.count });
@@ -218,9 +218,11 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                     >
                       Deposit
                     </button>
-                    <div>
-                      <img src={authData.avatarURL} className="rounded-full w-8 cursor-pointer" onClick={() => setIsOpen(!isOpen)} />
-                    </div>
+                    {!isMobile &&
+                      <div>
+                        <img src={authData.avatarURL} className="rounded-full w-8 cursor-pointer" onClick={() => setIsOpen(!isOpen)} />
+                      </div>
+                    }
                   </div>
                 )}
 
@@ -248,7 +250,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                   </div>
                 )}
 
-                {isMobile && !isAuthenticated && (
+                {isMobile && (
                   !isOpen ?
                     <button onClick={() => setIsOpen(!isOpen)}>
                       <Menu className="w-6 h-6 mb-1" />

@@ -170,10 +170,10 @@ const ItemSpin = ({
                   </div>
                   :
                   <div className="relative aspect-square group flex items-center justify-center">
-                    {currentMidIndex == index ? <img src="./images/packSelector.png" className="absolute top-6 inset-0 m-auto w-3/5 aspect-square" /> :
+                    {currentMidIndex == index ? <img src="./images/packSelector.png" className="absolute top-6 inset-0 m-auto w-5/6 aspect-square" /> :
                       <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
                     }
-                    <img src={`./images/items/${data.item.imageUrl}`} className="w-3/5 aspect-square relative mt-6" />
+                    <img src={`./images/items/${data.item.imageUrl}`} className="w-4/5 aspect-square relative mt-6" />
                   </div>
                 }
               </div>
@@ -197,10 +197,11 @@ const ItemSpin = ({
                   </div>
                   :
                   <div className="relative aspect-square group flex items-center justify-center">
-                    {currentMidIndex == (index + carouselItems.length) ? <img src="./images/packSelector.png" className="absolute top-6 inset-0 m-auto w-3/5 aspect-square" /> :
+                    {currentMidIndex == (index + carouselItems.length) ? 
+                      <img src="./images/packSelector.png" className="absolute top-6 inset-0 m-auto w-5/6 aspect-square" /> :
                       <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
                     }
-                    <img src={`./images/items/${data.item.imageUrl}`} className="w-3/5 aspect-square relative mt-6" />
+                    <img src={`./images/items/${data.item.imageUrl}`} className="w-4/5 aspect-square relative mt-6" />
                   </div>
                 }
               </div>

@@ -146,6 +146,9 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                   <Packs className="h-8 w-auto text-gray-600" />
                   <span className="text-lg font-bold">New Packs</span>
                 </div>
+                <div>
+                  <a href="/packs" className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Packs</a>
+                </div>
               </div>
               <div className="w-full grid grid-cols-2 md:grid-cols-6 gap-6 mt-4">
                 {packs.map((data: any, index) => (
@@ -159,6 +162,9 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                   <Battles className="h-8 w-auto text-gray-600" />
                   <span className="text-lg font-bold">Battle Highlights</span>
                 </div>
+                <div>
+                  <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View Battles</button>
+                </div>
               </div>
               <div className="w-full mt-4 bg-[#22272b] h-[100px] rounded-xl text-center p-[35px]">
                 No Battles
@@ -169,6 +175,9 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                 <div className="flex items-center gap-2">
                   <Forge className="h-8 w-auto text-gray-600" />
                   <span className="text-lg font-bold">Forge Highlights</span>
+                </div>
+                <div>
+                  <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View Forge</button>
                 </div>
               </div>
               <div className="w-full grid grid-cols-2 md:grid-cols-6 gap-6 mt-4">
@@ -190,6 +199,9 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                 <div className="flex items-center gap-2">
                   <FAQSVG className="h-6 w-auto text-gray-600" />
                   <span className="text-lg font-bold">How DuelPack Works</span>
+                </div>
+                <div>
+                  <a href="/packs" className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Packs</a>
                 </div>
               </div>
               <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">

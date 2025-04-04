@@ -188,9 +188,14 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
   }
 
   const onClickBuyItem = () => {
+
     if (isAuthenticated) {
-      setSpinType(true);
-      onStartSpin();
+      if (authData.balance < addedPacksTotalPrice) {
+        openNotification("warning", "Warning", "Deposit first!", "topRight");
+      } else {
+        setSpinType(true);
+        onStartSpin();
+      }
     } else {
       setIsAuthModalOpen(true);
     }
