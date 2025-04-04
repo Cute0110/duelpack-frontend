@@ -1,17 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Minus, Plus } from "lucide-react";
-import Image from "next/image";
-
 import Packs from "@/public/images/packs.svg";
 import Battles from "@/public/images/battles.svg";
 import Forge from "@/public/images/forge.svg";
-import Events from "@/public/images/events.svg";
-import Rewards from "@/public/images/rewards.svg";
 import FAQSVG from "@/public/images/faq.svg";
-import UpArrow from "@/public/images/upArrow.svg";
 import DownArrow from "@/public/images/downArrow.svg";
 import EachPack from "./EachPack";
 import PackItemsModal from "./Modals/PackItemsModal";
@@ -177,7 +170,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                   <span className="text-lg font-bold">Forge Highlights</span>
                 </div>
                 <div>
-                  <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View Forge</button>
+                <a href="/forge" className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View Forge</a>
                 </div>
               </div>
               <div className="w-full grid grid-cols-2 md:grid-cols-6 gap-6 mt-4">

@@ -264,7 +264,7 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
 
       <audio ref={failedAudioRef} src="/sounds/spin/failed.mp3" />
       <audio ref={successAudioRef} src="/sounds/spin/success.mp3" />
-      <div className="mt-[75px] relative">
+      <div className="mt-[75px] pt-4 relative">
         <Link href="/" className="flex items-center absolute top-2 left-[50%] -translate-x-1/2 z-10">
           <img src="./duelpack-logo.svg" alt="Wecazoo Logo" className="h-9 lg:h-11 w-auto" />
           <h1 className="text-xl text-white font-bold ml-2">DuelPack</h1>

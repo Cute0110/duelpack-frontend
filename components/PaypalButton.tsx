@@ -3,7 +3,7 @@ import { useAuth } from "@/lib/authContext";
 import { dot, eot } from "@/lib/cryptoUtils";
 import { PayPalButtons, PayPalScriptProvider, FUNDING } from "@paypal/react-paypal-js";
 import { useEffect, useState } from "react";
-import { Divider, Input, notification, Select } from 'antd';
+import { notification } from 'antd';
 import type { NotificationArgsProps } from 'antd';
 
 type NotificationPlacement = NotificationArgsProps['placement'];

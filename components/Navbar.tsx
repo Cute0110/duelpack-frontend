@@ -373,28 +373,6 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                           </div>
                         )}
                         <div className="w-full h-[1px] border-t-[1px] border-gray-600 mt-2"></div>
-                        {/* {!isAuthenticated && (
-                          <div className="flex items-center gap-3 m-2">
-                            <button
-                              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-6 h-10 w-28"
-                              onClick={() => {
-                                setIsAuthModalOpen(true);
-                                setIsAuthModalType(true);
-                              }}
-                            >
-                              Login
-                            </button>
-                            <button
-                              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-blue-400 text-base text-white font-bold hover:bg-blue-500 disabled:text-blue-600 px-6 h-10 w-28"
-                              onClick={() => {
-                                setIsAuthModalOpen(true);
-                                setIsAuthModalType(false);
-                              }}
-                            >
-                              Sign Up
-                            </button>
-                          </div>
-                        )} */}
                         <div className="relative p-4">
                           <input
                             placeholder="Promotion code"

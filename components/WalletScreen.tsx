@@ -1,27 +1,17 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "./ui/button";
-import { Icon } from "@iconify/react";
-import { ChevronDown, ChevronDownIcon, CopyIcon, WalletIcon } from "lucide-react";
-import Image from "next/image";
-import { FaArrowUp, FaQuestionCircle } from "react-icons/fa";
-import { RiExchangeDollarLine } from "react-icons/ri";
-import { BiMoneyWithdraw, BiCoinStack } from "react-icons/bi";
-import { MdOutlineAccountBalanceWallet } from "react-icons/md";
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import { FaArrowUp } from "react-icons/fa";
+import { BiMoneyWithdraw } from "react-icons/bi";
 import { useAuth } from "@/lib/authContext";
 import { useState } from "react";
-import { Divider, Input, notification, Select } from 'antd';
+import { notification, Select } from 'antd';
 import type { NotificationArgsProps } from 'antd';
 import axiosInstance from "@/lib/action";
 import { eot, dot } from "@/lib/cryptoUtils";
 import Web3 from 'web3';
-import { isAddress } from 'web3-validator';
 import GuideBuyCyrpto from "./Modals/GuideBuyCrypto";
-import Footer from "./Footer";
 import DepositPaymentDialog from "./Modals/DepositPaymentDialog";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 
 const PayPalButton = dynamic(() => import("./PaypalButton"), { ssr: false });
@@ -153,17 +143,6 @@ const WalletScreen = () => {
         setPaymentUrl("");
     };
 
-    const onScrollTo = (gameSection: any) => {
-        const element = document.getElementById(gameSection); // Replace with your target element's ID
-        if (element) {
-            const top = element.getBoundingClientRect().top + window.scrollY - 76;
-            window.scrollTo({
-                top: top,
-                behavior: "smooth", // Adds smooth scrolling
-            });
-        }
-    }
-
     return (
         <>
             {contextHolder}
@@ -189,14 +168,6 @@ const WalletScreen = () => {
                                 <BiMoneyWithdraw className="mr-2 text-lg md:text-xl" />
                                 <span className="text-sm md:text-base">Withdraw</span>
                             </TabsTrigger>
-                            {/* <TabsTrigger value="buyCrypto">
-                                <BiCoinStack className="mr-2 text-lg md:text-xl" />
-                                <span className="text-sm md:text-base">Buy Crypto</span>
-                            </TabsTrigger> */}
-                            {/* <TabsTrigger value="transaction">
-                <RiExchangeDollarLine className="mr-2 text-lg md:text-xl" />
-                <span className="text-sm md:text-base">Transaction</span>
-              </TabsTrigger> */}
                         </TabsList>
                         {/* tab content */}
                         <div className="w-full lg:max-w-4xl xl:max-w-6xl">
@@ -239,26 +210,6 @@ const WalletScreen = () => {
                                             <PayPalButton depositAmount={depositAmount} />
                                         </div>
                                     </div>
-                                    {/* <div>
-                                        <h2 className="text-xl font-semibold">Suggested Amount</h2>
-                                        <div className="flex flex-col my-4 gap-3">
-                                            {depositAmountArray.map((amount, index) => (
-                                                <div key={index} className="flex items-center justify-between bg-[#34383c] rounded-[10px] px-6 py-5 md:py-4">
-                                                    <div className="flex items-center justify-center gap-2.5">
-                                                        <p className="font-semibold text-md">${amount.toFixed(2)}</p>
-                                                    </div>
-                                                    <div className="flex items-center justify-center gap-4">
-                                                        <button
-                                                            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-gray-600 text-base text-white font-bold hover:bg-gray-500 disabled:text-gray-400 px-6 h-10 w-28"
-                                                            onClick={() => onCreateInvoice(amount)}
-                                                        >
-                                                            Pay with Crypto
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div> */}
                                 </div>
                             </TabsContent>
                             <TabsContent value="withdraw">
@@ -330,73 +281,6 @@ const WalletScreen = () => {
                                     </div>
                                 </div>
                             </TabsContent>
-                            {/* <TabsContent value="buyCrypto">
-                                <div className="bg-[#161a1d] flex flex-col rounded-md">
-                                    <PayPalButton />
-                                </div>
-                            </TabsContent> */}
-                            {/* <TabsContent value="transaction">
-                <div className="bg-[#130D25] flex flex-col px-4 py-8 md:p-8 gap-8 justify-center">
-                  <div className="flex gap-4 items-start w-fit">
-                    <div className="flex flex-col gap-4">
-                      <div className="flex items-center justify-between space-x-8 md:space-x-12 bg-[#2A253A] rounded-[10px] py-3 px-6 min-w-fit h-12 md:h-14 whitespace-nowrap">
-                        <div className="flex items-center justify-center gap-2">
-                          <span className="text-sm md:text-lg">Deposit</span>
-                        </div>
-                        <ChevronDownIcon size={20} />
-                      </div>
-                      <div className="flex items-center justify-between space-x-8 md:space-x-12 bg-[#2A253A] rounded-[10px] py-3 px-6 min-w-fit h-12 md:h-14 whitespace-nowrap">
-                        <span className="text-sm md:text-lg">All Status</span>
-                        <ChevronDownIcon size={20} />
-                      </div>
-                    </div>
-                    <div className="flex gap-4 flex-col md:flex-row">
-                      <div className="flex items-center justify-between space-x-8 md:space-x-12 bg-[#2A253A] rounded-[10px] py-3 px-6 min-w-fit h-12 md:h-14 whitespace-nowrap">
-                        <span className="text-sm md:text-lg">All Assets</span>
-                        <ChevronDownIcon size={20} />
-                      </div>
-                      <div className="flex items-center justify-between space-x-8 md:space-x-12 bg-[#2A253A] rounded-[10px] py-3 px-4 min-w-fit h-12 md:h-14 whitespace-nowrap">
-                        <span className="text-sm md:text-lg">Past 60 days</span>
-                        <ChevronDownIcon size={20} />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="rounded-[10px] overflow-clip w-[85vw] sm:w-[80vw] md:w-[70vw]">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="bg-[#2a253a] px-6 py-3 text-sm md:text-base">
-                          <th className=" font-medium w-1/4 whitespace-nowrap py-3">
-                            Type
-                          </th>
-                          <th className="font-medium w-1/4 whitespace-nowrap py-3">
-                            Merchant ID
-                          </th>
-                          <th className="font-medium w-1/4 whitespace-nowrap py-3">
-                            Amount
-                          </th>
-                          <th className="font-medium w-1/4 whitespace-nowrap py-3">
-                            Status
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="text-sm md:text-base bg-gray-800/30">
-                        <tr className=" text-center">
-                          <td className="px-2 py-4 w-1/4">Deposit</td>
-                          <td className="px-2 py-4 w-1/4">123456</td>
-                          <td className="px-2 py-4 w-1/4">$100.00</td>
-                          <td className="px-2 py-4 w-1/4">Success</td>
-                        </tr>
-                        <tr className="text-center">
-                          <td className="px-2 py-4 w-1/4">Withdrawal</td>
-                          <td className="px-2 py-4 w-1/4">789012</td>
-                          <td className="px-2 py-4 w-1/4">$50.00</td>
-                          <td className="px-2 py-4 w-1/4">Pending</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </TabsContent> */}
                         </div>
                     </Tabs>
                 </div> :

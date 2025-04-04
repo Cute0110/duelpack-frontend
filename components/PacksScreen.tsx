@@ -158,16 +158,6 @@ const PacksScreen = ({ packsData }: any) => {
                 />
                 <SearchSVG className="absolute  h-5 text-white top-[50%] left-[10px] -translate-y-[50%]" />
               </div>
-              {/* <div>
-                <Select
-                  className="w-full"
-                  variant="filled"
-                  value={selectedPackType}
-                  onChange={onPackTypeChange}
-                  optionLabelProp="value"
-                  options={packTypeList.map((item) => ({ label: <span className="flex items-center text-md font-bold">{item.value == selectedPackType ? (<Check size={20} className="w-[30px]"/>) : <div className="w-[30px]"></div>}{item.label}</span>, value: item.value }))}
-                />
-              </div> */}
               <div className="col-start-1 md:col-start-3">
                 <Select
                   className="w-full"
@@ -189,14 +179,6 @@ const PacksScreen = ({ packsData }: any) => {
                   options={sortTypeList.map((item) => ({ label: <span className="flex items-center text-md font-semibold">{item.value == selectedSortType ? (<Check size={20} className="w-[30px]"/>) : <div className="w-[30px]"></div>}{item.label}</span>, value: item.value }))}
                 />
               </div>
-              {/* <div className="flex items-center col-span-2 md:col-span-1 justify-center rounded-md p-2 bg-[#4299e1] gap-2 hover:bg-[#3182ce] cursor-pointer">
-                <img
-                  src={"./duelpack-logo.svg"}
-                  alt="Wecazoo Logo"
-                  className="h-6 w-auto"
-                />
-                <span>Creat Pack</span>
-              </div> */}
             </div>
             <div className="w-full grid grid-cols-2 md:grid-cols-5 gap-4 mt-4 mb-12">
               {packs.map((data: any, index) => (
