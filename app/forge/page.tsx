@@ -66,9 +66,9 @@ const Forge = () => {
     }
   }
   
-  const onUserBalanceChange = async (userId: any, newBalance: any) => {
+  const onUserBalanceChange = async (userId: any, priceAmount: any) => {
     try {
-      const response = await axiosInstance.post('/api/user_balance_change', eot({ id: userId, newBalance }));
+      const response = await axiosInstance.post('/api/user_balance_change', eot({ id: userId, priceAmount }));
       const res = dot(response.data);
       if (res.status == 1) {
         try {

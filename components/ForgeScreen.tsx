@@ -172,7 +172,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onUserBalanceChange, isL
       if (authData.balance < betPriceVal) {
         openNotification("warning", "Warning", "Deposit first!", "topRight");
       } else {
-        onUserBalanceChange(authData.id, authData.balance - betPriceVal);
+        onUserBalanceChange(authData.id, (-1 * betPriceVal));
         setSpinType(true);
         setIsSpin(true);
         const timeoutId = setTimeout(() => {
@@ -208,7 +208,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onUserBalanceChange, isL
     if (result) {
       fireConfetti();
       if (spinType == true) {
-        onUserBalanceChange(authData.id, (authData.balance + betPriceVal * 92.59 / percentVal));
+        onUserBalanceChange(authData.id, betPriceVal * 92.59 / percentVal);
       }
     }
     setStopDegree(-1);

@@ -193,7 +193,7 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
       if (authData.balance < addedPacksTotalPrice) {
         openNotification("warning", "Warning", "Deposit first!", "topRight");
       } else {
-        onUserBalanceChange(authData.id, authData.balance - addedPacksTotalPrice);
+        onUserBalanceChange(authData.id, (-1 * addedPacksTotalPrice));
         setSpinType(true);
         onStartSpin();
       }
