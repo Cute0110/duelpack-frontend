@@ -155,21 +155,27 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
         </text>
       </svg>
       <div className="absolute w-[300px] h-[300px]">
-        <div className="relative w-full h-full">
-          <p className="block md:hidden text-center font-bold text-lg w-full pt-8">{percentage.toFixed(2)}%</p>
-          <img src={`./images/items/${data?.imageUrl}`} className="block md:hidden w-2/5 mx-auto aspect-square relative" />
-          <p className="block md:hidden w-full text-center font-bold text-sm text-white truncate mt-[8px] px-14">{data?.name}</p>
-          <p className="block md:hidden w-full font-semibold text-center text-[#5a5e62] text-lg">${data?.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-          <p className="block md:hidden w-full font-bold text-center text-yellow-600 text-xl">x{(92.59 / percentage).toFixed(2)}</p>
-          <ForgeSpinSVG
-            className="absolute -translate-x-1/2 -translate-y-1/2"
-            style={{
-              top: `${center - arrowRadius * Math.cos((animatedDegree * Math.PI) / 180)}`,
-              left: `${center + arrowRadius * Math.sin((animatedDegree * Math.PI) / 180)}`,
-              transform: `translate(-50%, -50%) rotate(${animatedDegree}deg)`,
-            }}
-          />
-        </div>
+        {data ?
+          <div className="relative w-full h-full">
+            <p className="block md:hidden text-center font-bold text-lg w-full pt-8">{percentage.toFixed(2)}%</p>
+            <img src={`./images/items/${data?.imageUrl}`} className="block md:hidden w-2/5 mx-auto aspect-square relative" />
+            <p className="block md:hidden w-full text-center font-bold text-sm text-white truncate mt-[8px] px-14">{data?.name}</p>
+            <p className="block md:hidden w-full font-semibold text-center text-[#5a5e62] text-lg">${data?.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+            <p className="block md:hidden w-full font-bold text-center text-yellow-600 text-xl">x{(92.59 / percentage).toFixed(2)}</p>
+            <ForgeSpinSVG
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{
+                top: `${center - arrowRadius * Math.cos((animatedDegree * Math.PI) / 180)}`,
+                left: `${center + arrowRadius * Math.sin((animatedDegree * Math.PI) / 180)}`,
+                transform: `translate(-50%, -50%) rotate(${animatedDegree}deg)`,
+              }}
+            />
+          </div>
+          :
+          <div className="block md:hidden relative w-full h-full flex items-center justify-center text-white text-lg font-semibold">
+          0.00%
+          </div>
+        }
       </div>
     </div>
   );

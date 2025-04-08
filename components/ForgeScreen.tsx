@@ -43,7 +43,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onUserBalanceChange, isL
   const [showBetPriceVal, setShowBetPriceVal] = useState("");
   const [betMaxPrice, setbetMaxPrice] = useState(0);
   const [betMinPrice, setbetMinPrice] = useState(0);
-  const [percentVal, setPercentVal] = useState(80);
+  const [percentVal, setPercentVal] = useState(0);
   const [stopDegree, setStopDegree] = useState(-1);
   const [isSpin, setIsSpin] = useState(false);
   const [spinType, setSpinType] = useState(false);
@@ -61,6 +61,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onUserBalanceChange, isL
   useEffect(() => {
     const value = '$' + defaultMax.toLocaleString('en-US'); // Allow only numbers and dot
     setMaxPriceVal(value);
+    setShowBetPriceVal("0.00");
   }, []);
 
   useEffect(() => {
@@ -147,6 +148,9 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onUserBalanceChange, isL
     if (data.id == selectedItemId) {
       setSelectedItemData(null);
       setSelectedItemId(0);
+      setBetPriceVal(0);
+      setPercentVal(0);
+      setShowBetPriceVal("0.00");
       setIsItemSelected(false);
     } else {
       const minVal = (Number(data.price) / 100) * 1.08;
@@ -263,7 +267,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onUserBalanceChange, isL
               min={betMinPrice}
               max={betMaxPrice}
               onChange={onBetPriceSliderValChange}
-              step={0.01} // Allows float values like 45.3, 9999.9, etc.
+              step={0.03} // Allows float values like 45.3, 9999.9, etc.
               disabled={!isItemSelected || isSpin}
               className="mt-8 md:mt-12 mx-2 md:mx-0"
             />
