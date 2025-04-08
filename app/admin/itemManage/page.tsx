@@ -45,7 +45,7 @@ const ItemManagePage = () => {
         if (result.status == 0) {
           router.push("/");
         } else {
-          const userDataResult = await axiosInstance.post('/api/item_list', eot({ start: 0, length: 10, search: "", order: "id", dir: "ASC" }));
+          const userDataResult = await axiosInstance.post('/api/item_list', eot({ start: 0, length: 10, search: "", maxPrice: 0, order: "id", dir: "ASC" }));
 
           const res = dot(userDataResult.data);
 
@@ -66,7 +66,7 @@ const ItemManagePage = () => {
 
   const onGetTableDataAction = async (search: any, start: any, length: any, orderData: any) => {
     try {
-      const result = await axiosInstance.post("api/item_list", eot({ search, start: (start - 1) * length, length, order: orderData.order, dir: orderData.dir }));
+      const result = await axiosInstance.post("api/item_list", eot({ search, start: (start - 1) * length, length, maxPrice: 0, order: orderData.order, dir: orderData.dir }));
       const res = dot(result.data);
 
       if (res.status == 1) {

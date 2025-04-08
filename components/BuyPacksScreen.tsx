@@ -16,7 +16,7 @@ import ItemSpin from "./ui/ItemSpin";
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemAction, isMobile }: any) => {
+const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemAction, onUserBalanceChange, isMobile }: any) => {
   const itemBackColorArray = ['bg-yellow-500', 'bg-red-500', 'bg-blue-500', 'bg-gray-500'];
   const failedAudioRef = useRef<HTMLAudioElement | null>(null);
   const successAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -193,6 +193,7 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
       if (authData.balance < addedPacksTotalPrice) {
         openNotification("warning", "Warning", "Deposit first!", "topRight");
       } else {
+        onUserBalanceChange(authData.id, authData.balance - addedPacksTotalPrice);
         setSpinType(true);
         onStartSpin();
       }

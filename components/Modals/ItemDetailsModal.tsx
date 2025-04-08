@@ -26,7 +26,7 @@ const ItemDetailsModal = ({ itemData, setIsItemDetailsModalOpen, viewType }: any
                             {itemData.item.name}
                         </div>
                         <div className="mt-2 text-2xl">
-                            ${itemData.item.price}
+                            ${itemData.item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </div>
                         <Divider style={{ margin: '25px 0', borderColor: "gray" }} />
                         <div className="mt-2 text-lg">
