@@ -276,7 +276,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onUserBalanceChange, isL
             </div>
           </div>
           <div className="w-full md:aspect-square relative p-8">
-            <CircularProgress percentage={percentVal} isSpin={isSpin} stopDegree={stopDegree} onSpinFinish={onSpinFinish} />
+            <CircularProgress percentage={percentVal} isSpin={isSpin} stopDegree={stopDegree} onSpinFinish={onSpinFinish} data={selectedItemData}/>
             <div className="fixed md:hidden bottom-0 left-0 w-full h-[150px] bg-black z-[90] opacity-50"></div>
             <div className="fixed md:absolute bottom-0 md:bottom-0 left-0 w-full flex flex-col md:flex-row md:items-center md:justify-center gap-2 z-[99] px-4 py-8 md:px-0 md:py-0">
               <button

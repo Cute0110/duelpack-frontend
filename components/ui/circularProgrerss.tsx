@@ -9,6 +9,7 @@ interface CircularProgressProps {
   isSpin: boolean;
   stopDegree: number; // percentage change per frame (optional)
   onSpinFinish: () => void;
+  data: any;
 }
 const CircularProgress: React.FC<CircularProgressProps> = ({
   percentage,
@@ -17,6 +18,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
   speed = 15,
   isSpin,
   stopDegree,
+  data,
   onSpinFinish
 }) => {
   const radius = (size - strokeWidth) / 2;
@@ -35,21 +37,21 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
     const start = 0;
     const end = target;
     const startTime = performance.now();
-  
+
     // Smooth easing function (easeOutCubic)
     function easeOutCubic(t: number): number {
       return 1 - Math.pow(1 - t, 3);
     }
-  
+
     function update(currentTime: number) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-  
+
       const easedProgress = easeOutCubic(progress); // apply easing here
       const value = Math.round(start + (end - start) * easedProgress);
-  
+
       setAnimatedDegree(value % 360);
-  
+
       if (progress < 1) {
         requestAnimationFrame(update);
       } else {
@@ -57,14 +59,14 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
         onSpinFinish?.(); // safe call if defined
       }
     }
-  
+
     requestAnimationFrame(update);
   }
 
   // Animate progress
   useEffect(() => {
     if (finalStopDegree != -1) {
-      return ;
+      return;
     }
     if (isSpin == true) {
       const animate = () => {
@@ -77,19 +79,19 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
             }
             return 0; // stop condition
           }
-  
+
           const delta = Math.sign(diff) * Math.min(Math.abs(diff), speed);
           return prev + delta;
         });
-  
+
         requestRef.current = requestAnimationFrame(animate);
       };
-  
+
       requestRef.current = requestAnimationFrame(animate);
       return () => cancelAnimationFrame(requestRef.current!);
     }
   }, [isSpin, stopDegree, finalStopDegree]);
-  
+
   useEffect(() => {
     if (stopDegree >= 0) {
     }
@@ -147,13 +149,18 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
           y="50%"
           textAnchor="middle"
           dy=".3em"
-          className="fill-white text-lg font-semibold"
+          className="fill-white text-lg font-semibold hidden md:block"
         >
           {percentage.toFixed(2)}%
         </text>
       </svg>
       <div className="absolute w-[300px] h-[300px]">
         <div className="relative w-full h-full">
+          <p className="block md:hidden text-center font-bold text-lg w-full pt-8">{percentage.toFixed(2)}%</p>
+          <img src={`./images/items/${data?.imageUrl}`} className="block md:hidden w-2/5 mx-auto aspect-square relative" />
+          <p className="block md:hidden w-full text-center font-bold text-sm text-white truncate mt-[8px] px-14">{data?.name}</p>
+          <p className="block md:hidden w-full font-semibold text-center text-[#5a5e62] text-lg">${data?.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+          <p className="block md:hidden w-full font-bold text-center text-yellow-600 text-xl">x{(92.59 / percentage).toFixed(2)}</p>
           <ForgeSpinSVG
             className="absolute -translate-x-1/2 -translate-y-1/2"
             style={{
@@ -164,7 +171,6 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
           />
         </div>
       </div>
-
     </div>
   );
 };
