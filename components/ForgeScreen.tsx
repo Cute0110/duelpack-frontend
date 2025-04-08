@@ -22,7 +22,7 @@ interface ItemData {
   // other fields if needed
 }
 
-const ForgeScreen = ({ itemsData, onGetItemsDataAction, onUserBalanceChange, isLoading }: any) => {
+const ForgeScreen = ({ itemsData, onGetItemsDataAction, onBetForgeAction, isLoading }: any) => {
   const defaultMax = 350000;
   const defaultMin = 20;
   const perPageCount = 48;
@@ -46,7 +46,6 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onUserBalanceChange, isL
   const [percentVal, setPercentVal] = useState(0);
   const [stopDegree, setStopDegree] = useState(-1);
   const [isSpin, setIsSpin] = useState(false);
-  const [spinType, setSpinType] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const openNotification = (type: NotificationType, title: any, content: any, placement: NotificationPlacement) => {
@@ -176,11 +175,12 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onUserBalanceChange, isL
       if (authData.balance < betPriceVal) {
         openNotification("warning", "Warning", "Deposit first!", "topRight");
       } else {
-        onUserBalanceChange(authData.id, (-1 * betPriceVal));
-        setSpinType(true);
+        const tempStopDegree = Math.floor(Math.random() * 359);
+        const result = (tempStopDegree < (360 * percentVal / 100)) ? true : false;
+        onBetForgeAction(authData.id, selectedItemId, betPriceVal, 92.59 / percentVal, result);
         setIsSpin(true);
         const timeoutId = setTimeout(() => {
-          setStopDegree(Math.floor(Math.random() * 359));
+          setStopDegree(tempStopDegree);
         }, 1000);
       }
     } else {
@@ -190,7 +190,6 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onUserBalanceChange, isL
 
   const onClickDemoSpin = () => {
     setIsSpin(true);
-    setSpinType(false);
     const timeoutId = setTimeout(() => {
       setStopDegree(Math.floor(Math.random() * 359));
     }, 1000);
@@ -211,9 +210,6 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onUserBalanceChange, isL
     const result = stopDegree < 360 * percentVal / 100 ? true : false;
     if (result) {
       fireConfetti();
-      if (spinType == true) {
-        onUserBalanceChange(authData.id, betPriceVal * 92.59 / percentVal);
-      }
     }
     setStopDegree(-1);
     setIsSpin(false);

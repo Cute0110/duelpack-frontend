@@ -66,9 +66,9 @@ const Forge = () => {
     }
   }
   
-  const onUserBalanceChange = async (userId: any, priceAmount: any) => {
+  const onBetForgeAction = async (userId: any, itemId: any, betAmount: any, multiVal: any, result: any) => {
     try {
-      const response = await axiosInstance.post('/api/user_balance_change', eot({ id: userId, priceAmount }));
+      const response = await axiosInstance.post('/api/forge_bet', eot({ userId, itemId, betAmount, multiVal, result }));
       const res = dot(response.data);
       if (res.status == 1) {
         try {
@@ -102,7 +102,7 @@ const Forge = () => {
         <ForgeScreen
           itemsData={itemsData}
           onGetItemsDataAction={onGetItemsDataAction}
-          onUserBalanceChange={onUserBalanceChange}
+          onBetForgeAction={onBetForgeAction}
           isLoading={isLoading}
         />
       </div >

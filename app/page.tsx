@@ -48,7 +48,7 @@ const Home = () => {
       }
 
       try {
-        const response = await axiosInstance.post('/api/forge_list', eot({ start: 0, length: 6, search: 0, order: "id", dir: "asc" }));
+        const response = await axiosInstance.post('/api/forge_list', eot({ start: 0, length: 6, search: "success", order: "createdAt", dir: "desc" }));
         const res = dot(response.data);
         if (res.status == 1) {
           setForgeData({ data: res.data, count: res.count, start: res.start, length: res.length });

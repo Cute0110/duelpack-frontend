@@ -103,41 +103,11 @@ const BuyPacks = () => {
     fetchData();
   }, []);
 
-  const onUserBalanceChange = async (userId: any, priceAmount: any) => {
+  const onBuyItemAction = async (packIds: any, itemIds: any, userId: any, payAmount: any) => {
     try {
-      const response = await axiosInstance.post('/api/user_balance_change', eot({ id: userId, priceAmount }));
+      const response = await axiosInstance.post('/api/buy_items', eot({ packIds, itemIds, userId, payAmount }));
       const res = dot(response.data);
       if (res.status == 1) {
-        try {
-          const response = await axiosInstance.get('/api/check_session', {
-            withCredentials: true,
-          });
-
-          const res = dot(response.data);
-
-          if (res.status == 1) {
-            setAuthData(res.userData);
-            setIsAuthenticated(res.status);
-          } else {
-            console.log(res.msg);
-          }
-        } catch (error) {
-          openNotification("error", "Error", "error", "topRight");
-        }
-      } else {
-        openNotification("error", "Error", res.msg, "topRight");
-      }
-    } catch (err) {
-      openNotification("error", "Error", "Network error!", "topRight");
-    }
-  }
-
-  const onBuyItemAction = async (itemIds: any, userId: any, payAmount: any) => {
-    try {
-      const response = await axiosInstance.post('/api/buy_items', eot({ itemIds, userId, payAmount }));
-      const res = dot(response.data);
-      if (res.status == 1) {
-        openNotification("success", "Success", "Items added to cart!", "topRight");
         try {
           const response = await axiosInstance.get('/api/check_session', {
             withCredentials: true,
@@ -177,7 +147,6 @@ const BuyPacks = () => {
             packId={packId}
             onBuyItemAction={onBuyItemAction}
             isMobile={isMobile}
-            onUserBalanceChange={onUserBalanceChange}
           />}
       </div >
     </>
