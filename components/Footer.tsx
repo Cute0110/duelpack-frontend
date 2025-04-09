@@ -1,14 +1,11 @@
 "use client"
 
-import Image from "next/image";
-import Logo from "@/public/duelpack-logo.svg";
-import { FaFacebookF } from "react-icons/fa";
 import { FaInstagram, FaXTwitter, FaTelegram, FaYoutube } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/authContext";
 import Link from "next/link";
 
-const Footer = ({ onScrollTo }: any) => {
+const Footer = ({}: any) => {
   const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
   const [isCSModalOpen, setIsCSModalOpen] = useState(false);
   const [isPolicyModalOpen, setIsPolicyModalOpen] = useState(false);
@@ -46,7 +43,7 @@ const Footer = ({ onScrollTo }: any) => {
         <div className="flex-shrink-0 self-start w-full md:w-[50%]">
           <a href="#" className="flex items-center mb-2">
             <img
-              src={"./duelpack-logo.svg"}
+              src={"/duelpack-logo.svg"}
               alt="Wecazoo Logo"
               className="h-10 w-auto"
             />

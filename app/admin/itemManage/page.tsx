@@ -42,9 +42,7 @@ const ItemManagePage = () => {
 
         const result = dot(response.data);
 
-        if (result.status == 0) {
-          router.push("/");
-        } else {
+        if (result.status == 1) {
           const userDataResult = await axiosInstance.post('/api/item_list', eot({ start: 0, length: 10, search: "", maxPrice: 0, order: "id", dir: "ASC" }));
 
           const res = dot(userDataResult.data);
@@ -55,6 +53,8 @@ const ItemManagePage = () => {
             openNotification("error", "Error", res.msg, "topRight");
           }
           setIsLoading(false);
+        } else {
+          router.push("/");
         }
       } catch (err) {
         router.push("/");

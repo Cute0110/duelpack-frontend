@@ -41,9 +41,7 @@ const WithdrawHistoryPage = () => {
 
         const result = dot(response.data);
 
-        if (result.status == 0) {
-          router.push("/");
-        } else {
+        if (result.status == 1) {
           const dataResult = await axiosInstance.post('/api/get_withdraw_histories', eot({ start: 0, length: 10, search: "", order: "id", dir: "ASC" }));
 
           const res = dot(dataResult.data);
@@ -54,6 +52,8 @@ const WithdrawHistoryPage = () => {
             openNotification("error", "Error", res.msg, "topRight");
           }
           setIsLoading(false);
+        } else {
+          router.push("/");
         }
       } catch (err) {
         router.push("/");

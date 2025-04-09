@@ -26,10 +26,10 @@ const Admin = () => {
 
         const res = dot(response.data);
 
-        if (res.status == 0) {
-          router.push("/");
-        } else {
+        if (res.status == 1) {
           setIsLoading(false);
+        } else {
+          router.push("/");
         }
       } catch (err) {
         router.push("/");

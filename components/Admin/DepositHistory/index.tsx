@@ -7,9 +7,6 @@ import { UserAddOutlined, ReloadOutlined } from '@ant-design/icons'
 const DepositHistory = ({
   originalData,
   onGetTableDataAction,
-  onStatusChangeAction,
-  onOriginalStatusChangeAction,
-  onRefreshProviderAction,
 }: any) => {
 
   const { authData } = useAuth();
@@ -80,7 +77,7 @@ const DepositHistory = ({
 
           <div className="my-2">
             <div className="flex items-center justify-between mb-2">
-              <p>Total Providers : <span className="text-[20px]">{totalCount}</span></p>
+              <p>Total Records : <span className="text-[20px]">{totalCount}</span></p>
             </div>
             <Pagination
               simple

@@ -41,9 +41,7 @@ const UserManagePage = () => {
 
         const result = dot(response.data);
 
-        if (result.status == 0) {
-          router.push("/");
-        } else {
+        if (result.status == 1) {
           const userDataResult = await axiosInstance.post('/api/get_all_users', eot({ start: 0, length: 10, search: "", order: "id", dir: "ASC" }));
 
           const res = dot(userDataResult.data);
@@ -54,6 +52,8 @@ const UserManagePage = () => {
             openNotification("error", "Error", res.msg, "topRight");
           }
           setIsLoading(false);
+        } else {
+          router.push("/");
         }
       } catch (err) {
         router.push("/");

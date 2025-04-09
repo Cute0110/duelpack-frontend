@@ -7,7 +7,8 @@ import {
   Menu,
   LogOutIcon,
   WalletIcon,
-  ShoppingCart
+  ShoppingCart,
+  Check
 } from "lucide-react";
 import AuthModal from "./Modals/AuthModal";
 import { useAuth } from "@/lib/authContext";
@@ -18,7 +19,6 @@ import Battles from "@/public/images/battles.svg";
 import Forge from "@/public/images/forge.svg";
 import Events from "@/public/images/events.svg";
 import Rewards from "@/public/images/rewards.svg";
-import CheckSVG from "@/public/images/check.svg";
 import CloseSVG from "@/public/images/close.svg";
 import ClickOutside from "./ClickOutside";
 import axiosInstance from "@/lib/action";
@@ -137,7 +137,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
             <div className={`mx-auto h-[75px] flex items-center justify-between container relative`}>
               <div className="flex items-center">
                 <Link href="/" className="flex items-center">
-                  <img src="./duelpack-logo.svg" alt="Wecazoo Logo" className="h-9 lg:h-11 w-auto" />
+                  <img src="/duelpack-logo.svg" alt="Wecazoo Logo" className="h-9 lg:h-11 w-auto" />
                   <h1 className="text-xl text-white font-bold ml-2">DuelPack</h1>
                 </Link>
 
@@ -216,7 +216,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                       className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-blue-400 text-base text-white font-bold hover:bg-blue-500 disabled:text-blue-600 px-4 h-10"
                       onClick={() => onDepositClick()}
                     >
-                      Deposit
+                      {authData?.balance > 0 ? '$' + authData?.balance.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "Deposit"}
                     </button>
                     {!isMobile &&
                       <div>
@@ -267,13 +267,13 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                     <div className="fixed top-0 left-0 w-screen h-screen" onClick={() => { setIsOpen(false) }}></div>
                     {!isMobile && isAuthenticated && (
                       <div className={`absolute right-4 top-[80px] bg-[#23272b] z-50 w-[250px] rounded-xl shadow`} >
-                        <div className="flex items-center p-4 gap-4 cursor-pointer">
+                        <a className="flex items-center p-4 gap-4 cursor-pointer" href="/profile">
                           <img src={authData.avatarURL} className="rounded-full h-12" />
                           <div>
                             <div>{authData.userName}</div>
                             <div className="text-gray-600">View profile</div>
                           </div>
-                        </div>
+                        </a>
                         <div className="w-full h-[1px] border-t-[1px] border-gray-600 mt-2"></div>
                         <div className="flex items-center justify-start mt-2 p-4 gap-2 cursor-pointer" onClick={onLogOutClick}>
                           <LogOutIcon className="w-6 h-6" />
@@ -287,7 +287,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                             required
                           />
                           <button className="absolute top-5 right-4 bg-[#4299e1] p-2 rounded-md">
-                            <CheckSVG className="h-6 w-auto text-gray-300" />
+                            <Check size={14} />
                           </button>
                         </div>
                       </div>
@@ -296,13 +296,13 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                     {isMobile && (
                       <div className={`absolute right-4 top-[80px] bg-[#23272b] z-50 w-[250px] rounded-xl shadow`} >
                         {isAuthenticated ?
-                          <div className="flex items-center p-4 gap-4 cursor-pointer">
+                          <a className="flex items-center p-4 gap-4 cursor-pointer" href="/profile">
                             <img src={authData.avatarURL} className="rounded-full h-12" />
                             <div>
                               <div>{authData.userName}</div>
                               <div className="text-gray-600">View profile</div>
                             </div>
-                          </div> : <></>}
+                          </a> : <></>}
                         <nav className="space-y-5 p-4">
                           <Link
                             href="/packs"
@@ -379,8 +379,8 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                             className="w-full text-[15px] px-4 py-2 mx-1 rounded bg-[#1d2125] flex items-center"
                             required
                           />
-                          <button className="absolute top-4 right-4 bg-[#4299e1] p-2 rounded-md">
-                            <CheckSVG className="h-6 w-auto text-gray-300" />
+                          <button className="absolute top-5 right-4 bg-[#4299e1] p-2 rounded-md">
+                            <Check size={14} />
                           </button>
                         </div>
                       </div>

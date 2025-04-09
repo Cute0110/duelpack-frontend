@@ -52,17 +52,6 @@ const Packs = () => {
     fetchData();
   }, []);
 
-  const onScrollTo = (gameSection: any) => {
-    const element = document.getElementById(gameSection); // Replace with your target element's ID
-    if (element) {
-      const top = element.getBoundingClientRect().top + window.scrollY - 76;
-      window.scrollTo({
-        top: top,
-        behavior: "smooth", // Adds smooth scrolling
-      });
-    }
-  }
-
   return (
     <>
       {contextHolder}

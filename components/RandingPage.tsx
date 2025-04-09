@@ -202,22 +202,19 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                   <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">1</div>
                   <img src={"./images/openPacks.webp"} className="h-[50%] mt-12 mx-auto" />
                   <p className="text-center font-bold text-xl mt-2">Open Packs</p>
-                  <p className="text-center text-md mt-2 text-gray-400">Find your perfect packs & experience</p>
-                  <p className="text-center text-md mt-2 text-gray-400">the online excitement!</p>
+                  <p className="text-center text-md mt-2 text-gray-400 px-16">Find the perfect pack for you and your budget</p>
                 </div>
                 <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
                   <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">2</div>
                   <img src={"./images/winItems.webp"} className="h-[50%] mt-12 mx-auto" />
-                  <p className="text-center font-bold text-xl mt-2">Open Packs</p>
-                  <p className="text-center text-md mt-2 text-gray-400">Find your perfect packs & experience</p>
-                  <p className="text-center text-md mt-2 text-gray-400">the online excitement!</p>
+                  <p className="text-center font-bold text-xl mt-2">Win Items</p>
+                  <p className="text-center text-md mt-2 text-gray-400 px-16">Reveal one item per pack from top brands you know & love!</p>
                 </div>
                 <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
                   <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">3</div>
                   <img src={"./images/cashOrClaim.webp"} className="h-[50%] mt-12 mx-auto" />
-                  <p className="text-center font-bold text-xl mt-2">Open Packs</p>
-                  <p className="text-center text-md mt-2 text-gray-400">Find your perfect packs & experience</p>
-                  <p className="text-center text-md mt-2 text-gray-400">the online excitement!</p>
+                  <p className="text-center font-bold text-xl mt-2">Cash or Claim</p>
+                  <p className="text-center text-md mt-2 text-gray-400 px-16">Sell back unwanted items, cash them out, or have them delivered!</p>
                 </div>
               </div>
             </div>

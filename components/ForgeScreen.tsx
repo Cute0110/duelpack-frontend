@@ -311,7 +311,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onBetForgeAction, isLoad
               </div>
               :
               <div>
-                <img src="./duelpack-logo.svg" alt="Wecazoo Logo" className="w-3/5 mx-auto aspect-square relative mt-16" />
+                <img src="/duelpack-logo.svg" alt="Wecazoo Logo" className="w-3/5 mx-auto aspect-square relative mt-16" />
                 <p className="font-semibold text-md text-white truncate mt-8">Select a product below to get started</p>
                 <div className="flex items-center justify-between mt-2">
                   <span className="font-semibold text-[#5a5e62] text-lg">$0.00</span>

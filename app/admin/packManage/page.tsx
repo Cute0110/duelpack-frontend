@@ -42,9 +42,7 @@ const PackManagePage = () => {
 
         const result = dot(response.data);
 
-        if (result.status == 0) {
-          router.push("/");
-        } else {
+        if (result.status == 1) {
           const userDataResult = await axiosInstance.post('/api/pack_list', eot({ start: 0, length: 10, search: "", order: "id", dir: "ASC" }));
 
           const res = dot(userDataResult.data);
@@ -55,6 +53,8 @@ const PackManagePage = () => {
             openNotification("error", "Error", res.msg, "topRight");
           }
           setIsLoading(false);
+        } else {
+          router.push("/");
         }
       } catch (err) {
         router.push("/");

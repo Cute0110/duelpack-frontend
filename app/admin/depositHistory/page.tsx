@@ -41,9 +41,7 @@ const DepositHistoryPage = () => {
 
         const result = dot(response.data);
 
-        if (result.status == 0) {
-          router.push("/");
-        } else {
+        if (result.status == 1) {
           const dataResult = await axiosInstance.post('/api/get_deposit_histories', eot({ start: 0, length: 10, search: "", order: "id", dir: "ASC" }));
 
           const res = dot(dataResult.data);
@@ -54,6 +52,8 @@ const DepositHistoryPage = () => {
             openNotification("error", "Error", "Network error!", "topRight");
           }
           setIsLoading(false);
+        } else {
+          router.push("/");
         }
       } catch (err) {
         openNotification("error", "Error", "Network error!", "topRight");
