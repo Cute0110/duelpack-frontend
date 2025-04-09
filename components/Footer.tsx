@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/authContext";
 import Link from "next/link";
 
-const Footer = ({}: any) => {
+const Footer = ({ }: any) => {
   const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false);
   const [isCSModalOpen, setIsCSModalOpen] = useState(false);
   const [isPolicyModalOpen, setIsPolicyModalOpen] = useState(false);
@@ -25,7 +25,7 @@ const Footer = ({}: any) => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  
+
   const onModalClose = () => {
     setIsAboutUsModalOpen(false);
     setIsCSModalOpen(false);
@@ -49,7 +49,7 @@ const Footer = ({}: any) => {
             />
             <h1 className="text-xl text-white font-bold ml-4">DuelPack</h1>
           </a>
-          <span className="text-gray-500">Open packs and battle to win rare and </span><br/>
+          <span className="text-gray-500">Open packs and battle to win rare and </span><br />
           <span className="text-gray-500">valuable products.</span>
         </div>
 
@@ -80,13 +80,13 @@ const Footer = ({}: any) => {
               <h3 className="font-bold text-lg">LEGAL</h3>
               <ul className="text-muted flex flex-col gap-2 justify-start">
                 <li className="hover:text-primary transition-colors">
-                  <span className="cursor-pointer">Fairness</span>
+                  <a href="/privacy" className="cursor-pointer">Fairness</a>
                 </li>
                 <li className="hover:text-primary transition-colors">
-                  <span className="cursor-pointer">Privacy Policy</span>
+                  <a href="/privacy" className="cursor-pointer">Privacy Policy</a>
                 </li>
                 <li className="hover:text-primary transition-colors">
-                  <span className="cursor-pointer">Terms of Service</span>
+                  <a href="/privacy" className="cursor-pointer">Terms of Service</a>
                 </li>
                 <li className="hover:text-primary transition-colors">
                   <span className="cursor-pointer font-bold text-white text-lg">SUPPORT</span>
