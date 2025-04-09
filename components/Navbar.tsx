@@ -263,7 +263,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                       onClick={onClickCart}
                     >
                       {isMobile ? <ShoppingCart /> : "Cart"}
-                      <span className="w-5 aspect-square bg-white rounded-full text-sm text-black">{cartData.count}</span>
+                      {cartData.count != 0 ? <span className="w-5 aspect-square bg-white rounded-full text-sm text-black">{cartData.count}</span> : ""}
                     </button>
                     <button
                       className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-blue-400 text-base text-white font-bold hover:bg-blue-500 disabled:text-blue-600 px-4 h-10"

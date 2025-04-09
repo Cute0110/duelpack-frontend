@@ -67,7 +67,7 @@ const BuyPacks = () => {
                 start: i * batchSize,
                 length: batchSize,
                 search: 0,
-                order: "id",
+                order: "rarity",
                 dir: "asc",
               }))
             );
