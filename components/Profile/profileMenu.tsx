@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/lib/authContext";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const ProfileMenu = ({ }: any) => {
     const pathName = usePathname();
@@ -36,9 +37,9 @@ const ProfileMenu = ({ }: any) => {
                     <div className="text-sm text-gray-400 font-semibold">{menu.name}</div>
                     <div className="flex flex-col gap-4 mt-4">
                     {menu.menuItems.map((item: any, index: any) => (
-                        <a href={item.route} key={index} className={`rounded-md ${pathName == item.route ? "bg-[#34383c]" : ""} text-[#7a8084] px-8 py-2 text-md font-semibold`}>
+                        <Link href={item.route} key={index} className={`rounded-md ${pathName == item.route ? "bg-[#34383c]" : ""} text-[#7a8084] px-8 py-2 text-md font-semibold`}>
                             {item.label}
-                        </a>
+                        </Link>
                     ))}
                     </div>
                 </div>

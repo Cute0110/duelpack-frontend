@@ -41,14 +41,14 @@ const Footer = ({ }: any) => {
       <div className={`${isMobile ? "" : "container"} flex flex-col md:flex-row justify-between items-normal md:items-center py-10 gap-y-6 px-4`}>
         {/* Logo */}
         <div className="flex-shrink-0 self-start w-full md:w-[50%]">
-          <a href="#" className="flex items-center mb-2">
+          <Link href="#" className="flex items-center mb-2">
             <img
               src={"/duelpack-logo.svg"}
               alt="Wecazoo Logo"
               className="h-10 w-auto"
             />
             <h1 className="text-xl text-white font-bold ml-4">DuelPack</h1>
-          </a>
+          </Link>
           <span className="text-gray-500">Open packs and battle to win rare and </span><br />
           <span className="text-gray-500">valuable products.</span>
         </div>
@@ -80,13 +80,13 @@ const Footer = ({ }: any) => {
               <h3 className="font-bold text-lg">LEGAL</h3>
               <ul className="text-muted flex flex-col gap-2 justify-start">
                 <li className="hover:text-primary transition-colors">
-                  <a href="/privacy" className="cursor-pointer">Fairness</a>
+                  <Link className="cursor-pointer" href="/privacy">Fairness</Link>
                 </li>
                 <li className="hover:text-primary transition-colors">
-                  <a href="/privacy" className="cursor-pointer">Privacy Policy</a>
+                  <Link href="/privacy" className="cursor-pointer">Privacy Policy</Link>
                 </li>
                 <li className="hover:text-primary transition-colors">
-                  <a href="/privacy" className="cursor-pointer">Terms of Service</a>
+                  <Link href="/privacy" className="cursor-pointer">Terms of Service</Link>
                 </li>
                 <li className="hover:text-primary transition-colors">
                   <span className="cursor-pointer font-bold text-white text-lg">SUPPORT</span>

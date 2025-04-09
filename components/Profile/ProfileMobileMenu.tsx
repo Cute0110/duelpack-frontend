@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/lib/authContext";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const ProfileMobileMenu = ({ setIsMenuOpen }: any) => {
     const pathName = usePathname();
@@ -30,9 +31,9 @@ const ProfileMobileMenu = ({ setIsMenuOpen }: any) => {
             <div className="relative bg-[#22272b] w-[300px] border border-gray-700 rounded-md mt-12 p-4 z-[50]">
                 {menuGroups.map((item: any, index: any) =>
                     <div key={index} className="mb-4">
-                        <a href={item.route}>
+                        <Link href={item.route}>
                             {item.label}
-                        </a>
+                        </Link>
                     </div>
                 )}
             </div>

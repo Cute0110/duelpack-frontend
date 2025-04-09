@@ -7,6 +7,7 @@ import moment from 'moment';
 import { useRouter } from 'next/navigation';
 import HeadTitle from '../../ui/HeadTitle';
 import { RiLockPasswordFill } from 'react-icons/ri';
+import Link from 'next/link';
 
 interface DataType {
   key: React.Key;

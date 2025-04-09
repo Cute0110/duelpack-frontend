@@ -14,6 +14,7 @@ import { dot, eot } from "@/lib/cryptoUtils";
 
 import { notification } from 'antd';
 import type { NotificationArgsProps } from 'antd';
+import Link from "next/link";
 
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
@@ -138,7 +139,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                   <span className="text-lg font-bold">New Packs</span>
                 </div>
                 <div>
-                  <a href="/packs" className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Packs</a>
+                  <Link href="/packs" className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Packs</Link>
                 </div>
               </div>
               <div className="w-full grid grid-cols-2 md:grid-cols-6 gap-6 mt-4">
@@ -168,7 +169,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                   <span className="text-lg font-bold">Forge Highlights</span>
                 </div>
                 <div>
-                <a href="/forge" className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View Forge</a>
+                <Link href="/forge" className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View Forge</Link>
                 </div>
               </div>
               <div className="w-full grid grid-cols-2 md:grid-cols-6 gap-6 mt-4">
@@ -192,7 +193,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                   <span className="text-lg font-bold">How DuelPack Works</span>
                 </div>
                 <div>
-                  <a href="/packs" className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Packs</a>
+                  <Link href="/packs" className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View All Packs</Link>
                 </div>
               </div>
               <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">

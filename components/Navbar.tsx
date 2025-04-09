@@ -320,13 +320,13 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                     <div className="fixed top-0 left-0 w-screen h-screen" onClick={() => { setIsOpen(false) }}></div>
                     {!isMobile && isAuthenticated && (
                       <div className={`absolute right-4 top-[80px] bg-[#23272b] z-50 w-[250px] rounded-xl shadow`} >
-                        <a className="flex items-center p-4 gap-4 cursor-pointer" href="/profile">
+                        <Link className="flex items-center p-4 gap-4 cursor-pointer" onClick={() => setIsOpen(false)} href="/profile">
                           <img src={authData.avatarURL} className="rounded-full h-12" />
                           <div>
                             <div>{authData.userName}</div>
                             <div className="text-gray-600">View profile</div>
                           </div>
-                        </a>
+                        </Link>
                         <div className="w-full h-[1px] border-t-[1px] border-gray-600 mt-2"></div>
                         <div className="flex items-center justify-start mt-2 p-4 gap-2 cursor-pointer" onClick={onLogOutClick}>
                           <LogOutIcon className="w-6 h-6" />
@@ -349,13 +349,13 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                     {isMobile && (
                       <div className={`absolute right-4 top-[80px] bg-[#23272b] z-50 w-[250px] rounded-xl shadow`} >
                         {isAuthenticated ?
-                          <a className="flex items-center p-4 gap-4 cursor-pointer" href="/profile">
+                          <Link className="flex items-center p-4 gap-4 cursor-pointer" onClick={() => setIsOpen(false)}  href="/profile">
                             <img src={authData.avatarURL} className="rounded-full h-12" />
                             <div>
                               <div>{authData.userName}</div>
                               <div className="text-gray-600">View profile</div>
                             </div>
-                          </a> : <></>}
+                          </Link> : <></>}
                         <nav className="space-y-5 p-4">
                           <Link
                             href="/packs"
