@@ -46,7 +46,6 @@ const ProfileWithdrawalsPage = () => {
                 });
 
                 const res = dot(response.data);
-                console.log(res);
 
                 if (res.status == 1) {
                     setAuthData(res.userData);

@@ -20,11 +20,10 @@ const montserrat = Montserrat({
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [loading, setLoading] = useState<boolean>(true);
 
   // Handle initial loading (e.g., for fetching user authentication status)
   useEffect(() => {
-    setTimeout(() => setLoading(false), 1000); // Simulate a delay for loading
+
   }, []);
 
   return (

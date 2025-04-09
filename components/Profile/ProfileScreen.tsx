@@ -37,7 +37,6 @@ const ProfileScreen = ({ isLoading, onUserInfoSaveAction, saveBtnIsLoading }: an
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setUserInfo((prevData) => ({
       ...prevData,
       [name]: value,

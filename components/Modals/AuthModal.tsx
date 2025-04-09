@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
+const AuthModal = ({ isModalOpen, onModalClose, modalType, referCode }: any) => {
     const router = useRouter();
     const [isLogin, setIsLogin] = useState(modalType);
     const [showPassword, setShowPassword] = useState(false);
@@ -84,7 +84,7 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
             }
         } else {
             try {
-                const response = await axiosInstance.post('/api/register', eot({ emailAddress: formData.email, password: formData.password }));
+                const response = await axiosInstance.post('/api/register', eot({ emailAddress: formData.email, password: formData.password, referCode }));
                 const res = dot(response.data);
                 if (res.status == 1) {
                     openNotification('success', 'Success', 'Registered successfully!', 'topRight');
@@ -118,7 +118,7 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType }: any) => {
             const result = await signInWithPopup(auth, googleProvider);
 
             try {
-                const response = await axiosInstance.post('/api/google_login', eot({ emailAddress: result.user.email, password: "" }));
+                const response = await axiosInstance.post('/api/google_login', eot({ emailAddress: result.user.email, password: "", referCode }));
                 const res = dot(response.data);
                 if (res.status == 1) {
                     openNotification('success', 'Success', 'Logged In successfully!', 'topRight');

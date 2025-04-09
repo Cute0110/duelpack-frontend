@@ -63,8 +63,6 @@ const RandingPage = ({ packsData, forgeData }: any) => {
   }, [forgeData]);
 
   const onClickComments = (key: any) => {
-
-    console.log(activeComment, key);
     if (activeComment == key) { setActiveComment(0) }
     else { setActiveComment(key) }
   }
@@ -100,7 +98,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
             <div className="w-full">
               <div className="flex flex-col md:flex-row gap-4 w-full pt-8">
                 <div className="relative flex-1 bg-[#161a1d] rounded-lg">
-                  <img src={`./images/${imageURL[0]}`} className="w-full h-auto rounded-lg" />
+                  <img src={`/images/${imageURL[0]}`} className="w-full h-auto rounded-lg" />
                   <div className="absolute top-4 left-4 z-10 flex items-center justify-between gap-2 bg-[#22272b] px-2 py-[4px] rounded-md">
                     <Battles className="h-5 w-auto text-[#90cdf4]" />
                     <span className="text-[#90cdf4] font-semibold text-sm">Battle</span>
@@ -111,7 +109,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                   </div>
                 </div>
                 <div className="relative flex-1 bg-[#161a1d] rounded-lg">
-                  <img src={`./images/${imageURL[1]}`} className="w-full h-auto rounded-lg" />
+                  <img src={`/images/${imageURL[1]}`} className="w-full h-auto rounded-lg" />
                   <div className="absolute top-4 left-4 z-10 flex items-center justify-between gap-2 bg-[#22272b] px-2 py-[4px] rounded-md">
                     <Packs className="h-5 w-auto text-[#7c4be2]" />
                     <span className="text-[#7c4be2] font-semibold text-sm">Packs</span>
@@ -122,7 +120,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                   </div>
                 </div>
                 <div className="relative flex-1 bg-[#161a1d] rounded-lg">
-                  <img src={`./images/${imageURL[2]}`} className="w-full h-auto rounded-lg" />
+                  <img src={`/images/${imageURL[2]}`} className="w-full h-auto rounded-lg" />
                   <div className="absolute top-4 left-4 z-10 flex items-center justify-between gap-2 bg-[#22272b] px-2 py-[4px] rounded-md">
                     <Forge className="h-5 w-auto text-[#53e296]" />
                     <span className="text-[#53e296] font-semibold text-sm">Forge</span>
@@ -180,7 +178,7 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                       <div className="text-[#f6e05e] font-semibold">{data.multi.toFixed(2)}X</div>
                       <img src={data.user.avatarURL} className="rounded-full w-6" />
                     </div>
-                    <img src={`./images/items/${data.item.imageUrl}`} className="rounded-xl h-24 mx-auto" />
+                    <img src={`/images/items/${data.item.imageUrl}`} className="rounded-xl h-24 mx-auto" />
                     <p className="w-full text-center font-semibold text-md text-gray-500 truncate px-8">{data.item.name}</p>
                     <p className="w-full text-center font-semibold text-lg">${data.item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                   </div>
@@ -200,19 +198,19 @@ const RandingPage = ({ packsData, forgeData }: any) => {
               <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
                 <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
                   <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">1</div>
-                  <img src={"./images/openPacks.webp"} className="h-[50%] mt-12 mx-auto" />
+                  <img src={"/images/openPacks.webp"} className="h-[50%] mt-12 mx-auto" />
                   <p className="text-center font-bold text-xl mt-2">Open Packs</p>
                   <p className="text-center text-md mt-2 text-gray-400 px-16">Find the perfect pack for you and your budget</p>
                 </div>
                 <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
                   <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">2</div>
-                  <img src={"./images/winItems.webp"} className="h-[50%] mt-12 mx-auto" />
+                  <img src={"/images/winItems.webp"} className="h-[50%] mt-12 mx-auto" />
                   <p className="text-center font-bold text-xl mt-2">Win Items</p>
                   <p className="text-center text-md mt-2 text-gray-400 px-16">Reveal one item per pack from top brands you know & love!</p>
                 </div>
                 <div className="rounded-lg border border-gray-600 h-[350px] md:h-auto md:aspect-square relative" style={{ backgroundImage: "radial-gradient(60.6% 55.06% at 50% 20.25%,rgba(66,153,225,.12) 0,rgba(66,153,225,0) 100%)" }}>
                   <div className="flex items-center justify-center absolute h-8 w-8 top-4 left-4 rounded-full border-2 border-[#90cdf4] text-[#90cdf4]">3</div>
-                  <img src={"./images/cashOrClaim.webp"} className="h-[50%] mt-12 mx-auto" />
+                  <img src={"/images/cashOrClaim.webp"} className="h-[50%] mt-12 mx-auto" />
                   <p className="text-center font-bold text-xl mt-2">Cash or Claim</p>
                   <p className="text-center text-md mt-2 text-gray-400 px-16">Sell back unwanted items, cash them out, or have them delivered!</p>
                 </div>

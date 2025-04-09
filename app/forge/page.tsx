@@ -71,27 +71,30 @@ const Forge = () => {
       const response = await axiosInstance.post('/api/forge_bet', eot({ userId, itemId, betAmount, multiVal, result }));
       const res = dot(response.data);
       if (res.status == 1) {
-        try {
-          const response = await axiosInstance.get('/api/check_session', {
-            withCredentials: true,
-          });
-
-          const res = dot(response.data);
-
-          if (res.status == 1) {
-            setAuthData(res.userData);
-            setIsAuthenticated(res.status);
-          } else {
-            console.log(res.msg);
-          }
-        } catch (error) {
-          openNotification("error", "Error", "error", "topRight");
-        }
       } else {
         openNotification("error", "Error", res.msg, "topRight");
       }
     } catch (err) {
       openNotification("error", "Error", "Network error!", "topRight");
+    }
+  }
+  
+  const onBetFinishAction = async () => {
+    try {
+      const response = await axiosInstance.get('/api/check_session', {
+        withCredentials: true,
+      });
+
+      const res = dot(response.data);
+
+      if (res.status == 1) {
+        setAuthData(res.userData);
+        setIsAuthenticated(res.status);
+      } else {
+        console.log(res.msg);
+      }
+    } catch (error) {
+      openNotification("error", "Error", "error", "topRight");
     }
   }
 
@@ -103,6 +106,7 @@ const Forge = () => {
           itemsData={itemsData}
           onGetItemsDataAction={onGetItemsDataAction}
           onBetForgeAction={onBetForgeAction}
+          onBetFinishAction={onBetFinishAction}
           isLoading={isLoading}
         />
       </div >

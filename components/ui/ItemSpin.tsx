@@ -162,7 +162,7 @@ const ItemSpin = ({
                 {selectedIndex == index ?
                   <div className="relative aspect-square group flex items-center justify-center">
                     <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
-                    <img src={`./images/items/${data.item.imageUrl}`} className="w-5/6 aspect-square relative mt-6" />
+                    <img src={`/images/items/${data.item.imageUrl}`} className="w-5/6 aspect-square relative mt-6" />
                     <div className="absolute w-full -bottom-4 left-[50%] -translate-x-1/2 z-10 px-4 py-2 rounded-md before:absolute before:inset-0 before:bg-black before:opacity-20 before:rounded-md">
                       <p className="w-full text-center font-semibold text-md text-white truncate">{data.item.name}</p>
                       <p className="w-full text-center font-semibold text-md text-white truncate">${data.item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
@@ -170,10 +170,10 @@ const ItemSpin = ({
                   </div>
                   :
                   <div className="relative aspect-square group flex items-center justify-center">
-                    {currentMidIndex == index ? <img src="./images/packSelector.png" className="absolute top-6 inset-0 m-auto w-5/6 aspect-square" /> :
+                    {currentMidIndex == index ? <img src="/images/packSelector.png" className="absolute top-6 inset-0 m-auto w-5/6 aspect-square" /> :
                       <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
                     }
-                    <img src={`./images/items/${data.item.imageUrl}`} className="w-4/5 aspect-square relative mt-6" />
+                    <img src={`/images/items/${data.item.imageUrl}`} className="w-4/5 aspect-square relative mt-6" />
                   </div>
                 }
               </div>
@@ -189,7 +189,7 @@ const ItemSpin = ({
                 {selectedIndex == (index + carouselItems.length) ?
                   <div className="relative aspect-square group flex items-center justify-center">
                     <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
-                    <img src={`./images/items/${data.item.imageUrl}`} className="w-5/6 aspect-square relative mt-6" />
+                    <img src={`/images/items/${data.item.imageUrl}`} className="w-5/6 aspect-square relative mt-6" />
                     <div className="absolute w-full -bottom-4 left-[50%] -translate-x-1/2 z-10 px-4 py-2 rounded-md before:absolute before:inset-0 before:bg-black before:opacity-20 before:rounded-md">
                       <p className="w-full text-center font-semibold text-md text-white truncate">{data.item.name}</p>
                       <p className="w-full text-center font-semibold text-md text-white truncate">${data.item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
@@ -198,10 +198,10 @@ const ItemSpin = ({
                   :
                   <div className="relative aspect-square group flex items-center justify-center">
                     {currentMidIndex == (index + carouselItems.length) ? 
-                      <img src="./images/packSelector.png" className="absolute top-6 inset-0 m-auto w-5/6 aspect-square" /> :
+                      <img src="/images/packSelector.png" className="absolute top-6 inset-0 m-auto w-5/6 aspect-square" /> :
                       <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
                     }
-                    <img src={`./images/items/${data.item.imageUrl}`} className="w-4/5 aspect-square relative mt-6" />
+                    <img src={`/images/items/${data.item.imageUrl}`} className="w-4/5 aspect-square relative mt-6" />
                   </div>
                 }
               </div>

@@ -158,7 +158,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
         {data ?
           <div className="relative w-full h-full">
             <p className="block md:hidden text-center font-bold text-lg w-full pt-8">{percentage.toFixed(2)}%</p>
-            <img src={`./images/items/${data?.imageUrl}`} className="block md:hidden w-2/5 mx-auto aspect-square relative" />
+            <img src={`/images/items/${data?.imageUrl}`} className="block md:hidden w-2/5 mx-auto aspect-square relative" />
             <p className="block md:hidden w-full text-center font-bold text-sm text-white truncate mt-[8px] px-14">{data?.name}</p>
             <p className="block md:hidden w-full font-semibold text-center text-[#5a5e62] text-lg">${data?.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
             <p className="block md:hidden w-full font-bold text-center text-yellow-600 text-xl">x{(92.59 / percentage).toFixed(2)}</p>

@@ -16,7 +16,7 @@ import ItemSpin from "./ui/ItemSpin";
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemAction, isMobile }: any) => {
+const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemAction, isMobile, onSpinFinishAction }: any) => {
   const itemBackColorArray = ['bg-yellow-500', 'bg-red-500', 'bg-blue-500', 'bg-gray-500'];
   const failedAudioRef = useRef<HTMLAudioElement | null>(null);
   const successAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -32,6 +32,7 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
   const [isPackItemsModalOpen, setIsPackItemsModalOpen] = useState(false);
   const [isSpinFaster, setIsSpinFaster] = useState(false);
   const [isSpin, setIsSpin] = useState(false);
+  const [spinType, setSpinType] = useState(false);
   const [itemsSpinStatus, setItemsSpinStatus] = useState([]);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [selectedItemData, setSelectedItemData] = useState(null);
@@ -156,7 +157,7 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
       tempArray.push(getRandomWeightedValue(temp));
     }
 
-    
+
     return tempArray;
   }
 
@@ -190,6 +191,7 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
   }
 
   const onClickDemoSpin = () => {
+    setSpinType(false);
     onStartSpin(false);
   }
 
@@ -198,6 +200,7 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
       if (authData.balance < addedPacksTotalPrice) {
         openNotification("warning", "Warning", "Deposit first!", "topRight");
       } else {
+        setSpinType(true);
         onStartSpin(true);
       }
     } else {
@@ -205,7 +208,7 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
     }
   }
 
-  
+
   const playAudio = async (flag: any) => {
     if (successAudioRef.current && failedAudioRef.current) {
       try {
@@ -220,7 +223,7 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
   useEffect(() => {
     if (isSpin == false) {
       let flag = false;
-      for (let i = 0; i < targetPackIds.length; i ++) {
+      for (let i = 0; i < targetPackIds.length; i++) {
         if (targetPackIds[i] != -1 && addedPacks[i].itemsInfo[targetPackIds[i]].rarity < 3) {
           flag = true;
           break;
@@ -230,6 +233,11 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
       if (targetPackIds[0] != -1) {
         playAudio(flag);
       }
+
+      if (spinType) {
+        onSpinFinishAction();
+      }
+
       setTargetPackIds([-1, -1, -1, -1, -1]);
       setItemSpinSpeed([0, 0, 0, 0, 0]);
     }
@@ -319,7 +327,7 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
                         <p className="w-full text-center font-semibold text-lg text-gray-500">{itemData.percent.toFixed(4)}%</p>
                         <div className="relative w-full aspect-square p-4 mt-2">
                           <div className={`absolute inset-0 m-auto ${itemBackColorArray[itemData.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-3/4 aspect-square rounded-full blur-xl`}></div>
-                          <img src={`./images/items/${itemData.item.imageUrl}`} className="w-full aspect-square relative" />
+                          <img src={`/images/items/${itemData.item.imageUrl}`} className="w-full aspect-square relative" />
                         </div>
                         <p className="w-full text-center font-semibold text-md text-gray-500 truncate px-8 mt-2">{itemData.item.name}</p>
                         <p className="w-full text-center font-semibold text-lg">${itemData.item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>

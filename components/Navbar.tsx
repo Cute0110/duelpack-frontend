@@ -26,21 +26,33 @@ import { dot, eot } from "@/lib/cryptoUtils";
 import CartModal from "./Modals/CartModal";
 import { notification } from 'antd';
 import type { NotificationArgsProps } from 'antd';
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
+const NavbarWrapper = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Navbar />
+    </Suspense>
+  );
+};
 
 const Navbar = ({ isNavLinksHidden }: any) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isAuthModalType, setIsAuthModalType] = useState(true);
-  const { isAuthenticated, setIsAuthenticated, authData } = useAuth();
+  const { isAuthenticated, setIsAuthenticated, authData, setAuthData } = useAuth();
   const [isMobile, setIsMobile] = useState(true);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [cartData, setCartData] = useState({ data: [], count: 0 });
   const [isLoading, setIsLoading] = useState(false);
   const [api, contextHolder] = notification.useNotification();
+  const searchParams = useSearchParams();
+  const referCode = searchParams.get("ref"); // Get the 'id' from the URL
 
   const openNotification = (type: NotificationType, title: any, content: any, placement: NotificationPlacement) => {
     api[type]({
@@ -52,13 +64,61 @@ const Navbar = ({ isNavLinksHidden }: any) => {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const userRes = await axiosInstance.get('/api/check_session', {
+          withCredentials: true,
+        });
+        const userInfo = dot(userRes.data);
+
+        if (userInfo.status == 1) {
+          const response = await axiosInstance.post('/api/cart_list', eot({ userId: userInfo.userData.id }));
+          const res = dot(response.data);
+          if (res.status == 1) {
+            setCartData({ data: res.data, count: res.count });
+          } else {
+            openNotification("error", "Error", res.msg, "topRight");
+          }
+        }
+      } catch (err) {
+        openNotification("error", "Error", "Network error!", "topRight");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);
     };
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    const fetchCartData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axiosInstance.post('/api/cart_list', eot({ userId: authData.id }));
+        const res = dot(response.data);
+        if (res.status == 1) {
+          setCartData({ data: res.data, count: res.count });
+        } else {
+          openNotification("error", "Error", res.msg, "topRight");
+        }
+      } catch (err) {
+        openNotification("error", "Error", "Network error!", "topRight");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    if (isAuthenticated) fetchCartData();
+  }, [authData, isAuthenticated])
 
   const onLogOutClick = () => {
     setIsAuthenticated(false);
@@ -68,24 +128,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
   };
 
   const onClickCart = async () => {
-    setIsLoading(true);
     setIsCartModalOpen(true);
-    try {
-      const response = await axiosInstance.post('/api/cart_list', eot({ userId: authData.id }));
-      const res = dot(response.data);
-      if (res.status == 1) {
-        setCartData({ data: res.data, count: res.count });
-        setIsCartModalOpen(true);
-      } else {
-        openNotification("error", "Error", res.msg, "topRight");
-        setIsCartModalOpen(false);
-      }
-    } catch (err) {
-      openNotification("error", "Error", "Network error!", "topRight");
-      setIsCartModalOpen(false);
-    } finally {
-      setIsLoading(false);
-    }
   }
 
   const onSellClick = async (ids: any, price: any) => {
@@ -99,6 +142,14 @@ const Navbar = ({ isNavLinksHidden }: any) => {
         if (res.status == 1) {
           setCartData({ data: res.data, count: res.count });
           openNotification("success", "Success", "Sold items successfully!", "topRight");
+
+          const userRes = await axiosInstance.get('/api/check_session', {
+            withCredentials: true,
+          });
+          const userInfo = dot(userRes.data);
+          if (userInfo.status == 1) {
+            setAuthData(userInfo.userData);
+          }
         } else {
           openNotification("error", "Error", res.msg, "topRight");
         }
@@ -122,6 +173,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
         isModalOpen={isAuthModalOpen}
         onModalClose={() => setIsAuthModalOpen(false)}
         modalType={isAuthModalType}
+        referCode={referCode}
       />
       {isCartModalOpen &&
         <CartModal
@@ -211,6 +263,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                       onClick={onClickCart}
                     >
                       {isMobile ? <ShoppingCart /> : "Cart"}
+                      <span className="w-5 aspect-square bg-white rounded-full text-sm text-black">{cartData.count}</span>
                     </button>
                     <button
                       className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors disabled:pointer-events-none bg-blue-400 text-base text-white font-bold hover:bg-blue-500 disabled:text-blue-600 px-4 h-10"
@@ -396,4 +449,4 @@ const Navbar = ({ isNavLinksHidden }: any) => {
   );
 };
 
-export default Navbar;
+export default NavbarWrapper;

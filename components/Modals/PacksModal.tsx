@@ -136,7 +136,7 @@ const PacksModal = ({ packs, setIsPacksModalOpen, addedPackIds, onClickViewItem,
                             <div className="absolute top-4 right-4 bg-[#34383c] p-2 rounded-xl" onClick={() => onClickViewItem(data)}>
                                 <Eye className="h-5 w-auto text-gray-300 z-10" />
                             </div>
-                            <img src={`./images/packs/${data.imageUrl}`} className="rounded-xl" onClick={() => onAddId(data.id)} />
+                            <img src={`/images/packs/${data.imageUrl}`} className="rounded-xl" onClick={() => onAddId(data.id)} />
                             {
                                 addedPackIds.filter((id: any) => id == data.id).length == 0 ?
                                     <>

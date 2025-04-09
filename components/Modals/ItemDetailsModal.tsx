@@ -19,7 +19,7 @@ const ItemDetailsModal = ({ itemData, setIsItemDetailsModalOpen, viewType }: any
                 {itemData &&
                     (<>
                         <div className="bg-[#34383c] rounded-lg mt-4 py-8">
-                            <img src={`./images/items/${itemData.item.imageUrl}`} className="h-[200px] aspect-square mx-auto relative" />
+                            <img src={`/images/items/${itemData.item.imageUrl}`} className="h-[200px] aspect-square mx-auto relative" />
                         </div>
 
                         <div className="mt-8 font-bold text-xl">

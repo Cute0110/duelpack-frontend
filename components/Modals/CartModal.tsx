@@ -27,8 +27,6 @@ const CartModal = ({ cartData, setIsCartModalOpen, isLoading, onSellClick }: any
         let tempTotal = totalPrice;
         const index = temp.findIndex((el: any) => el === data.id);
 
-        console.log(temp);
-
         if (index !== -1) {
           // Remove the item if found
           tempTotal -= data.item.price;
@@ -102,7 +100,7 @@ const CartModal = ({ cartData, setIsCartModalOpen, isLoading, onSellClick }: any
                                         <Eye className="h-5 w-auto text-gray-300 z-10" />
                                     </button>
                                     <div className="relative w-full p-2 items-center justify-center flex">
-                                        <img src={`./images/items/${data.item.imageUrl}`} className="w-3/4 aspect-square relative" />
+                                        <img src={`/images/items/${data.item.imageUrl}`} className="w-3/4 aspect-square relative" />
                                     </div>
                                     <p className="w-full text-center font-semibold text-md text-gray-500 truncate px-2">{data.item.name}</p>
                                     <p className="w-full text-center font-semibold text-lg">${data.item.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>

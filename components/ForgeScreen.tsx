@@ -22,7 +22,7 @@ interface ItemData {
   // other fields if needed
 }
 
-const ForgeScreen = ({ itemsData, onGetItemsDataAction, onBetForgeAction, isLoading }: any) => {
+const ForgeScreen = ({ itemsData, onGetItemsDataAction, onBetForgeAction, onBetFinishAction, isLoading }: any) => {
   const defaultMax = 350000;
   const defaultMin = 20;
   const perPageCount = 48;
@@ -46,6 +46,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onBetForgeAction, isLoad
   const [percentVal, setPercentVal] = useState(0);
   const [stopDegree, setStopDegree] = useState(-1);
   const [isSpin, setIsSpin] = useState(false);
+  const [spinType, setSpinType] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const openNotification = (type: NotificationType, title: any, content: any, placement: NotificationPlacement) => {
@@ -178,6 +179,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onBetForgeAction, isLoad
         const tempStopDegree = Math.floor(Math.random() * 359);
         const result = (tempStopDegree < (360 * percentVal / 100)) ? true : false;
         onBetForgeAction(authData.id, selectedItemId, betPriceVal, 92.59 / percentVal, result);
+        setSpinType(true);
         setIsSpin(true);
         const timeoutId = setTimeout(() => {
           setStopDegree(tempStopDegree);
@@ -189,6 +191,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onBetForgeAction, isLoad
   }
 
   const onClickDemoSpin = () => {
+    setSpinType(false);
     setIsSpin(true);
     const timeoutId = setTimeout(() => {
       setStopDegree(Math.floor(Math.random() * 359));
@@ -211,6 +214,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onBetForgeAction, isLoad
     if (result) {
       fireConfetti();
     }
+    if (spinType) onBetFinishAction();
     setStopDegree(-1);
     setIsSpin(false);
   }
@@ -302,7 +306,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onBetForgeAction, isLoad
                 <div className="absolute top-4 right-4 bg-[#34383c] p-2 rounded-xl cursor-pointer" onClick={() => onClickViewItem(selectedItemData)}>
                   <ViewSVG className="h-4 w-auto text-gray-300 z-10" />
                 </div>
-                <img src={`./images/items/${selectedItemData?.imageUrl}`} className="w-3/5 mx-auto aspect-square relative mt-16" />
+                <img src={`/images/items/${selectedItemData?.imageUrl}`} className="w-3/5 mx-auto aspect-square relative mt-16" />
                 <p className="font-semibold text-md text-white truncate mt-8">{selectedItemData?.name}</p>
                 <div className="flex items-center justify-between mt-2">
                   <span className="font-semibold text-[#5a5e62] text-lg">${selectedItemData?.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
@@ -370,7 +374,7 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onBetForgeAction, isLoad
                 <div className="absolute top-4 right-4 bg-[#34383c] p-2 rounded-xl" onClick={() => onClickViewItem(data)}>
                   <ViewSVG className="h-4 w-auto text-gray-300 z-10" />
                 </div>
-                <img src={`./images/items/${data.imageUrl}`} className="w-2/4 mx-auto aspect-square relative mt-8" />
+                <img src={`/images/items/${data.imageUrl}`} className="w-2/4 mx-auto aspect-square relative mt-8" />
                 <p className="w-full text-center font-semibold text-md text-[#5a5e62] truncate mt-2">{data.name}</p>
                 <p className="w-full text-center font-semibold text-lg">${data.price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               </div>
