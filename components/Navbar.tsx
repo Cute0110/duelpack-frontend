@@ -50,6 +50,8 @@ const Navbar = ({ isNavLinksHidden }: any) => {
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [cartData, setCartData] = useState({ data: [], count: 0 });
   const [isLoading, setIsLoading] = useState(false);
+  const [isPromoCodeBtnLoading, setIsPromoCodeBtnLoading] = useState(false);
+  const [promoCode, setPromoCode] = useState("");
   const [api, contextHolder] = notification.useNotification();
   const searchParams = useSearchParams();
   const referCode = searchParams.get("ref"); // Get the 'id' from the URL
@@ -81,8 +83,8 @@ const Navbar = ({ isNavLinksHidden }: any) => {
             openNotification("error", "Error", res.msg, "topRight");
           }
         }
-      } catch (err) {
-        openNotification("error", "Error", "Network error!", "topRight");
+      } catch (err: any) {
+        openNotification("error", "Error", err.msg, "topRight");
       } finally {
         setIsLoading(false);
       }
@@ -98,6 +100,37 @@ const Navbar = ({ isNavLinksHidden }: any) => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const isValidCode = (promoCode: any) => {
+    const regex = /^(?=[a-zA-Z0-9_]{1,19}$)(?=.*[a-zA-Z0-9]).*$/;
+    return regex.test(promoCode);
+  }
+
+  const onSendPromoCode = async () => {
+    if (isValidCode(promoCode)) {
+      try {
+        setIsPromoCodeBtnLoading(true);
+        const response = await axiosInstance.post("/api/send_promoCode", eot({ userId: authData.id, referralCode: promoCode }));
+
+        const result = dot(response.data);
+        if (result.status) {
+          openNotification("success", "Success", "Sent code successfully!", "topRight");
+        } else {
+          openNotification("error", "Error", result.msg, "topRight");
+        }
+      } catch (err: any) {
+        openNotification("error", "Error", err.msg, "topRight");
+      } finally {
+        setIsPromoCodeBtnLoading(false);
+      }
+    } else {
+      openNotification("error", "Error", "Invalid code!", "topRight");
+    }
+  }
+
+  const onPromoCodeChange = (e: any) => {
+    setPromoCode(e.target.value);
+  }
 
   useEffect(() => {
     const fetchCartData = async () => {
@@ -337,10 +370,18 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                           <input
                             placeholder="Promotion code"
                             className="w-full text-[15px] px-4 py-2 mx-1 rounded bg-[#1d2125] flex items-center"
+                            value={promoCode}
+                            onChange={onPromoCodeChange}
                             required
                           />
-                          <button className="absolute top-5 right-4 bg-[#4299e1] p-2 rounded-md">
-                            <Check size={14} />
+                          <button className="absolute top-5 right-4 bg-[#4299e1] p-2 rounded-md" type="button" onClick={onSendPromoCode}>
+                            {isPromoCodeBtnLoading ?
+                              <div className="h-full w-full flex items-center justify-center">
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+                              </div>
+                              :
+                              <Check size={14} />
+                            }
                           </button>
                         </div>
                       </div>
@@ -349,7 +390,7 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                     {isMobile && (
                       <div className={`absolute right-4 top-[80px] bg-[#23272b] z-50 w-[250px] rounded-xl shadow`} >
                         {isAuthenticated ?
-                          <Link className="flex items-center p-4 gap-4 cursor-pointer" onClick={() => setIsOpen(false)}  href="/profile">
+                          <Link className="flex items-center p-4 gap-4 cursor-pointer" onClick={() => setIsOpen(false)} href="/profile">
                             <img src={authData.avatarURL} className="rounded-full h-12" />
                             <div>
                               <div>{authData.userName}</div>
@@ -430,9 +471,11 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                           <input
                             placeholder="Promotion code"
                             className="w-full text-[15px] px-4 py-2 mx-1 rounded bg-[#1d2125] flex items-center"
+                            value={promoCode}
+                            onChange={onPromoCodeChange}
                             required
                           />
-                          <button className="absolute top-5 right-4 bg-[#4299e1] p-2 rounded-md">
+                          <button className="absolute top-5 right-4 bg-[#4299e1] p-2 rounded-md" onClick={onSendPromoCode}>
                             <Check size={14} />
                           </button>
                         </div>

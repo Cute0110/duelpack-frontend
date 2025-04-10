@@ -50,13 +50,13 @@ const AffiliateScreen = ({ isLoading, onReferralCodeSaveAction, onGetTableDataAc
     }));
   };
 
-  const isValidUsername = (username: any) => {
-    const regex = /^(?=[a-zA-Z0-9_]{1,19}$)(?=.*[a-zA-Z])/;
+  const isValidCode = (username: any) => {
+    const regex = /^(?=[a-zA-Z0-9_]{1,19}$)(?=.*[a-zA-Z0-9]).*$/;
     return regex.test(username);
   }
 
   const onSaveClick = () => {
-    if (isValidUsername(userInfo.referralCode)) {
+    if (isValidCode(userInfo.referralCode)) {
       if (userInfo.referralCode != authData.referralCode) {
         onReferralCodeSaveAction(userInfo);
       }
@@ -130,7 +130,7 @@ const AffiliateScreen = ({ isLoading, onReferralCodeSaveAction, onGetTableDataAc
                   <div className="bg-[#292f34] rounded-md p-4">
                     <div className="flex items-center gap-2 text-sm">
                       Your Referral Code
-                      <Tooltip title="Referral code must be less than 20 characters. It can only contain letters, numbers, and underscores and must contain at least one letter.">
+                      <Tooltip title="Referral code must be less than 20 characters. It can only contain letters, numbers, and underscores and must contain at least one letter or one number.">
                         <CircleHelp size={16} className="cursor-pointer" />
                       </Tooltip>
                     </div>
