@@ -36,7 +36,7 @@ const Footer = ({ }: any) => {
     setIsTCModalOpen(false);
   }
   return (
-    <footer className={`bg-[#161a1d]`}>
+    <footer className={`relative z-[10] bg-[#161a1d]`}>
 
       <div className={`${isMobile ? "" : "container"} flex flex-col md:flex-row justify-between items-normal md:items-center py-10 gap-y-6 px-4`}>
         {/* Logo */}
@@ -114,7 +114,7 @@ const Footer = ({ }: any) => {
                 </li>
                 <li className="group">
                   <a
-                    href="https://www.instagram.com/wecazoo?igsh=MXgzM3Vvd2V0MXVxbA=="
+                    href="https://www.instagram.com/duelpack?igsh=MXN1MjJyYmdmZXhy"
                     className="flex items-center gap-2 group-hover:text-primary transition-colors"
                   >
                     <div className="w-[24px] h-[24px] rounded-full bg-muted flex items-center justify-center group-hover:bg-primary transition-colors">

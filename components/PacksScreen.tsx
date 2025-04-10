@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, Check } from "lucide-react";
 
@@ -14,6 +14,7 @@ import SearchSVG from "@/public/images/search.svg";
 import DownArrowSVG from "@/public/images/downArrow.svg";
 import ViewSVG from "@/public/images/view.svg";
 import EachPack from "./EachPack";
+import SideSliderScreen from "./ui/SideSliderScreen";
 
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
@@ -21,27 +22,27 @@ type NotificationType = 'success' | 'info' | 'warning' | 'error';
 const PacksScreen = ({ packsData }: any) => {
 
   const packTypeList = [
-    {label: "Official Packs", value: "Official Packs"},
-    {label: "Community Packs", value: "Community Packs"},
-    {label: "My Packs", value: "My Packs"}
+    { label: "Official Packs", value: "Official Packs" },
+    { label: "Community Packs", value: "Community Packs" },
+    { label: "My Packs", value: "My Packs" }
   ]
-  
+
   const sortTypeList = [
-    {label: "Newest", value: "Newest"},
-    {label: "Most Popular", value: "Most Popular"},
-    {label: "Price Low to High", value: "Price Low to High"},
-    {label: "Price High to Low", value: "Price High to Low"}
+    { label: "Newest", value: "Newest" },
+    { label: "Most Popular", value: "Most Popular" },
+    { label: "Price Low to High", value: "Price Low to High" },
+    { label: "Price High to Low", value: "Price High to Low" }
   ]
 
   const priceRangeList = [
-    {label: "All", value: 0, min: 0, max: 999999},
-    {label: "Greater than $500", value: 1, min: 500, max: 999999},
-    {label: "$250.00 - $500.00", value: 2, min: 250, max: 500},
-    {label: "$100.00 - $250.00", value: 3, min: 100, max: 250},
-    {label: "$50.00 - $100.00", value: 4, min: 50, max: 100},
-    {label: "$25.00 - $50.00", value: 5, min: 25, max: 50},
-    {label: "$5.00 - $25.00", value: 6, min: 5, max: 25},
-    {label: "Less than $5.00", value: 7, min: 0, max: 5},
+    { label: "All", value: 0, min: 0, max: 999999 },
+    { label: "Greater than $500", value: 1, min: 500, max: 999999 },
+    { label: "$250.00 - $500.00", value: 2, min: 250, max: 500 },
+    { label: "$100.00 - $250.00", value: 3, min: 100, max: 250 },
+    { label: "$50.00 - $100.00", value: 4, min: 50, max: 100 },
+    { label: "$25.00 - $50.00", value: 5, min: 25, max: 50 },
+    { label: "$5.00 - $25.00", value: 6, min: 5, max: 25 },
+    { label: "Less than $5.00", value: 7, min: 0, max: 5 },
   ]
 
   const [api, contextHolder] = notification.useNotification();
@@ -64,6 +65,27 @@ const PacksScreen = ({ packsData }: any) => {
       placement,
     });
   };
+
+  const leftDiv: any = useRef(null);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    if (!leftDiv.current) return;
+
+    const observer = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        if (entry.contentRect) {
+          setHeight(entry.contentRect.height);
+        }
+      }
+    });
+
+    observer.observe(leftDiv.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     setPacks(packsData.data);
@@ -90,17 +112,17 @@ const PacksScreen = ({ packsData }: any) => {
     }
   }
 
-  const onFilterAndSortPack = (searchArg : any, sortArg : any, rangeArg : any) => {
+  const onFilterAndSortPack = (searchArg: any, sortArg: any, rangeArg: any) => {
     const tempData = packsData.data.filter((data: any) => data.name.toLowerCase().includes(searchArg.toLowerCase()));
-    
+
     if (sortArg == "Newest") {
-      tempData.sort((a:any, b:any) => a.createdAt - b.updatedAt);
+      tempData.sort((a: any, b: any) => a.createdAt - b.updatedAt);
     } else if (sortArg == "Most Popular") {
-      tempData.sort((a:any, b:any) => a.createdAt - b.updatedAt);
+      tempData.sort((a: any, b: any) => a.createdAt - b.updatedAt);
     } else if (sortArg == "Price Low to High") {
-      tempData.sort((a:any, b:any) => a.price - b.price);
+      tempData.sort((a: any, b: any) => a.price - b.price);
     } else if (sortArg == "Price High to Low") {
-      tempData.sort((a:any, b:any) => b.price - a.price);
+      tempData.sort((a: any, b: any) => b.price - a.price);
     }
 
     if (rangeArg == 0) {
@@ -140,53 +162,53 @@ const PacksScreen = ({ packsData }: any) => {
     <>
       {contextHolder}
       {isPackItemsModalOpen && (<PackItemsModal packData={selectedPackData} itemsData={itemsData} setIsPackItemsModalOpen={setIsPackItemsModalOpen} isLoading={isLoading} />)}
-      <div className="container mt-[75px]">
-        <div className="flex justify-between gap-6">
-          <div className="w-full md:calc-100-minus-250">
-            <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <div className="relative">
-                <input
-                  placeholder="Search"
-                  className="rounded-md bg-[#34383c] w-full py-2 pl-[40px] placeholder-bold"
-                  value={searchVal}
-                  onChange={onSearchValueChange}
-                  onKeyUp={(e) => {
-                    if (e.key === "Enter") {
-                      onSearchEnter();
-                    }
-                  }}
-                />
-                <SearchSVG className="absolute  h-5 text-white top-[50%] left-[10px] -translate-y-[50%]" />
-              </div>
-              <div className="col-start-1 md:col-start-3">
-                <Select
-                  className="w-full"
-                  variant="filled"
-                  value={selectedSortType}
-                  onChange={onSortTypeChange}
-                  optionLabelProp="value"
-                  open={isSortTypeMenuOpen}
-                  onDropdownVisibleChange={setIsSortTypeMenuOpen}
-                  dropdownRender={(menu) => (
-                    <>
-                      {menu}
-                      <Divider style={{ margin: '8px 0', borderColor: "gray" }} />
-                      <div className="px-[10px]">
-                        {priceRangeList.map((item, index) => <div key={index} className="flex items-center text-md font-semibold mb-2 cursor-pointer" onClick={() => onPriceRangeChange(item.value)}>{item.value == selectedPriceRange ? (<Check size={20} className="w-[30px]"/>) : <div className="w-[30px]"></div>}{item.label}</div>)}
-                      </div>
-                    </>
-                  )}
-                  options={sortTypeList.map((item) => ({ label: <span className="flex items-center text-md font-semibold">{item.value == selectedSortType ? (<Check size={20} className="w-[30px]"/>) : <div className="w-[30px]"></div>}{item.label}</span>, value: item.value }))}
-                />
-              </div>
+      <div className="container mt-[75px] relative">
+        <div ref={leftDiv} className="w-full md:w-[calc(100%-250px)]">
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 pt-8">
+            <div className="relative">
+              <input
+                placeholder="Search"
+                className="rounded-md bg-[#34383c] w-full py-2 pl-[40px] placeholder-bold"
+                value={searchVal}
+                onChange={onSearchValueChange}
+                onKeyUp={(e) => {
+                  if (e.key === "Enter") {
+                    onSearchEnter();
+                  }
+                }}
+              />
+              <SearchSVG className="absolute  h-5 text-white top-[50%] left-[10px] -translate-y-[50%]" />
             </div>
-            <div className="w-full grid grid-cols-2 md:grid-cols-5 gap-4 mt-4 mb-12">
-              {packs.map((data: any, index) => (
-                <EachPack key={index} data={data} onClickViewItem={onClickViewItem} />
-              ))}
+            <div className="col-start-1 md:col-start-3">
+              <Select
+                className="w-full"
+                variant="filled"
+                value={selectedSortType}
+                onChange={onSortTypeChange}
+                optionLabelProp="value"
+                open={isSortTypeMenuOpen}
+                onDropdownVisibleChange={setIsSortTypeMenuOpen}
+                dropdownRender={(menu) => (
+                  <>
+                    {menu}
+                    <Divider style={{ margin: '8px 0', borderColor: "gray" }} />
+                    <div className="px-[10px]">
+                      {priceRangeList.map((item, index) => <div key={index} className="flex items-center text-md font-semibold mb-2 cursor-pointer" onClick={() => onPriceRangeChange(item.value)}>{item.value == selectedPriceRange ? (<Check size={20} className="w-[30px]" />) : <div className="w-[30px]"></div>}{item.label}</div>)}
+                    </div>
+                  </>
+                )}
+                options={sortTypeList.map((item) => ({ label: <span className="flex items-center text-md font-semibold">{item.value == selectedSortType ? (<Check size={20} className="w-[30px]" />) : <div className="w-[30px]"></div>}{item.label}</span>, value: item.value }))}
+              />
             </div>
           </div>
-          <div className="hidden md:block w-[250px]">Slide Show</div>
+          <div className="w-full grid grid-cols-2 md:grid-cols-5 gap-4 mt-4 mb-12">
+            {packs.map((data: any, index) => (
+              <EachPack key={index} data={data} onClickViewItem={onClickViewItem} />
+            ))}
+          </div>
+        </div>
+        <div className="hidden md:block absolute top-0 right-0 w-[250px]" style={{ height: `${height + 200}px` }}>
+          <SideSliderScreen />
         </div>
       </div>
     </>
