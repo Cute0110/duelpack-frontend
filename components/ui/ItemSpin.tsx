@@ -92,7 +92,7 @@ const ItemSpin = ({
       smoothScrollTo(containerRef.current.scrollLeft + gap + ((itemWidth * currentIndex + gap * (currentIndex - 0.5) - containerRef.current.scrollLeft) - (itemWidth * Math.floor(visibleItems / 2) + gap * (visibleItems / 2.0))), 500, (currentIndex))
       return;
     } else if (startSpeed === 0) {
-      return ;
+      return;
     }
     let animationFrameId: number;
     const scroll = () => {
@@ -183,7 +183,12 @@ const ItemSpin = ({
                   </div>
                   :
                   <div className="relative aspect-square group flex items-center justify-center">
-                    {currentMidIndex == index ? <img src="/images/packSelector.png" className="absolute top-6 inset-0 m-auto w-5/6 aspect-square" /> :
+                    {currentMidIndex == index ?
+                      <>
+                        <img src="/images/packSelector.png" className="absolute opacity-70 top-6 inset-0 m-auto w-5/6 aspect-square" />
+                        <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[2]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-4/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
+                      </>
+                      :
                       <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
                     }
                     <img src={`/images/items/${data.item.imageUrl}`} className="w-4/5 aspect-square relative mt-6" />
@@ -210,7 +215,7 @@ const ItemSpin = ({
                   </div>
                   :
                   <div className="relative aspect-square group flex items-center justify-center">
-                    {currentMidIndex == (index + carouselItems.length) ? 
+                    {currentMidIndex == (index + carouselItems.length) ?
                       <img src="/images/packSelector.png" className="absolute top-6 inset-0 m-auto w-5/6 aspect-square" /> :
                       <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
                     }
