@@ -134,8 +134,8 @@ const ItemSpin = ({
           const currentIndex: any = calculateCenterItem();
           const itemIndex = (currentIndex + 5) % carouselItems.length;
           if (carouselItems[itemIndex].id == packItems.itemsInfo[stopItemId].id && containerRef.current && flag == false) {
-            beforeIndex = (currentIndex + 4) % carouselItems.length;
-            midIndex = (currentIndex + 2) % carouselItems.length;
+            beforeIndex = (currentIndex + 5) % carouselItems.length;
+            midIndex = (currentIndex + 3) % carouselItems.length;
             flag = true;
             setSpeed(10);
           }
