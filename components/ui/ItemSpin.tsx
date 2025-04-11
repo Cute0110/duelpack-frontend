@@ -54,7 +54,7 @@ const ItemSpin = ({
     }
   };
 
-  const smoothScrollTo = (targetScrollLeft: number, duration = 2000, selectedIndex = -1) => {
+  const smoothScrollTo = (targetScrollLeft: number, duration = 500, selectedIndex = -1) => {
     if (!containerRef.current) return;
 
     const start = containerRef.current.scrollLeft;
@@ -89,7 +89,7 @@ const ItemSpin = ({
       return;
     } else if (containerRef.current && speed === 0 && stopItemId >= 0) {
       const currentIndex: any = calculateCenterItem();
-      smoothScrollTo(containerRef.current.scrollLeft + gap + ((itemWidth * currentIndex + gap * (currentIndex - 0.5) - containerRef.current.scrollLeft) - (itemWidth * Math.floor(visibleItems / 2) + gap * (visibleItems / 2.0))), 1000, (currentIndex))
+      smoothScrollTo(containerRef.current.scrollLeft + gap + ((itemWidth * currentIndex + gap * (currentIndex - 0.5) - containerRef.current.scrollLeft) - (itemWidth * Math.floor(visibleItems / 2) + gap * (visibleItems / 2.0))), 500, (currentIndex))
       return;
     } else if (startSpeed === 0) {
       return ;
@@ -137,11 +137,11 @@ const ItemSpin = ({
             beforeIndex = (currentIndex + 4) % carouselItems.length;
             midIndex = (currentIndex + 2) % carouselItems.length;
             flag = true;
-            setSpeed(5);
+            setSpeed(10);
           }
 
           if (currentIndex % carouselItems.length == midIndex && flag == true) {
-            setSpeed(2);
+            setSpeed(3);
           }
 
           if (currentIndex % carouselItems.length == beforeIndex && flag == true) {
