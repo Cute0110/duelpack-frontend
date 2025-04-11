@@ -122,16 +122,29 @@ const ItemSpin = ({
   useEffect(() => {
     if (stopItemId >= 0) {
       let currentSpeed = speed;
+      let beforeIndex = 0;
+      let midIndex = 0;
       let flag = false;
       const decelerate = () => {
-        if (currentSpeed > 30) {
+        if (currentSpeed > 20) {
           currentSpeed *= 0.98; // Gradually reduce speed
           setSpeed(currentSpeed);
           requestAnimationFrame(decelerate);
         } else {
           const currentIndex: any = calculateCenterItem();
-          const itemIndex = currentIndex % carouselItems.length;
+          const itemIndex = (currentIndex + 5) % carouselItems.length;
           if (carouselItems[itemIndex].id == packItems.itemsInfo[stopItemId].id && containerRef.current && flag == false) {
+            beforeIndex = (currentIndex + 4) % carouselItems.length;
+            midIndex = (currentIndex + 2) % carouselItems.length;
+            flag = true;
+            setSpeed(5);
+          }
+
+          if (currentIndex % carouselItems.length == midIndex && flag == true) {
+            setSpeed(2);
+          }
+
+          if (currentIndex % carouselItems.length == beforeIndex && flag == true) {
             setSpeed(0);
           }
           else {
