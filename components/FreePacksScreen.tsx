@@ -50,7 +50,7 @@ const FreePacksScreen = ({ packsData }: any) => {
             {packs.map((data: any, index) => (
               <EachFreePack key={index} data={data} />
             ))}
-            <div className="col-span-2 md:col-span-3 px-0 mt-4 md:px-8 md:mt-0">
+            <div className="col-span-2 md:col-span-3 px-0 mt-12 md:px-8 md:mt-0">
               <p className="font-bold text-2xl text-center">Claim Your Free Daily Packs Everyday</p>
               <p className="text-lg mt-4 text-center">DuelPack offers all players who create an account on DuelPack 1 FREE daily pack everyday forever, we also offer another FREE daily pack for players who deposit onto DuelPack. Players who deposit onto DuelPack get 2 FREE packs everyday!</p>
             </div>
