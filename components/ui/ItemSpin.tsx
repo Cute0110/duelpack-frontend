@@ -40,6 +40,9 @@ const ItemSpin = ({
   useEffect(() => {
     if (startSpeed != 0) {
       setSelectedIndex(-1);
+      
+      const currentIndex: any = calculateCenterItem();
+      setCurrentMidIndex(currentIndex);
     }
     setSpeed(startSpeed);
   }, [startSpeed]);
@@ -64,6 +67,9 @@ const ItemSpin = ({
       const elapsedTime = currentTime - startTime;
       const progress = Math.min(elapsedTime / duration, 1); // Normalize progress (0 to 1)
 
+      
+      const currentIndex: any = calculateCenterItem();
+      setCurrentMidIndex(currentIndex);
       // Use an easing function (easeOutQuad for a smooth deceleration effect)
       const easedProgress = 1 - Math.pow(1 - progress, 3);
 
