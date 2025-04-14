@@ -175,11 +175,20 @@ const SpinFreePacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItem
     let tempArray: any = [];
     for (let i = 0; i < addedPacks.length; i++) {
       let tempPack: any = addedPacks[i];
-      let temp: any = [];
-      for (let j = 0; j < tempPack.itemsInfo.length; j++) {
-        temp.push(tempPack.itemsInfo[j].percent);
+
+      if (spinType) {
+        const maxIndex = tempPack.itemsInfo.reduce((maxIdx: any, item: any, idx: any, arr: any) => 
+          item.percent > arr[maxIdx].percent ? idx : maxIdx
+        , 0);
+  
+        tempArray.push(maxIndex);
+      } else {
+        let temp: any = [];
+        for (let j = 0; j < tempPack.itemsInfo.length; j++) {
+          temp.push(tempPack.itemsInfo[j].percent);
+        }
+        tempArray.push(getRandomWeightedValue(temp));
       }
-      tempArray.push(getRandomWeightedValue(temp));
     }
     return tempArray;
   }
