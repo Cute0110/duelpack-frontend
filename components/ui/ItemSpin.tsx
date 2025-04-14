@@ -29,8 +29,6 @@ const ItemSpin = ({
 
   useEffect(() => {
     const currentIndex: any = calculateCenterItem();
-
-    console.log(currentIndex);
     setCurrentMidIndex(currentIndex);
   }, [itemWidth])
 
@@ -61,6 +59,7 @@ const ItemSpin = ({
       // Calculate the index of the center item
       console.log(containerRef.current.scrollLeft, containerRef.current.offsetWidth, itemWidth, gap);
       const itemIndex = Math.floor(centerPosition / (itemWidth + gap));
+      console.log(111, itemIndex, startSpeed);
       return itemIndex;
     }
   };
@@ -197,7 +196,7 @@ const ItemSpin = ({
                   </div>
                   :
                   <div className="relative aspect-square group flex items-center justify-center">
-                    {currentMidIndex == index && startSpeed > 0 ?
+                    {currentMidIndex == index ?
                       <>
                         <img src="/images/packSelector.png" className="absolute opacity-70 top-6 inset-0 m-auto w-5/6 aspect-square" />
                         <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[2]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-4/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
@@ -229,7 +228,7 @@ const ItemSpin = ({
                   </div>
                   :
                   <div className="relative aspect-square group flex items-center justify-center">
-                    {currentMidIndex == (index + carouselItems.length) && startSpeed > 0 ?
+                    {currentMidIndex == (index + carouselItems.length) ?
                       <>
                         <img src="/images/packSelector.png" className="absolute opacity-70 top-6 inset-0 m-auto w-5/6 aspect-square" />
                         <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[2]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-4/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
