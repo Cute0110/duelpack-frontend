@@ -87,28 +87,41 @@ const SpinFreePacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItem
     }
     return shuffledArray;
   }
-  
-  useEffect(() => {
-    if (addedPacks.length > 0 && isAuthenticated) {
-      const oneDayMs = 24 * 60 * 60 * 1000;
 
+
+  const parseTimeString = (time: string): number => {
+    const [hh, mm, ss] = time.split(':').map(Number);
+    return hh * 3600 + mm * 60 + ss;
+  }
+
+  const formatTime = (seconds: number): string => {
+    const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+    const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    return `${h}:${m}:${s}`;
+  }
+
+  useEffect(() => {
+    if (spinRemainTime != 'Spin Now') {
       const interval = setInterval(() => {
-        const target = new Date(new Date(authData.userLastSpinTime[addedPacks[0]?.packInfo.type - 2]).getTime() + oneDayMs);
-        const now = new Date();
-        const diff = target.getTime() - now.getTime();
-  
-        if (diff <= 0) {
-          setSpinRemainTime('Spin Now');
-          clearInterval(interval);
-        } else {
-          const hours = String(Math.floor(diff / (1000 * 60 * 60)) % 24).padStart(2, '0');
-          const minutes = String(Math.floor(diff / (1000 * 60)) % 60).padStart(2, '0');
-          const seconds = String(Math.floor(diff / 1000) % 60).padStart(2, '0');
-          setSpinRemainTime(`${hours}:${minutes}:${seconds}`);
-        }
+        setSpinRemainTime((prev) => {
+          const remainTime = parseTimeString(prev);
+          if (remainTime <= 1) {
+            clearInterval(interval);
+            return 'Spin Now';
+          }
+
+          return formatTime(remainTime - 1);
+        })
       }, 1000);
   
-      return () => clearInterval(interval); // cleanup
+      return () => clearInterval(interval);
+    }
+  }, [spinRemainTime])
+
+  useEffect(() => {
+    if (addedPacks.length > 0 && isAuthenticated) {
+      setSpinRemainTime(authData.freePackSpinRemainTime[addedPacks[0].packInfo.type - 2]);
     }
   }, [addedPacks, isAuthenticated, authData]);
 
@@ -177,10 +190,10 @@ const SpinFreePacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItem
       let tempPack: any = addedPacks[i];
 
       if (spinType) {
-        const maxIndex = tempPack.itemsInfo.reduce((maxIdx: any, item: any, idx: any, arr: any) => 
+        const maxIndex = tempPack.itemsInfo.reduce((maxIdx: any, item: any, idx: any, arr: any) =>
           item.percent > arr[maxIdx].percent ? idx : maxIdx
-        , 0);
-  
+          , 0);
+
         tempArray.push(maxIndex);
       } else {
         let temp: any = [];
@@ -331,8 +344,8 @@ const SpinFreePacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItem
                 disabled={isSpin || isAuthenticated == false || (addedPacks[0]?.packInfo.type == 3 && authData.totalDeposit == 0) || spinRemainTime != "Spin Now"}
               >
                 {isAuthenticated == false || (addedPacks[0]?.packInfo.type == 3 && authData.totalDeposit == 0) ? <p className="flex items-center justify-center gap-2">
-                  <LockKeyhole size={16} /> Locked</p> 
-                  : 
+                  <LockKeyhole size={16} /> Locked</p>
+                  :
                   <>{spinRemainTime}</>
                 }
               </button>
