@@ -149,6 +149,18 @@ body {
   background: #5a5e62 !important;
 }
 
+.ant-notification .ant-notification-notice-wrapper .ant-notification-notice {
+  background: #34383c;
+  border-radius: 5px;
+}
+
+.ant-notification-notice-message {
+  color: white !important;
+}
+.ant-notification-notice-description {
+  color: white !important;
+}
+
 ::-webkit-scrollbar {
   width: 4px;
 }

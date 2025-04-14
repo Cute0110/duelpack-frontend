@@ -280,8 +280,8 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                       }`
                     }
                   >
-                    <Rewards className="h-6 w-auto text-gray-300" />
-                    <p className="text-base text-white font-semibold">Free Packs</p>
+                    <Rewards className="h-6 w-auto text-[#00bf62]" />
+                    <p className="text-base text-[#00bf62] font-semibold">Free Packs</p>
                   </Link>
 
                   <div className="absolute bottom-0 bg-white h-0.5 transition-transform duration-300" />
@@ -450,8 +450,8 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                               }`
                             }
                           >
-                            <Rewards className="h-6 w-auto text-gray-300" />
-                            <p className="text-base text-white font-semibold">Free Packs</p>
+                            <Rewards className="h-6 w-auto text-[#00bf62]" />
+                            <p className="text-base text-[#00bf62] font-semibold">Free Packs</p>
                           </Link>
 
                           <div className="absolute bottom-0 bg-white h-0.5 transition-transform duration-300" />

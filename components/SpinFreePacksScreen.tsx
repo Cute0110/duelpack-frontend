@@ -245,8 +245,12 @@ const SpinFreePacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItem
       if (authData.balance < addedPacksTotalPrice) {
         openNotification("warning", "Warning", "Deposit first!", "topRight");
       } else {
-        setSpinType(true);
-        onStartSpin(true);
+        if (authData.totalDeposit == 0) {
+          openNotification("warning", "Warning", "You need to deposit onto duelpack in order to unlock this pack", "topRight");
+        } else {
+          setSpinType(true);
+          onStartSpin(true);
+        }
       }
     } else {
       setIsAuthModalOpen(true);
@@ -341,7 +345,7 @@ const SpinFreePacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItem
                 type="button"
                 className="w-40 md:w-44 bg-[#00bf62] hover:bg-green-500 text-white rounded-md py-2 h-[40px] font-bold disabled:cursor-not-allowed"
                 onClick={onClickBuyItem}
-                disabled={isSpin || isAuthenticated == false || (addedPacks[0]?.packInfo.type == 3 && authData.totalDeposit == 0) || spinRemainTime != "Spin Now"}
+                disabled={isSpin || isAuthenticated == false || spinRemainTime != "Spin Now"}
               >
                 {isAuthenticated == false || (addedPacks[0]?.packInfo.type == 3 && authData.totalDeposit == 0) ? <p className="flex items-center justify-center gap-2">
                   <LockKeyhole size={16} /> Locked</p>
