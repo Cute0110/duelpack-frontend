@@ -28,11 +28,6 @@ const ItemSpin = ({
   }, [visibleItems, gap]);
 
   useEffect(() => {
-    const currentIndex: any = calculateCenterItem();
-    setCurrentMidIndex(currentIndex);
-  }, [itemWidth])
-
-  useEffect(() => {
     if (isMobile) {
       setGap(8);
       setVisibleItems(3);
@@ -45,9 +40,6 @@ const ItemSpin = ({
   useEffect(() => {
     if (startSpeed != 0) {
       setSelectedIndex(-1);
-      
-      const currentIndex: any = calculateCenterItem();
-      setCurrentMidIndex(currentIndex);
     }
     setSpeed(startSpeed);
   }, [startSpeed]);
@@ -57,9 +49,7 @@ const ItemSpin = ({
       // Calculate the center position of the container
       const centerPosition = containerRef.current.scrollLeft + containerRef.current.offsetWidth / 2;
       // Calculate the index of the center item
-      console.log(containerRef.current.scrollLeft, containerRef.current.offsetWidth, itemWidth, gap);
       const itemIndex = Math.floor(centerPosition / (itemWidth + gap));
-      console.log(111, itemIndex, startSpeed);
       return itemIndex;
     }
   };
@@ -74,7 +64,7 @@ const ItemSpin = ({
       const elapsedTime = currentTime - startTime;
       const progress = Math.min(elapsedTime / duration, 1); // Normalize progress (0 to 1)
 
-      
+
       const currentIndex: any = calculateCenterItem();
       setCurrentMidIndex(currentIndex);
       // Use an easing function (easeOutQuad for a smooth deceleration effect)
@@ -196,14 +186,8 @@ const ItemSpin = ({
                   </div>
                   :
                   <div className="relative aspect-square group flex items-center justify-center">
-                    {currentMidIndex == index ?
-                      <>
-                        <img src="/images/packSelector.png" className="absolute opacity-70 top-6 inset-0 m-auto w-5/6 aspect-square" />
-                        <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[2]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-4/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
-                      </>
-                      :
-                      <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
-                    }
+                    <img src="/images/packSelector.png" className={`absolute ${currentMidIndex % carouselItems.length == index ? "opacity-70" : "opacity-0"} top-6 inset-0 m-auto w-5/6 aspect-square`} />
+                    <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:w-2/4 aspect-square rounded-full blur-xl`}></div>
                     <img src={`/images/items/${data.item.imageUrl}`} className="w-4/5 aspect-square relative mt-6" />
                   </div>
                 }
@@ -228,14 +212,8 @@ const ItemSpin = ({
                   </div>
                   :
                   <div className="relative aspect-square group flex items-center justify-center">
-                    {currentMidIndex == (index + carouselItems.length) ?
-                      <>
-                        <img src="/images/packSelector.png" className="absolute opacity-70 top-6 inset-0 m-auto w-5/6 aspect-square" />
-                        <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[2]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-4/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
-                      </>
-                      :
-                      <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:2/4 aspect-square rounded-full blur-xl`}></div>
-                    }
+                    <img src="/images/packSelector.png" className={`absolute ${currentMidIndex == (index + carouselItems.length) ? "opacity-70" : "opacity-0"} top-6 inset-0 m-auto w-5/6 aspect-square`} />
+                    <div className={`absolute top-6 inset-0 m-auto ${itemBackColorArray[data.rarity - 1]} opacity-[0.4] group-hover:opacity-[0.8] transition-opacity duration-500 w-2/5 md:w-2/4 aspect-square rounded-full blur-xl`}></div>
                     <img src={`/images/items/${data.item.imageUrl}`} className="w-4/5 aspect-square relative mt-6" />
                   </div>
                 }
