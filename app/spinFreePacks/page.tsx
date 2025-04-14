@@ -9,22 +9,22 @@ import { notification } from 'antd';
 import type { NotificationArgsProps } from 'antd';
 import { useAuth } from "@/lib/authContext";
 import { useSearchParams } from "next/navigation";
-import BuyPacksScreen from "@/components/BuyPacksScreen";
 import { Suspense } from "react";
+import SpinFreePacksScreen from "@/components/SpinFreePacksScreen";
 
 type NotificationPlacement = NotificationArgsProps['placement'];
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 
-const BuyPacksWrapper = () => {
+const SpinFreePacksWrapper = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <BuyPacks />
+      <SpinFreePacks />
     </Suspense>
   );
 };
 
-const BuyPacks = () => {
+const SpinFreePacks = () => {
   const { isAuthenticated, isSidebarCollapsed, setAuthData, setIsAuthenticated } = useAuth();
   const [packsInfo, setPacksInfo] = useState({ data: [], count: 0});
   const [packItemConnectInfo, setPackItemConnectInfo] = useState({ data: [], count: 0 });
@@ -51,7 +51,7 @@ const BuyPacks = () => {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.post('/api/pack_list', eot({ start: 0, length: 0, search: 0, order: "id", dir: "asc" }));
+        const response = await axiosInstance.post('/api/free_pack_list', eot({ start: 0, length: 0, search: 0, order: "id", dir: "asc" }));
         const res = dot(response.data);
         if (res.status == 1) {
           setPacksInfo({ data: res.data, count: res.count });
@@ -144,7 +144,7 @@ const BuyPacks = () => {
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white" />
           </div>
           :
-          <BuyPacksScreen
+          <SpinFreePacksScreen
             packsInfo={packsInfo}
             packItemConnectInfo={packItemConnectInfo}
             packId={packId}
@@ -157,4 +157,4 @@ const BuyPacks = () => {
   );
 }
 
-export default BuyPacksWrapper;
+export default SpinFreePacksWrapper;

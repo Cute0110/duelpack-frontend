@@ -23,7 +23,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   // Handle initial loading (e.g., for fetching user authentication status)
   useEffect(() => {
-
   }, []);
 
   return (

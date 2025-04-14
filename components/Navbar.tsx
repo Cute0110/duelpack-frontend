@@ -274,14 +274,14 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                   </Link>
 
                   <Link
-                    href="/rewards"
+                    href="/freePacks"
                     className={
                       `flex justify-center items-center px-1 gap-1 ${isAuthenticated ? "text-white" : "text-gray-400"
                       }`
                     }
                   >
                     <Rewards className="h-6 w-auto text-gray-300" />
-                    <p className="text-base text-white font-semibold">Rewards</p>
+                    <p className="text-base text-white font-semibold">Free Packs</p>
                   </Link>
 
                   <div className="absolute bottom-0 bg-white h-0.5 transition-transform duration-300" />
@@ -444,14 +444,14 @@ const Navbar = ({ isNavLinksHidden }: any) => {
                           </Link>
 
                           <Link
-                            href="/rewards"
+                            href="/freePacks"
                             className={
                               `flex items-center px-1 gap-1 ${isAuthenticated ? "text-white" : "text-gray-400"
                               }`
                             }
                           >
                             <Rewards className="h-6 w-auto text-gray-300" />
-                            <p className="text-base text-white font-semibold">Rewards</p>
+                            <p className="text-base text-white font-semibold">Free Packs</p>
                           </Link>
 
                           <div className="absolute bottom-0 bg-white h-0.5 transition-transform duration-300" />
