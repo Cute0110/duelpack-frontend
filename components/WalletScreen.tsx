@@ -58,7 +58,7 @@ const WalletScreen = () => {
     }
 
     const handleDepositAmountInputChange = (e: any) => {
-        const rawValue = e.target.value.replace(/\D/g, "");
+        const rawValue = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
         setDepositAmount(rawValue); // Add dollar symbol
     }
 
@@ -76,8 +76,8 @@ const WalletScreen = () => {
 
     const onDepositClick = () => {
         if (!isNaN(Number(depositAmount)) && depositAmount.trim() !== "") {
-            if (Number(depositAmount) < 10) {
-                openNotification("warning", "Warning", "Minimum value is 10$!", "topRight");
+            if (Number(depositAmount) < 5) {
+                openNotification("warning", "Warning", "Minimum value is 5$!", "topRight");
             } else {
                 onCreateInvoice(Number(depositAmount));
             }
@@ -92,7 +92,7 @@ const WalletScreen = () => {
 
     const onWithdrawClick = () => {
         if (!isNaN(Number(withdrawAmount)) && withdrawAmount.trim() !== "") {
-            if (Number(withdrawAmount) < 1) {
+            if (Number(withdrawAmount) < 5) {
                 openNotification("warning", "Warning", "Minimum value is 5$!", "topRight");
             } else if (Number(withdrawAmount) > authData.balance) {
                 openNotification("warning", "Warning", "You have not enough balance!", "topRight");
