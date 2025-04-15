@@ -245,7 +245,7 @@ const SpinFreePacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItem
       if (authData.balance < addedPacksTotalPrice) {
         openNotification("warning", "Warning", "Deposit first!", "topRight");
       } else {
-        if (authData.totalDeposit == 0) {
+        if (authData.totalDeposit == 0 && addedPacks[0].packInfo.type == 3) {
           openNotification("warning", "Warning", "You need to deposit onto duelpack in order to unlock this pack", "topRight");
         } else {
           setSpinType(true);
