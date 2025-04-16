@@ -176,11 +176,11 @@ const RandingPage = ({ packsData, forgeData }: any) => {
                 <span className="text-lg font-bold">Battle Highlights</span>
               </div>
               <div>
-                <button className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View Battles</button>
+                <Link href="/battles" className="bg-[#34383c] px-4 py-2 rounded-lg font-bold text-sm">View Battles</Link>
               </div>
             </div>
             <div className="w-full mt-4 bg-[#22272b] h-[100px] rounded-xl text-center p-[35px]">
-              No Battles
+              Coming soon...
             </div>
           </div>
           <div className="w-full mt-12">
