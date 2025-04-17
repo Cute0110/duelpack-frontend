@@ -156,8 +156,6 @@ const BuyPacksScreen = ({ packsInfo, packItemConnectInfo, packId, onBuyItemActio
       }
       tempArray.push(getRandomWeightedValue(temp));
     }
-
-
     return tempArray;
   }
 

@@ -176,8 +176,14 @@ const ForgeScreen = ({ itemsData, onGetItemsDataAction, onBetForgeAction, onBetF
       if (authData.balance < betPriceVal) {
         openNotification("warning", "Warning", "Deposit first!", "topRight");
       } else {
-        const tempStopDegree = Math.floor(Math.random() * 359);
-        const result = (tempStopDegree < (360 * percentVal / 100)) ? true : false;
+        let tempStopDegree = Math.floor(Math.random() * 359);
+        let result = (tempStopDegree < (360 * percentVal / 100)) ? true : false;
+
+        const isReSpin = (Math.floor(Math.random() * 359)) % 3;
+        if (isReSpin == 0 && result) {
+          tempStopDegree = Math.floor(Math.random() * 359);
+          result = (tempStopDegree < (360 * percentVal / 100)) ? true : false;
+        }
         onBetForgeAction(authData.id, selectedItemId, betPriceVal, 92.59 / percentVal, result);
         setSpinType(true);
         setIsSpin(true);
