@@ -78,7 +78,7 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType, referCode }: any) => 
                     openNotification('error', 'Error', res.msg, 'topRight');
                 }
             } catch (error) {
-                openNotification('error', 'Error', "Network error!", 'topRight');
+                openNotification('error', 'Error', "Login Failed!", 'topRight');
             } finally {
                 setIsLoading(false);
             }
@@ -93,7 +93,7 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType, referCode }: any) => 
                     openNotification('error', 'Error', res.msg, 'topRight');
                 }
             } catch (error) {
-                openNotification('error', 'Error', "Network error!", 'topRight');
+                openNotification('error', 'Error', "Login Failed!", 'topRight');
             } finally {
                 setIsLoading(false);
             }
@@ -131,12 +131,12 @@ const AuthModal = ({ isModalOpen, onModalClose, modalType, referCode }: any) => 
                     openNotification('error', 'Error', res.msg, 'topRight');
                 }
             } catch (error) {
-                openNotification('error', 'Error', "Network error!", 'topRight');
+                openNotification('error', 'Error', "Login Failed!", 'topRight');
             } finally {
                 setIsLoading(false);
             }
         } catch (error) {
-            openNotification('error', 'Error', "Network error!", 'topRight');
+            openNotification('error', 'Error', "Login Failed!", 'topRight');
         } finally {
             setIsLoading(false);
         }
